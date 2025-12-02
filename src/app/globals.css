@@ -83,6 +83,28 @@
   --text-14-body-m--font-weight: 500;
 }
 
+@theme {
+  --color-white: #ffffff;
+  --color-black: #000000;
+  --color-red: #ff2727;
+
+  --color-primary100: #e5f3ff;
+  --color-primary500: #3d9ef2;
+
+  --color-gray25: #f8f8f8;
+  --color-gray50: #edeef2;
+  --color-gray100: #e0e0e5;
+  --color-gray200: #c6c8cf;
+  --color-gray300: #b3b4bc;
+  --color-gray400: #9fa0a7;
+  --color-gray500: #84858c;
+  --color-gray600: #707177;
+  --color-gray700: #5d5d61;
+  --color-gray800: #49494c;
+  --color-gray900: #323236;
+  --color-gray950: #1f1f22;
+}
+
 @font-face {
   font-family: "Pretendard";
   src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Bold.woff2")
