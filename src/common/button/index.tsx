@@ -1,11 +1,15 @@
 import clsx from "clsx";
 
 type ButtonVariant = keyof typeof buttonVariant;
+type ButtonHeight = keyof typeof buttonHeight;
+type ButtonRounded = keyof typeof buttonRounded;
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
   variant: ButtonVariant;
+  height: ButtonHeight;
+  rounded: ButtonRounded;
   disabled?: boolean;
   fullWidth?: boolean;
   className?: string;
@@ -17,9 +21,27 @@ const buttonVariant = {
   disabled: "bg-gray20 text-gray50",
 };
 
+const buttonHeight = {
+  "29": "h-[29px]",
+  "40": "h-10",
+  "40-48": "h-10 md:h-12",
+  "50": "h-12.5",
+  "54": "h-13.5",
+};
+
+const buttonRounded = {
+  "8": "rounded-lg",
+  "12": "rounded-xl",
+  "12-14": "rounded-xl md:rounded-[14px]",
+  "14": "rounded-[14px]",
+  "16": "rounded-2xl",
+};
+
 export default function Button({
   children,
   variant = "primary",
+  height = "40",
+  rounded = "14",
   disabled = false,
   className,
   ...props
@@ -28,6 +50,8 @@ export default function Button({
     <button
       className={clsx(
         "flex items-center justify-center whitespace-nowrap w-30",
+        buttonHeight[height],
+        buttonRounded[rounded],
         disabled ? buttonVariant.disabled : buttonVariant[variant],
         className
       )}
