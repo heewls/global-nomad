@@ -20,7 +20,7 @@ export interface ButtonProps
 const buttonVariant = {
   primary: "bg-primary500 text-white",
   outline: "bg-white border-1 border-gray200 text-gray600",
-  disabled: "bg-gray20 text-gray50",
+  disabled: "bg-gray200 text-gray50",
 };
 
 const buttonHeight = {
