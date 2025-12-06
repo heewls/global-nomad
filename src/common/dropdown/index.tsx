@@ -14,9 +14,9 @@ const dropdownListType = {
 };
 
 const dropdownListArray = {
-  left: "justify-start",
+  left: "justify-start px-5",
   center: "justify-center",
-  right: "justify-end",
+  right: "justify-end px-5",
 };
 
 export default function Dropdown({
@@ -52,8 +52,8 @@ export default function Dropdown({
       {isOpen && (
         <div
           className={clsx(
-            "absolute bg-white z-100 mt-2 border border-gray100 rounded-2xl cursor-pointer",
-            listType === "active" ? "p-3 rounded-2xl" : "px-3 rounded-lg",
+            "absolute bg-white z-100 mt-2 border border-gray100 cursor-pointer",
+            listType === "active" ? "p-3 rounded-2xl" : "rounded-lg",
             fullWidth && "w-full",
             placement
           )}
