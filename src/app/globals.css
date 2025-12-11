@@ -9,6 +9,19 @@
   button {
     cursor: pointer;
   }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: var(--color-gray200);
+    border-radius: 999px;
+  }
+
+  .textarea-custom-scrollbar::-webkit-scrollbar {
+    width: 3px;
+  }
 }
 
 @theme {
