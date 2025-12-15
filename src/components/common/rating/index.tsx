@@ -19,6 +19,7 @@ export default function Rating({
   onChange,
   readonly,
 }: RatingProps) {
+  const [hover, setHover] = useState<number>(0);
   const [rating, setRating] = useState<number>(count ?? 0);
 
   const handleStarClick = (star: number) => {
@@ -28,6 +29,18 @@ export default function Rating({
     setRating(star);
   };
 
+  const handleMouseOver = (star: number) => {
+    if (readonly) return;
+    setHover(star);
+  };
+
+  const handleMouseLeave = () => {
+    if (readonly) return;
+    setHover(0);
+  };
+
+  const activeRating = hover > 0 ? hover : rating;
+
   return (
     <div className="flex justify-center items-center">
       {Array.from({ length: starLength }).map((_, idx) => (
@@ -36,8 +49,10 @@ export default function Rating({
           key={idx}
           width={starSize}
           height={starSize}
-          fill={rating > idx ? "#FFCB02" : "var(--color-gray100)"}
+          fill={activeRating > idx ? "#FFCB02" : "var(--color-gray100)"}
           onClick={() => handleStarClick(idx + 1)}
+          onMouseOver={() => handleMouseOver(idx + 1)}
+          onMouseLeave={handleMouseLeave}
         />
       ))}
     </div>
