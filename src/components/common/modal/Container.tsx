@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect } from "react";
 import clsx from "clsx";
 
 export default function Container({
@@ -7,6 +10,15 @@ export default function Container({
   children: React.ReactNode;
   className?: string;
 }) {
+  useEffect(() => {
+    const originalOverflow = window.getComputedStyle(document.body).overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = originalOverflow;
+    };
+  }, []);
+
   return (
     <div
       className={clsx(
