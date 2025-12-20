@@ -5,9 +5,9 @@ interface HeaderProps {
 
 export default function Header({ image, children }: HeaderProps) {
   return (
-    <div className="flex flex-col justify-center items-center w-full gap-0.5">
+    <div className="flex w-full flex-col items-center justify-center gap-0.5">
       {image}
-      <h2 className="w-full text-center text-gray950 text-16-b sm:text-18-b">
+      <h2 className="text-gray950 text-16-b sm:text-18-b w-full text-center">
         {children}
       </h2>
     </div>

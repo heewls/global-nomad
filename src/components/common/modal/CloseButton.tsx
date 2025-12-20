@@ -1,8 +1,8 @@
-import X from "@/../public/icons/x.svg";
+import X from '@/../public/icons/x.svg';
 
 export default function CloseButton() {
   return (
-    <button className="w-full flex justify-end">
+    <button className="flex w-full justify-end">
       <X className="cursor-pointer" />
     </button>
   );

@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { useEffect } from "react";
-import clsx from "clsx";
+import { useEffect } from 'react';
+import clsx from 'clsx';
 
 export default function Container({
   children,
@@ -12,7 +12,7 @@ export default function Container({
 }) {
   useEffect(() => {
     const originalOverflow = window.getComputedStyle(document.body).overflow;
-    document.body.style.overflow = "hidden";
+    document.body.style.overflow = 'hidden';
 
     return () => {
       document.body.style.overflow = originalOverflow;
@@ -23,7 +23,7 @@ export default function Container({
     <div className="fixed inset-0 z-999 flex items-center justify-center bg-black/50">
       <div
         className={clsx(
-          "bg-white flex flex-col justify-center items-center rounded-[30px]",
+          'flex flex-col items-center justify-center rounded-[30px] bg-white',
           className
         )}
       >
