@@ -1,22 +1,22 @@
-"use client";
+'use client';
 
-import clsx from "clsx";
-import { TextareaProps } from "./type";
+import clsx from 'clsx';
+import { TextareaProps } from './type';
 
 export default function Textarea({
-  maxHeight = "h-50",
+  maxHeight = 'h-50',
   className,
   ...props
 }: TextareaProps) {
   return (
     <div
       className={clsx(
-        "bg-white flex h-fit w-full items-start rounded-2xl px-5 py-4 border border-gray100"
+        'border-gray100 flex h-fit w-full items-start rounded-2xl border bg-white px-5 py-4'
       )}
     >
       <textarea
         className={clsx(
-          "flex w-full resize-none justify-center items-center text-16-body-m text-gray950 placeholder:text-gray400 placeholder:text-16-m focus:outline-none textarea-custom-scrollbar",
+          'text-16-body-m text-gray950 placeholder:text-gray400 placeholder:text-16-m textarea-custom-scrollbar flex w-full resize-none items-center justify-center focus:outline-none',
           maxHeight,
           className
         )}

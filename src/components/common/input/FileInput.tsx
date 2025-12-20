@@ -1,9 +1,11 @@
-"use client";
+'use client';
 
-import { useRef } from "react";
+import { useRef } from 'react';
 
-interface FileInputProps
-  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "children"> {
+interface FileInputProps extends Omit<
+  React.InputHTMLAttributes<HTMLInputElement>,
+  'children'
+> {
   children: (props: {
     fileInputRef: React.RefObject<HTMLInputElement | null>;
   }) => React.ReactNode;

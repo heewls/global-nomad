@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { FormFieldProps } from "./type";
+import { FormFieldProps } from './type';
 
 export default function FormField({
   label,
@@ -12,12 +12,12 @@ export default function FormField({
   return (
     <div className="flex w-full flex-col gap-1.5">
       <div className="flex flex-col gap-2.5">
-        <label className="flex text-16-m text-gray950">{label}</label>
+        <label className="text-16-m text-gray950 flex">{label}</label>
         {render()}
       </div>
 
       {showError && (
-        <span className="pl-2 text-12-m text-red text-left">
+        <span className="text-12-m text-red pl-2 text-left">
           {errorMessage}
         </span>
       )}
