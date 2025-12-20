@@ -1,15 +1,15 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import clsx from "clsx";
-import { DropdownButtonProps, CustomDropdownProps } from "./type";
-import Dropdown from ".";
-import Arrow from "../arrow";
-import { useOutSideClickAutoClose } from "@/hook/useOutSideClickAutoClose";
+import { useState } from 'react';
+import clsx from 'clsx';
+import { DropdownButtonProps, CustomDropdownProps } from './type';
+import Dropdown from '.';
+import { useOutSideClickAutoClose } from '@/hook/useOutSideClickAutoClose';
+import Arrow from '@/components/arrow';
 
 const dropdownButtonSize = {
-  sm: "h-10 w-fit px-3.5",
-  md: "h-14 w-30 px-5",
+  sm: 'h-10 w-fit px-3.5',
+  md: 'h-14 w-30 px-5',
 };
 
 function DropdownButton({
@@ -24,12 +24,12 @@ function DropdownButton({
       ref={ref}
       onClick={() => setIsOpen((prev) => !prev)}
       className={clsx(
-        "flex items-center justify-center px-5 py-4 bg-white border border-gray100 rounded-2xl text-16-m text-gray950",
+        'border-gray100 text-16-m text-gray950 flex items-center justify-center rounded-2xl border bg-white px-5 py-4',
         dropdownButtonSize[size],
-        fullWidth && "w-full"
+        fullWidth && 'w-full'
       )}
     >
-      <div className="flex w-full justify-between items-center">
+      <div className="flex w-full items-center justify-between">
         <span>{selectedOption}</span>
         <Arrow isOpen={isOpen} />
       </div>

@@ -3,9 +3,9 @@ import {
   useForm,
   UseFormProps,
   UseFormReturn,
-} from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { ZodType } from "zod";
+} from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { ZodType } from 'zod';
 
 export default function useZodForm<T extends FieldValues>({
   validationSchema,
@@ -13,12 +13,12 @@ export default function useZodForm<T extends FieldValues>({
   ...rest
 }: {
   validationSchema: ZodType<T, T>;
-  defaultValues: UseFormProps<T>["defaultValues"];
-} & Omit<UseFormProps<T>, "resolver" | "defaultValues">): UseFormReturn<T> {
+  defaultValues: UseFormProps<T>['defaultValues'];
+} & Omit<UseFormProps<T>, 'resolver' | 'defaultValues'>): UseFormReturn<T> {
   return useForm<T>({
     resolver: zodResolver(validationSchema),
     defaultValues,
-    mode: "all",
+    mode: 'all',
     ...rest,
   });
 }
