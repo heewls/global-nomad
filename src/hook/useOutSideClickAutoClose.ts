@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from 'react';
 
 export function useOutSideClickAutoClose(initialState: boolean) {
   const [isOpen, setIsOpen] = useState<boolean>(initialState);
@@ -11,9 +11,9 @@ export function useOutSideClickAutoClose(initialState: boolean) {
   };
 
   useEffect(() => {
-    document.addEventListener("mousedown", handleOutsideClick, true);
+    document.addEventListener('mousedown', handleOutsideClick, true);
     return () => {
-      document.removeEventListener("mousedown", handleOutsideClick, true);
+      document.removeEventListener('mousedown', handleOutsideClick, true);
     };
   }, []);
 

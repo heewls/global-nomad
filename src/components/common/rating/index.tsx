@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import clsx from "clsx";
-import Star from "@/assets/icons/star.svg";
+import { useState } from 'react';
+import clsx from 'clsx';
+import Star from '@/assets/icons/star.svg';
 
 interface RatingProps {
   starLength: number;
@@ -15,7 +15,7 @@ interface RatingProps {
 
 export default function Rating({
   starLength,
-  starSize = "16",
+  starSize = '16',
   count,
   gap,
   onChange,
@@ -42,7 +42,7 @@ export default function Rating({
   };
 
   return (
-    <div className="flex justify-center items-center">
+    <div className="flex items-center justify-center">
       {Array.from({ length: starLength }).map((_, idx) => {
         const activeRating = mouseEvent > 0 ? mouseEvent : rating;
 
@@ -50,8 +50,8 @@ export default function Rating({
           <div
             key={idx}
             className={clsx(
-              "inline-block",
-              readonly ? "cursor-default" : "cursor-pointer"
+              'inline-block',
+              readonly ? 'cursor-default' : 'cursor-pointer'
             )}
             style={idx < starLength - 1 ? { paddingRight: `${gap}px` } : {}}
             onClick={() => handleStarClick(idx + 1)}
@@ -61,7 +61,7 @@ export default function Rating({
             <Star
               width={starSize}
               height={starSize}
-              fill={activeRating > idx ? "#FFCB02" : "var(--color-gray100)"}
+              fill={activeRating > idx ? '#FFCB02' : 'var(--color-gray100)'}
             />
           </div>
         );

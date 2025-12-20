@@ -1,4 +1,4 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
   webpack: (config) => {
@@ -6,12 +6,12 @@ const nextConfig: NextConfig = {
       {
         test: /\.svg$/,
         include: /src\/assets/,
-        use: ["@svgr/webpack"],
+        use: ['@svgr/webpack'],
       },
       {
         test: /\.svg$/,
         include: /public/,
-        use: ["@svgr/webpack"],
+        use: ['@svgr/webpack'],
       }
     );
 
