@@ -6,7 +6,7 @@ export default function ProfileImage({
   image,
 }: {
   size: number;
-  image?: string;
+  image?: string | null;
 }) {
   return (
     <div
