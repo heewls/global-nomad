@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
-import Symbol from '@/../public/logo/smSymbol.svg';
+import Symbol from '@/assets/icons/symbol.svg';
 import Text from '@/../public/logo/smText.svg';
 import Bell from '@/../public/icons/bell.svg';
 import ProfileImage from '@/components/profileImage';
@@ -29,7 +29,7 @@ export default function GNB() {
     <nav className="sticky top-0 flex h-20 w-full items-center justify-center bg-white">
       <div className="flex w-full max-w-380 justify-between px-6 md:px-7.5">
         <Link href="/" className="flex w-fit items-center justify-center gap-3">
-          <Symbol />
+          <Symbol className="h-7 w-7" />
           <Text className="hidden sm:flex" />
         </Link>
         {!isLogin && (
