@@ -5,7 +5,7 @@ import Twitter from '@/../public/icons/twitter.svg';
 
 export default function Footer() {
   return (
-    <footer className="border-gray100 bottom-0 flex h-29 items-center justify-center border-t px-6 py-7.5 md:h-35 md:px-50">
+    <footer className="border-gray100 bottom-0 flex h-29 w-full items-center justify-center border-t px-6 py-7.5 md:h-35 md:px-50">
       <div className="flex w-full flex-col items-center justify-center gap-5 sm:flex-row sm:justify-between">
         <span className="text-gray400 text-13-m hidden sm:inline">
           @GlobalNomad
