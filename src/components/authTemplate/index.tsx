@@ -29,10 +29,13 @@ export default function AuthTemplate({
 
   return (
     <div className="flex flex-col items-center justify-center gap-10 sm:gap-15">
-      <div className="flex flex-col items-center justify-center gap-6">
+      <Link
+        href="/"
+        className="flex flex-col items-center justify-center gap-6"
+      >
         <Symbol className="h-36 w-36" />
         <Text className="hidden sm:flex" />
-      </div>
+      </Link>
       <div className="flex w-full flex-col items-center gap-5 sm:gap-7.5">
         {children}
         <div className="flex w-full items-center gap-3.5">
