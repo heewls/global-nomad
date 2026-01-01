@@ -34,7 +34,7 @@ export default function GNB() {
         </Link>
         {!isLogin && (
           <div className="text-14-m text-gray950 flex gap-2.5">
-            <Link href="#" className="px-2.5 py-2">
+            <Link href="/login" className="px-2.5 py-2">
               로그인
             </Link>
             <Link href="#" className="px-2.5 py-2">
