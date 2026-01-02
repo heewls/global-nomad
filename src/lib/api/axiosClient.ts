@@ -57,8 +57,8 @@ axiosClient.interceptors.response.use(
         config.headers.set('Authorization', `Bearer ${token}`);
 
         return await axiosClient(config);
-      } catch (err) {
-        return Promise.reject(err);
+      } catch (error) {
+        return Promise.reject(error);
       }
     }
 
