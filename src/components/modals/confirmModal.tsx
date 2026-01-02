@@ -1,16 +1,8 @@
-import { MouseEventHandler } from 'react';
 import Modal from '../common/modal';
 import Button from '../common/button';
 import Really from '@/assets/icons/really.svg';
 import useModalStore from '@/store/modal';
-
-interface ConfirmModalProps {
-  modalId: string;
-  headerText: React.ReactNode;
-  cancelText: string;
-  confirmText: string;
-  confirmFunction: MouseEventHandler<HTMLButtonElement>;
-}
+import { ConfirmModalProps } from './type';
 
 export default function ConfirmModal({
   modalId,
