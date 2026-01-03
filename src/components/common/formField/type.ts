@@ -1,5 +1,11 @@
+export type FormFieldRenderProps = {
+  onFocus: () => void;
+  onBlur: () => void;
+  isError: boolean;
+};
+
 export interface FormFieldProps {
   label: string;
   errorMessage?: string;
-  render: () => React.ReactNode;
+  render: (renderProps: FormFieldRenderProps) => React.ReactNode;
 }

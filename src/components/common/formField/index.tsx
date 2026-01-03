@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import { FormFieldProps } from './type';
 
 export default function FormField({
@@ -7,13 +8,19 @@ export default function FormField({
   errorMessage,
   render,
 }: FormFieldProps) {
-  const showError = !!errorMessage;
+  const [isFocused, setIsFocused] = useState(false);
+  const showError = !!errorMessage && !isFocused;
 
   return (
     <div className="flex w-full flex-col gap-1.5">
       <div className="flex flex-col gap-2.5">
         <label className="text-16-m text-gray950 flex">{label}</label>
-        {render()}
+
+        {render({
+          onFocus: () => setIsFocused(true),
+          onBlur: () => setIsFocused(false),
+          isError: showError,
+        })}
       </div>
 
       {showError && (
