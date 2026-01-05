@@ -16,7 +16,7 @@ const AUTH_MESSAGES = {
   },
   login: {
     success: '가입이 완료되었습니다.',
-    invalid: '이메일 또는 비밀번호를 확인해 주세요.',
+    failure: '가입이 실패했습니다.',
     userNotFound: '존재하지 않는 유저입니다.',
   },
 };
