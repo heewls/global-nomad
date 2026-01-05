@@ -17,7 +17,7 @@ export default function Login() {
     form: {
       register,
       handleSubmit,
-      formState: { errors },
+      formState: { isValid, errors },
     },
     closeModal,
     handleTogglePasswordClick,
@@ -90,16 +90,16 @@ export default function Login() {
           fontSize="16-b"
           className="w-full"
           type="submit"
-          disabled={isLoading}
+          disabled={!isValid || isLoading}
         >
           {isLoading ? <BouncingDots /> : '로그인하기'}
         </Button>
       </form>
       <AlertModal
-        modalId="password-error"
+        modalId="password-wrong"
         headerText={AUTH_MESSAGES.password.wrong}
         confirmText="확인"
-        confirmFunction={() => {}}
+        confirmFunction={() => closeModal('password-wrong')}
       />
       <AlertModal
         modalId="user-not-found"

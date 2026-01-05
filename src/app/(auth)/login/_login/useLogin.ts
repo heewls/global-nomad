@@ -29,7 +29,6 @@ const LOGIN_FORM = {
 export default function useLogin() {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [errorModalMessage, setErrorModalMessage] = useState('');
 
   const router = useRouter();
   const { setUser } = useUserStore();
@@ -69,16 +68,17 @@ export default function useLogin() {
         setToken('accessToken', data.accessToken);
         setToken('refreshToken', data.refreshToken);
         router.push('/');
+        setIsLoading(false);
       })
       .catch((error) => {
         if (!axios.isAxiosError(error)) return;
 
         switch (error.response?.status) {
-          case 404:
-            open('user-not-found');
-            break;
           case 400:
             open('password-wrong');
+            break;
+          case 404:
+            open('user-not-found');
             break;
           default:
             console.log(error);
