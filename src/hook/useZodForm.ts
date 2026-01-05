@@ -18,7 +18,7 @@ export default function useZodForm<T extends FieldValues>({
   return useForm<T>({
     resolver: zodResolver(validationSchema),
     defaultValues,
-    mode: 'onBlur',
+    mode: 'all',
     ...rest,
   });
 }
