@@ -9,7 +9,7 @@ import ProfileImage from '@/components/profileImage';
 import useUserStore from '@/store/user';
 import Dropdown from '@/components/common/dropdown';
 import useModalStore from '@/store/modal';
-import ConfirmModal from '@/components/modals/confirmModal';
+import ConfirmModal from '@/components/modals/ConfirmModal';
 
 export default function GNB() {
   const { user, isLogin, clearUser } = useUserStore();

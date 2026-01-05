@@ -5,10 +5,10 @@ import FormField from '@/components/common/formField';
 import Input from '@/components/common/input';
 import Button from '@/components/common/button';
 import VisibilityToggle from '@/components/visibilityToggle';
-import AUTH_MESSAGES from '@/contents/message/auth';
-import useLogin from './_login/useLogin';
 import BouncingDots from '@/components/common/loading/BouncingDots';
 import AlertModal from '../../../components/modals/AlertModal';
+import useLogin from './_login/useLogin';
+import AUTH_MESSAGES from '@/contents/message/auth';
 
 export default function Login() {
   const {
