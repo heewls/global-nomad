@@ -25,5 +25,6 @@ export const buttonFontSize = {
   '14-b': 'text-14-b',
   '14-16-m': 'text-14-m sm:text-16-m',
   '14-16-b': 'text-14-b sm:text-16-b',
+  '16-m': 'text-16-m',
   '16-b': 'text-16-b',
 };

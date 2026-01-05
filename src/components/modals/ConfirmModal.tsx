@@ -1,16 +1,8 @@
-import { MouseEventHandler } from 'react';
 import Modal from '../common/modal';
 import Button from '../common/button';
 import Really from '@/assets/icons/really.svg';
 import useModalStore from '@/store/modal';
-
-interface ConfirmModalProps {
-  modalId: string;
-  headerText: React.ReactNode;
-  cancelText: string;
-  confirmText: string;
-  confirmFunction: MouseEventHandler<HTMLButtonElement>;
-}
+import { ConfirmModalProps } from './type';
 
 export default function ConfirmModal({
   modalId,
@@ -20,6 +12,7 @@ export default function ConfirmModal({
   confirmFunction,
 }: ConfirmModalProps) {
   const { close } = useModalStore();
+
   return (
     <Modal.Layer id={modalId}>
       <Modal.Container className="gap-6 px-7.5 pt-7.5 pb-6 sm:px-15 sm:py-7.5">

@@ -2,14 +2,14 @@
 
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
-import Symbol from '@/../public/logo/smSymbol.svg';
+import Symbol from '@/assets/icons/symbol.svg';
 import Text from '@/../public/logo/smText.svg';
 import Bell from '@/../public/icons/bell.svg';
 import ProfileImage from '@/components/profileImage';
 import useUserStore from '@/store/user';
 import Dropdown from '@/components/common/dropdown';
 import useModalStore from '@/store/modal';
-import ConfirmModal from '@/components/modals/confirmModal';
+import ConfirmModal from '@/components/modals/ConfirmModal';
 
 export default function GNB() {
   const { user, isLogin, clearUser } = useUserStore();
@@ -29,12 +29,12 @@ export default function GNB() {
     <nav className="sticky top-0 flex h-20 w-full items-center justify-center bg-white">
       <div className="flex w-full max-w-380 justify-between px-6 md:px-7.5">
         <Link href="/" className="flex w-fit items-center justify-center gap-3">
-          <Symbol />
+          <Symbol className="h-7 w-7" />
           <Text className="hidden sm:flex" />
         </Link>
         {!isLogin && (
           <div className="text-14-m text-gray950 flex gap-2.5">
-            <Link href="#" className="px-2.5 py-2">
+            <Link href="/login" className="px-2.5 py-2">
               로그인
             </Link>
             <Link href="#" className="px-2.5 py-2">
