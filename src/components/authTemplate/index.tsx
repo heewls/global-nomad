@@ -33,7 +33,7 @@ export default function AuthTemplate({
         href="/"
         className="flex flex-col items-center justify-center gap-6"
       >
-        <Symbol width={144} height={144} />
+        <Symbol className="h-36 w-36" />
         <Text className="hidden sm:flex" />
       </Link>
       <div className="flex w-full flex-col items-center gap-5 sm:gap-7.5">
