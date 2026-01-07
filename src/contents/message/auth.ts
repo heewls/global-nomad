@@ -15,9 +15,11 @@ const AUTH_MESSAGES = {
     notMatch: '비밀번호가 일치하지 않습니다.',
   },
   login: {
+    userNotFound: '존재하지 않는 유저입니다.',
+  },
+  signup: {
     success: '가입이 완료되었습니다.',
     failure: '가입이 실패했습니다.',
-    userNotFound: '존재하지 않는 유저입니다.',
   },
 };
 
