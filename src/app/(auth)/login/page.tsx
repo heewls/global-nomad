@@ -59,6 +59,7 @@ export default function Login() {
             return (
               <FormField
                 key={field.id}
+                id={field.id}
                 label={field.label}
                 errorMessage={errors[field.id]?.message}
                 render={({ onFocus, onBlur, isError }) => (

@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { FormFieldProps } from './type';
 
 export default function FormField({
+  id,
   label,
   errorMessage,
   render,
@@ -14,7 +15,9 @@ export default function FormField({
   return (
     <div className="flex w-full flex-col gap-1.5">
       <div className="flex flex-col gap-2.5">
-        <label className="text-16-m text-gray950 flex">{label}</label>
+        <label htmlFor={id} className="text-16-m text-gray950 flex">
+          {label}
+        </label>
 
         {render({
           onFocus: () => setIsFocused(true),
