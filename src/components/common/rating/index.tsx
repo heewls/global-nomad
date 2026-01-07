@@ -6,7 +6,7 @@ import Star from '@/assets/icons/star.svg';
 
 interface RatingProps {
   starLength: number;
-  starSize: string;
+  className: string;
   count?: number;
   gap?: number;
   onChange?: (star: number) => void;
@@ -15,7 +15,7 @@ interface RatingProps {
 
 export default function Rating({
   starLength,
-  starSize = '16',
+  className,
   count,
   gap,
   onChange,
@@ -50,19 +50,15 @@ export default function Rating({
           <div
             key={idx}
             className={clsx(
-              'inline-block',
-              readonly ? 'cursor-default' : 'cursor-pointer'
+              readonly ? 'cursor-default' : 'cursor-pointer',
+              readonly || activeRating > idx ? 'text-[#FFCB02]' : 'text-gray100'
             )}
             style={idx < starLength - 1 ? { paddingRight: `${gap}px` } : {}}
             onClick={() => handleStarClick(idx + 1)}
             onMouseOver={() => handleMouseOver(idx + 1)}
             onMouseLeave={handleMouseLeave}
           >
-            <Star
-              width={starSize}
-              height={starSize}
-              fill={activeRating > idx ? '#FFCB02' : 'var(--color-gray100)'}
-            />
+            <Star className={className} fill="currentColor" />
           </div>
         );
       })}
