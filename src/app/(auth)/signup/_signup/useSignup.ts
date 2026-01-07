@@ -30,7 +30,10 @@ export default function useSignup() {
   const signupSchema = z
     .object({
       email: z.string().email(AUTH_MESSAGES.email.invalid),
-      nickname: z.string().max(10, AUTH_MESSAGES.nickname.invalid),
+      nickname: z
+        .string()
+        .min(1, AUTH_MESSAGES.nickname.requried)
+        .max(10, AUTH_MESSAGES.nickname.invalid),
       password: z.string().min(8, AUTH_MESSAGES.password.invalid),
       passwordCheck: z.string().min(8, AUTH_MESSAGES.password.invalid),
     })
