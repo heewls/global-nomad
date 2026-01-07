@@ -1,11 +1,11 @@
 import { useState } from 'react';
+import axios from 'axios';
 import z from 'zod';
+import axiosClient from '@/lib/api/axiosClient';
+import useZodForm from '@/hook/useZodForm';
+import useModalStore from '@/store/modal';
 import { User } from '@/types/user';
 import AUTH_MESSAGES from '@/contents/message/auth';
-import useZodForm from '@/hook/useZodForm';
-import axiosClient from '@/lib/api/axiosClient';
-import axios from 'axios';
-import useModalStore from '@/store/modal';
 
 type SignupResponse = User;
 
@@ -27,12 +27,17 @@ export default function useSignup() {
 
   const { open, close } = useModalStore();
 
-  const signupSchema = z.object({
-    email: z.string().email(AUTH_MESSAGES.email.invalid),
-    nickname: z.string().max(10, AUTH_MESSAGES.nickname.invalid),
-    password: z.string().min(8, AUTH_MESSAGES.password.invalid),
-    passwordCheck: z.string().min(8, AUTH_MESSAGES.password.invalid),
-  });
+  const signupSchema = z
+    .object({
+      email: z.string().email(AUTH_MESSAGES.email.invalid),
+      nickname: z.string().max(10, AUTH_MESSAGES.nickname.invalid),
+      password: z.string().min(8, AUTH_MESSAGES.password.invalid),
+      passwordCheck: z.string().min(8, AUTH_MESSAGES.password.invalid),
+    })
+    .refine((data) => data.password === data.passwordCheck, {
+      path: ['passwordCheck'],
+      message: AUTH_MESSAGES.passwordConfirmation.notMatch,
+    });
 
   const form = useZodForm({
     validationSchema: signupSchema,
