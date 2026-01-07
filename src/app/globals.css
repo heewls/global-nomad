@@ -6,8 +6,15 @@
     color: var(--color-gray950);
     background-color: var(--color-white);
   }
+
   button {
     cursor: pointer;
+  }
+
+  input:-webkit-autofill {
+    box-shadow: 0 0 0px 1000px var(--color-white) inset !important;
+    -webkit-text-fill-color: var(--color-gray950) !important;
+    caret-color: var(--color-gray950) !important;
   }
 
   ::-webkit-scrollbar-track {
