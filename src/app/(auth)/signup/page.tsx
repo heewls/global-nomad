@@ -50,6 +50,8 @@ export default function Signup() {
     handleSignupSubmit,
     form: {
       register,
+      setValue,
+      setFocus,
       handleSubmit,
       formState: { isValid, errors },
     },
@@ -126,7 +128,11 @@ export default function Signup() {
         modalId="email-exist"
         headerText={AUTH_MESSAGES.email.duplicated}
         confirmText="확인"
-        confirmFunction={() => closeModal('email-exist')}
+        confirmFunction={() => {
+          setValue('email', '');
+          setFocus('email');
+          closeModal('email-exist');
+        }}
       />
     </AuthTemplate>
   );

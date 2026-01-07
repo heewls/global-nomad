@@ -33,10 +33,6 @@ export default function useLogin() {
   const { setUser } = useUserStore();
   const { open, close } = useModalStore();
 
-  const closeModal = (id: string) => {
-    close(id);
-  };
-
   const loginSchema = z.object({
     email: z.string().email(AUTH_MESSAGES.email.invalid),
     password: z.string().min(8, AUTH_MESSAGES.password.invalid),
@@ -85,7 +81,7 @@ export default function useLogin() {
   return {
     isLoading,
     form,
-    closeModal,
+    closeModal: close,
     handleLoginSubmit,
   };
 }
