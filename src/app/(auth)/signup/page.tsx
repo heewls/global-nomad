@@ -18,24 +18,28 @@ const SIGNUP_FIELDS = [
     label: '이메일',
     type: 'email',
     placeholder: '이메일을 입력해 주세요',
+    autoComplete: 'email',
   },
   {
     id: 'nickname',
     label: '닉네임',
     type: 'text',
     placeholder: '닉네임을 입력해 주세요',
+    autoComplete: 'username',
   },
   {
     id: 'password',
     label: '비밀번호',
     type: 'password',
     placeholder: '비밀번호를 입력해 주세요',
+    autoComplete: 'new-password',
   },
   {
     id: 'passwordCheck',
     label: '비밀번호 확인',
     type: 'password',
     placeholder: '비밀번호를 다시 입력해 주세요',
+    autoComplete: 'new-password',
   },
 ] as const;
 
@@ -74,6 +78,7 @@ export default function Signup() {
                 render={({ onFocus, onBlur, isError }) => (
                   <Input
                     type={isPassword && isPasswordVisible ? 'text' : field.type}
+                    autoComplete={field.autoComplete}
                     placeholder={field.placeholder}
                     isError={isError}
                     onFocus={onFocus}
