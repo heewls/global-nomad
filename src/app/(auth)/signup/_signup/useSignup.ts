@@ -55,8 +55,7 @@ export default function useSignup() {
         nickname: signupForm.nickname,
         password: signupForm.password,
       })
-      .then((response) => {
-        const data = response.data;
+      .then(() => {
         setIsLoading(false);
         open('signup-success');
       })
@@ -64,7 +63,8 @@ export default function useSignup() {
         if (!axios.isAxiosError(error)) return;
 
         if (error.response?.status === 409) open('email-exist');
-      });
+      })
+      .finally(() => setIsLoading(false));
   };
 
   return {

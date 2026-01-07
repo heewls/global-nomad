@@ -1,5 +1,6 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import AuthTemplate from '@/components/authTemplate';
 import FormField from '@/components/common/formField';
 import Input from '@/components/common/input';
@@ -50,6 +51,7 @@ export default function Signup() {
     },
   } = useSignup();
 
+  const router = useRouter();
   const { isVisible, toggleVisibility } = usePasswordVisibility();
 
   return (
@@ -110,7 +112,10 @@ export default function Signup() {
         modalId="signup-success"
         headerText={AUTH_MESSAGES.signup.success}
         confirmText="확인"
-        confirmFunction={() => closeModal('signup-success')}
+        confirmFunction={() => {
+          closeModal('signup-success');
+          router.push('/login');
+        }}
       />
       <AlertModal
         modalId="email-exist"
