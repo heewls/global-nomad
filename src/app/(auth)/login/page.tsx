@@ -59,11 +59,13 @@ export default function Login() {
             return (
               <FormField
                 key={field.id}
+                id={field.id}
                 label={field.label}
                 errorMessage={errors[field.id]?.message}
                 render={({ onFocus, onBlur, isError }) => (
                   <Input
                     type={isPassword && isPasswordVisible ? 'text' : field.type}
+                    id={field.id}
                     autoComplete={field.autoComplete}
                     placeholder={field.placeholder}
                     isError={isError}

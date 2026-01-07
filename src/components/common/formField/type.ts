@@ -5,6 +5,7 @@ export type FormFieldRenderProps = {
 };
 
 export interface FormFieldProps {
+  id: string;
   label: string;
   errorMessage?: string;
   render: (renderProps: FormFieldRenderProps) => React.ReactNode;
