@@ -87,7 +87,7 @@ export default function Signup() {
                       onBlur();
                     }}
                     rightSlot={
-                      field.type === 'password' && (
+                      isPassword && (
                         <PasswordVisibility
                           isVisible={isPasswordVisible}
                           onToggle={() => toggleVisibility(field.id)}
