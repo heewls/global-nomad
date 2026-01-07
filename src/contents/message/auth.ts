@@ -1,5 +1,6 @@
 const AUTH_MESSAGES = {
   nickname: {
+    requried: '닉네임을 입력해 주세요.',
     invalid: '열 자 이하로 작성해주세요.',
   },
   email: {
@@ -15,9 +16,11 @@ const AUTH_MESSAGES = {
     notMatch: '비밀번호가 일치하지 않습니다.',
   },
   login: {
+    userNotFound: '존재하지 않는 유저입니다.',
+  },
+  signup: {
     success: '가입이 완료되었습니다.',
     failure: '가입이 실패했습니다.',
-    userNotFound: '존재하지 않는 유저입니다.',
   },
 };
 

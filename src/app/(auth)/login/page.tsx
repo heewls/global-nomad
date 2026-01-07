@@ -4,26 +4,28 @@ import AuthTemplate from '@/components/authTemplate';
 import FormField from '@/components/common/formField';
 import Input from '@/components/common/input';
 import Button from '@/components/common/button';
-import VisibilityToggle from '@/components/visibilityToggle';
+import PasswordVisibility from '@/components/passwordVisibility';
 import BouncingDots from '@/components/common/loading/BouncingDots';
 import AlertModal from '../../../components/modals/AlertModal';
 import useLogin from './_login/useLogin';
+import usePasswordVisibility from '@/components/passwordVisibility/usePasswordVisibility';
 import AUTH_MESSAGES from '@/contents/message/auth';
 
 export default function Login() {
   const {
     isLoading,
-    isPasswordVisible,
+    closeModal,
+    handleLoginSubmit,
     form: {
       register,
       handleSubmit,
       formState: { isValid, errors },
     },
-    closeModal,
-    handleTogglePasswordClick,
-    handleLoginSubmit,
   } = useLogin();
 
+  const { isVisible, toggleVisibility } = usePasswordVisibility();
+
+  const isPasswordVisible = isVisible('password');
   const emailRegister = register('email');
   const passwordRegister = register('password');
 
@@ -66,9 +68,9 @@ export default function Login() {
                   type={isPasswordVisible ? 'text' : 'password'}
                   placeholder="비밀번호를 입력해 주세요"
                   rightSlot={
-                    <VisibilityToggle
+                    <PasswordVisibility
                       isVisible={isPasswordVisible}
-                      onToggle={handleTogglePasswordClick}
+                      onToggle={() => toggleVisibility('password')}
                     />
                   }
                   isError={isError}
