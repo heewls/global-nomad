@@ -81,6 +81,7 @@ export default function Signup() {
                 render={({ onFocus, onBlur, isError }) => (
                   <Input
                     type={isPassword && isPasswordVisible ? 'text' : field.type}
+                    id={field.id}
                     autoComplete={field.autoComplete}
                     placeholder={field.placeholder}
                     isError={isError}
