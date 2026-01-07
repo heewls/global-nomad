@@ -1,16 +1,16 @@
 import Visible from '@/../public/icons/visible.svg';
 import Hidden from '@/../public/icons/hidden.svg';
 
-interface VisibilityToggleProps {
+interface PasswordVisibilityProps {
   isVisible: boolean;
   onToggle: (isVisible: boolean) => void;
 }
 
-export default function VisibilityToggle({
+export default function PasswordVisibility({
   isVisible,
   onToggle,
-}: VisibilityToggleProps) {
-  const Icon = isVisible ? Visible : Hidden;
+}: PasswordVisibilityProps) {
+  const Icon = isVisible ? Hidden : Visible;
   return (
     <Icon
       className="h-6 w-6 cursor-pointer"

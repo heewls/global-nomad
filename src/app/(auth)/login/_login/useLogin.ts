@@ -27,16 +27,11 @@ const LOGIN_FORM = {
 };
 
 export default function useLogin() {
-  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const router = useRouter();
   const { setUser } = useUserStore();
   const { open, close } = useModalStore();
-
-  const handleTogglePasswordClick = () => {
-    setIsPasswordVisible((prev) => !prev);
-  };
 
   const closeModal = (id: string) => {
     close(id);
@@ -89,10 +84,8 @@ export default function useLogin() {
 
   return {
     isLoading,
-    isPasswordVisible,
     form,
     closeModal,
-    handleTogglePasswordClick,
     handleLoginSubmit,
   };
 }
