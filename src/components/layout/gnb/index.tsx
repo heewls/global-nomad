@@ -1,7 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import { redirect } from 'next/navigation';
+import { redirect, usePathname } from 'next/navigation';
+import clsx from 'clsx';
 import Symbol from '@/assets/icons/symbol.svg';
 import Text from '@/../public/logo/smText.svg';
 import Bell from '@/../public/icons/bell.svg';
@@ -12,8 +13,11 @@ import useModalStore from '@/store/modal';
 import ConfirmModal from '@/components/modals/ConfirmModal';
 
 export default function GNB() {
+  const pathname = usePathname();
   const { user, isLogin, clearUser } = useUserStore();
   const { open, close } = useModalStore();
+
+  const isMainPage = pathname === '/';
 
   const handleOptionClick = (option: string) => {
     if (option === '마이페이지') redirect('/mypage');
@@ -26,8 +30,13 @@ export default function GNB() {
   };
 
   return (
-    <nav className="sticky top-0 flex h-20 w-full items-center justify-center bg-white">
-      <div className="flex w-full max-w-380 justify-between px-6 md:px-7.5">
+    <nav
+      className={clsx(
+        isMainPage ? 'bg-transparent' : 'bg-white',
+        'sticky top-0 flex h-20 w-full items-center justify-center'
+      )}
+    >
+      <div className="flex w-full max-w-380 justify-between px-6 sm:px-7.5 md:px-10">
         <Link href="/" className="flex w-fit items-center justify-center gap-3">
           <Symbol className="h-7 w-7" />
           <Text className="hidden sm:flex" />
