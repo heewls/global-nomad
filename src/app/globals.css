@@ -125,6 +125,11 @@
   --color-gray950: #1f1f22;
 }
 
+@theme {
+  --shadow-card: 0 4px 24px 0 rrgb(156 180 202 / 20%);
+  --shadow-card-content: 0 8px 20px 0 rgba(0 0 0 /5%);
+}
+
 @font-face {
   font-family: 'Pretendard';
   src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Bold.woff2')
