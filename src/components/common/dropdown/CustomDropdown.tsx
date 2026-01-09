@@ -51,7 +51,7 @@ export default function CustomDropdown({
     defaultValue ?? options[0]
   );
 
-  const handleClickOption = (option: string) => {
+  const handleOptionClick = (option: string) => {
     setSelectedOption(option);
     onSelect?.(option);
   };
@@ -59,14 +59,14 @@ export default function CustomDropdown({
   return (
     <>
       <Dropdown
-        dropdownButton={
+        dropdownButton={() => (
           <DropdownButton
             size={size}
             selectedOption={selectedOption}
             fullWidth={fullWidth}
           />
-        }
-        onSelect={handleClickOption}
+        )}
+        onSelect={handleOptionClick}
         listSize={size}
         listArray={listArray}
         listType={listType}

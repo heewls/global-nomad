@@ -1,7 +1,7 @@
 type DropdownSize = 'sm' | 'md';
 
 export interface DropdownProps {
-  dropdownButton: React.ReactNode;
+  dropdownButton: (isOpen: boolean) => React.ReactNode;
   options: string[];
   defaultValue?: string;
   onSelect: (option: string) => void;

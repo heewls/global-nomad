@@ -47,7 +47,7 @@ export default function Dropdown({
         onClick={() => setIsOpen((prev) => !prev)}
         className="cursor-pointer"
       >
-        {dropdownButton}
+        {dropdownButton?.(isOpen)}
       </div>
       {isOpen && (
         <div
