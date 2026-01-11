@@ -10,14 +10,14 @@ import Calendar from '@/../public/icons/calendar.svg';
 import Plus from '@/assets/icons/plus.svg';
 import Minus from '@/assets/icons/minus.svg';
 
-interface SchduleSlot {
+interface ScheduleSlot {
   id: number;
   date: string;
   startTime: string;
   endTime: string;
 }
 
-const initialSlot: SchduleSlot = {
+const initialSlot: ScheduleSlot = {
   id: Date.now(),
   date: '',
   startTime: '',
@@ -25,16 +25,16 @@ const initialSlot: SchduleSlot = {
 };
 
 export default function ActivityForm() {
-  const [schduleSlots, setSchduleSlots] = useState<SchduleSlot[]>([initialSlot]);
+  const [scheduleSlots, setScheduleSlots] = useState<ScheduleSlot[]>([initialSlot]);
 
   const handleAddSlot = () => {
-    const newSlot: SchduleSlot = {
+    const newSlot: ScheduleSlot = {
       id: Date.now(),
       date: '',
       startTime: '',
       endTime: '',
     };
-    setSchduleSlots((prev) => [...prev, newSlot]);
+    setScheduleSlots((prev) => [...prev, newSlot]);
   };
 
   return (
@@ -86,7 +86,7 @@ export default function ActivityForm() {
 
         <div className="flex flex-col gap-4.5">
           <h2 className="text-16-b">예약 가능한 시간대</h2>
-          {schduleSlots.map((slot, index) => (
+          {scheduleSlots.map((slot, index) => (
             <div key={slot.id} className="flex flex-col gap-5">
               {index === 1 && (
                 <div className="border-gray100 w-full border-t" />
