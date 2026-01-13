@@ -2,10 +2,21 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { refreshAccessToken } from './lib/refreshAccessToken';
 
+const PUBLIC_PATHS = ['/login', '/signup', '/kakao', '/', '/activities'];
+
 export async function middleware(request: NextRequest) {
-  const { cookies, url } = request;
+  const { cookies, nextUrl } = request;
   const accessToken = cookies.get('accessToken')?.value;
   const refreshToken = cookies.get('refreshToken')?.value;
+
+  const isPublicPath = PUBLIC_PATHS.some(
+    (path) =>
+      nextUrl.pathname === path || nextUrl.pathname.startsWith('/activities/')
+  );
+
+  if (!accessToken && !refreshToken && !isPublicPath) {
+    return NextResponse.redirect(new URL('/login', nextUrl));
+  }
 
   if (!accessToken && refreshToken) {
     try {
@@ -24,11 +35,10 @@ export async function middleware(request: NextRequest) {
         return response;
       }
     } catch {
-      return NextResponse.redirect(new URL('/login', url));
+      if (!isPublicPath)
+        return NextResponse.redirect(new URL('/login', nextUrl));
     }
   }
-
-  // 토큰 필요없는 페이지 추가 예정(로그인, 회원가입, 카카오, 메인(체험 리스트), 체험 상세화면(체험 상세조회, 체험 리뷰 조회))
 
   return NextResponse.next();
 }

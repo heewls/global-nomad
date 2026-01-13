@@ -11,6 +11,7 @@ import useUserStore from '@/store/user';
 import Dropdown from '@/components/common/dropdown';
 import useModalStore from '@/store/modal';
 import ConfirmModal from '@/components/modals/ConfirmModal';
+import { clearTokens } from '@/lib/clientCookie';
 
 export default function GNB() {
   const pathname = usePathname();
@@ -26,6 +27,7 @@ export default function GNB() {
 
   const handleConfirmModal = () => {
     clearUser();
+    clearTokens();
     close('logout');
   };
 
