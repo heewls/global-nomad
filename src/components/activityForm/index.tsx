@@ -13,11 +13,14 @@ import FileInput from '../common/input/FileInput';
 import FormImagePreview from './FormImagePreview';
 import useActivityForm from './useActivityForm';
 import Spinner from '../common/loading/Spinner';
+import AlertModal from '../modals/AlertModal';
 
 export default function ActivityForm() {
   const {
     form: {
       register,
+      watch,
+      setValue,
       handleSubmit,
       formState: { isValid },
     },
@@ -27,16 +30,29 @@ export default function ActivityForm() {
     imageLoadingType,
     handleAddSlot,
     handleImageChange,
+    handleFormSubmit,
   } = useActivityForm();
 
   return (
-    <form className="flex flex-col items-center gap-6">
+    <form
+      onSubmit={handleSubmit(handleFormSubmit)}
+      className="flex flex-col items-center gap-6"
+    >
       <div className="flex w-full flex-col gap-7.5">
         <div className="flex flex-col gap-6">
           <FormField
             id="title"
             label="제목"
-            render={() => <Input placeholder="제목을 입력해 주세요" />}
+            render={() => {
+              const { ...inputProps } = register('title');
+              return (
+                <Input
+                  type="text"
+                  placeholder="제목을 입력해 주세요"
+                  {...inputProps}
+                />
+              );
+            }}
           />
           <FormField
             id="category"
@@ -53,41 +69,80 @@ export default function ActivityForm() {
                   '관광',
                   '웰빙',
                 ]}
-                onSelect={() => {}}
+                onSelect={(option: string) => setValue('category', option)}
               />
             )}
           />
           <FormField
             id="description"
             label="설명"
-            render={() => (
-              <Textarea placeholder="체험에 대한 설명을 입력해 주세요" />
-            )}
+            render={() => {
+              const { ...inputProps } = register('description');
+              return (
+                <Textarea
+                  placeholder="체험에 대한 설명을 입력해 주세요"
+                  {...inputProps}
+                />
+              );
+            }}
           />
           <FormField
             id="price"
             label="가격"
-            render={() => <Input placeholder="체험 금액을 입력해 주세요" />}
+            render={() => {
+              const { onChange, ...inputProps } = register('price', {
+                valueAsNumber: true,
+              });
+              const priceValue = watch('price');
+              const displayValue = priceValue
+                ? Number(priceValue).toLocaleString()
+                : '';
+
+              return (
+                <Input
+                  type="text"
+                  value={displayValue}
+                  placeholder="체험 금액을 입력해 주세요"
+                  onChange={(e) => {
+                    const onlyNumber = e.target.value.replace(/[^0-9]/g, '');
+                    const numberPrice = onlyNumber ? Number(onlyNumber) : 0;
+
+                    e.target.value = numberPrice.toString();
+                    onChange(e);
+                  }}
+                  {...inputProps}
+                />
+              );
+            }}
           />
           <FormField
             id="address"
             label="주소"
-            render={() => <Input placeholder="주소를 입력해 주세요" />}
+            render={() => {
+              const { ...inputProps } = register('address');
+              return (
+                <Input
+                  type="text"
+                  placeholder="주소를 입력해 주세요"
+                  {...inputProps}
+                />
+              );
+            }}
           />
         </div>
 
         <div className="flex flex-col gap-4.5">
           <h2 className="text-16-b">예약 가능한 시간대</h2>
           <div className="flex flex-col gap-4 sm:gap-5">
-            {scheduleSlots.map((slot, index) => (
+            {scheduleSlots.map((slot, idx) => (
               <div key={slot.id} className="flex flex-col gap-4 sm:gap-5">
-                {index === 1 && (
+                {idx === 1 && (
                   <div className="border-gray100 w-full border-t" />
                 )}
 
                 <div className="flex flex-col gap-2.5 sm:flex-row sm:gap-3.5">
                   <div className="flex flex-1 flex-col gap-2 sm:gap-2.5">
-                    {index === 0 && (
+                    {idx === 0 && (
                       <label className="text-14-m sm:text-16-m">날짜</label>
                     )}
                     <Input
@@ -102,7 +157,7 @@ export default function ActivityForm() {
                   <div className="flex flex-1 items-end gap-3.5">
                     <div className="flex items-end gap-2.5">
                       <div className="flex flex-col gap-2 sm:gap-2.5">
-                        {index === 0 && (
+                        {idx === 0 && (
                           <label className="text-14-m sm:text-16-m hidden sm:flex">
                             시작 시간
                           </label>
@@ -111,13 +166,15 @@ export default function ActivityForm() {
                           options={['00:00', '00:30']}
                           defaultValue=""
                           placeholder="00:00"
-                          onSelect={() => {}}
+                          onSelect={(option: string) => {
+                            setValue(`schedules.${idx}.startTime`, option);
+                          }}
                           inputClassName="sm:min-w-30"
                         />
                       </div>
                       <div className="bg-gray800 mb-[27px] h-0.5 w-2" />
                       <div className="flex flex-col gap-2 sm:gap-2.5">
-                        {index === 0 && (
+                        {idx === 0 && (
                           <label className="text-14-m sm:text-16-m hidden sm:flex">
                             종료 시간
                           </label>
@@ -126,13 +183,15 @@ export default function ActivityForm() {
                           options={['00:00', '00:30']}
                           defaultValue=""
                           placeholder="00:00"
-                          onSelect={() => {}}
+                          onSelect={(option: string) => {
+                            setValue(`schedules.${idx}.endTime`, option);
+                          }}
                           inputClassName="sm:min-w-30"
                         />
                       </div>
                     </div>
 
-                    {index === 0 ? (
+                    {idx === 0 ? (
                       <button
                         type="button"
                         onClick={handleAddSlot}
@@ -154,7 +213,7 @@ export default function ActivityForm() {
             ))}
           </div>
         </div>
-        <div>
+        <div className="flex flex-col gap-2.5">
           <h2 className="text-16-b">배너 이미지</h2>
           <div className="flex gap-3 sm:gap-3.5">
             <FileInput
@@ -165,9 +224,12 @@ export default function ActivityForm() {
               {({ fileInputRef }) => (
                 <div
                   onClick={() => fileInputRef.current?.click()}
-                  className="border-gray100 flex h-20 w-20 cursor-pointer items-center justify-center gap-0.5 rounded-lg border bg-transparent sm:h-32 sm:w-32 sm:gap-2.5"
+                  className="border-gray100 flex h-20 w-20 cursor-pointer flex-col items-center justify-center gap-0.5 rounded-lg border bg-transparent sm:h-32 sm:w-32 sm:gap-2.5"
                 >
                   <FormImage className="h-8 w-8 sm:h-10 sm:w-10" />
+                  <span className="text-13-m sm:text-14-m text-gray600">
+                    {bannerImage ? 1 : 0}/1
+                  </span>
                 </div>
               )}
             </FileInput>
@@ -181,7 +243,7 @@ export default function ActivityForm() {
             )}
           </div>
         </div>
-        <div>
+        <div className="flex flex-col gap-2.5">
           <h2 className="text-16-b">소개 이미지</h2>
           <div className="flex gap-3 sm:gap-3.5">
             <FileInput
@@ -226,6 +288,12 @@ export default function ActivityForm() {
       >
         등록하기
       </Button>
+      <AlertModal
+        modalId="success-write"
+        headerText="체험 등록이 완료되었습니다."
+        confirmText="확인"
+        confirmFunction={() => {}}
+      />
     </form>
   );
 }

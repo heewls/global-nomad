@@ -23,7 +23,7 @@ export interface ActivityRequest extends Omit<
   'id' | 'userId' | 'rating' | 'reviewCount' | 'createdAt' | 'updatedAt'
 > {
   schedules: Omit<Schedules, 'id'>[];
-  subImageUrls: string[];
+  subImageUrls?: string[];
 }
 
 interface SubImages {
@@ -32,7 +32,7 @@ interface SubImages {
 }
 
 interface Schedules {
-  id?: number;
+  id: number;
   date: string;
   startTime: string;
   endTime: string;
