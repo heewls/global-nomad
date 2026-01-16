@@ -1,6 +1,5 @@
 'use client';
 
-import { useState } from 'react';
 import Button from '../common/button';
 import FormField from '../common/formField';
 import Input from '../common/input';
@@ -13,46 +12,22 @@ import FormImage from '@/assets/icons/translucentLogo.svg';
 import FileInput from '../common/input/FileInput';
 import FormImagePreview from './FormImagePreview';
 import useActivityForm from './useActivityForm';
-
-interface ScheduleSlot {
-  id: number;
-  date: string;
-  startTime: string;
-  endTime: string;
-}
-
-const initialSlot: ScheduleSlot = {
-  id: Date.now(),
-  date: '',
-  startTime: '',
-  endTime: '',
-};
+import Spinner from '../common/loading/Spinner';
 
 export default function ActivityForm() {
-  const [scheduleSlots, setScheduleSlots] = useState<ScheduleSlot[]>([
-    initialSlot,
-  ]);
-
   const {
     form: {
       register,
       handleSubmit,
-      formState: { isValid, errors },
+      formState: { isValid },
     },
+    scheduleSlots,
     bannerImage,
     subImages,
+    imageLoadingType,
+    handleAddSlot,
     handleImageChange,
   } = useActivityForm();
-
-  const handleAddSlot = () => {
-    const newSlot: ScheduleSlot = {
-      id: Date.now(),
-      date: '',
-      startTime: '',
-      endTime: '',
-    };
-    setScheduleSlots((prev) => [...prev, newSlot]);
-  };
 
   return (
     <form className="flex flex-col items-center gap-6">
@@ -196,8 +171,13 @@ export default function ActivityForm() {
                 </div>
               )}
             </FileInput>
-            {bannerImage && (
-              <FormImagePreview deleteImage={() => {}} image={bannerImage} />
+            {bannerImage && imageLoadingType !== 'banner' && (
+              <FormImagePreview image={bannerImage} deleteImage={() => {}} />
+            )}
+            {imageLoadingType === 'banner' && (
+              <div className="flex h-20 w-20 items-center justify-center sm:h-32 sm:w-32">
+                <Spinner className="h-6 w-6" />
+              </div>
             )}
           </div>
         </div>
@@ -223,10 +203,15 @@ export default function ActivityForm() {
             {subImages?.map((subImage, idx) => (
               <FormImagePreview
                 key={`${subImage}-${idx}`}
-                deleteImage={() => {}}
                 image={subImage}
+                deleteImage={() => {}}
               />
             ))}
+            {imageLoadingType === 'sub' && (
+              <div className="flex h-20 w-20 items-center justify-center sm:h-32 sm:w-32">
+                <Spinner className="h-6 w-6" />
+              </div>
+            )}
           </div>
         </div>
       </div>
