@@ -15,6 +15,15 @@ import useActivityForm from './useActivityForm';
 import Spinner from '../common/loading/Spinner';
 import AlertModal from '../modals/AlertModal';
 
+const CATEGORY_OPTIONS = [
+  '문화 ∙ 예술',
+  '식음료',
+  '스포츠',
+  '투어',
+  '관광',
+  '웰빙',
+];
+
 export default function ActivityForm() {
   const {
     form: {
@@ -28,6 +37,7 @@ export default function ActivityForm() {
     bannerImage,
     subImages,
     imageLoadingType,
+    TIME_SLOTS,
     handleAddSlot,
     handleImageChange,
     handleBannerImageDelete,
@@ -62,16 +72,10 @@ export default function ActivityForm() {
             label="카테고리"
             render={() => (
               <InputDropdown
+                id="category"
                 placeholder="카테고리를 선택해 주세요"
                 defaultValue=""
-                options={[
-                  '문화 ∙ 예술',
-                  '식음료',
-                  '스포츠',
-                  '투어',
-                  '관광',
-                  '웰빙',
-                ]}
+                options={CATEGORY_OPTIONS}
                 onSelect={(option: string) => setValue('category', option)}
               />
             )}
@@ -83,6 +87,7 @@ export default function ActivityForm() {
               const { ...inputProps } = register('description');
               return (
                 <Textarea
+                  id="description"
                   placeholder="체험에 대한 설명을 입력해 주세요"
                   {...inputProps}
                 />
@@ -146,12 +151,15 @@ export default function ActivityForm() {
                 <div className="flex flex-col gap-2.5 sm:flex-row sm:gap-3.5">
                   <div className="flex flex-1 flex-col gap-2 sm:gap-2.5">
                     {idx === 0 && (
-                      <label className="text-14-m sm:text-16-m">날짜</label>
+                      <label htmlFor="date" className="text-14-m sm:text-16-m">
+                        날짜
+                      </label>
                     )}
                     <Input
                       readOnly
+                      id="date"
                       placeholder="yy/mm/dd"
-                      rightSlot={<Calendar className="shrink-0" />}
+                      rightSlot={idx === 0 && <Calendar className="shrink-0" />}
                       inputBgClassName="cursor-pointer"
                       inputClassName="cursor-pointer"
                     />
@@ -161,17 +169,22 @@ export default function ActivityForm() {
                     <div className="flex items-end gap-2.5">
                       <div className="flex flex-col gap-2 sm:gap-2.5">
                         {idx === 0 && (
-                          <label className="text-14-m sm:text-16-m hidden sm:flex">
+                          <label
+                            htmlFor="startTime"
+                            className="text-14-m sm:text-16-m hidden sm:flex"
+                          >
                             시작 시간
                           </label>
                         )}
                         <InputDropdown
-                          options={['00:00', '00:30']}
+                          id="startTime"
+                          options={TIME_SLOTS}
                           defaultValue=""
                           placeholder="00:00"
                           onSelect={(option: string) => {
                             setValue(`schedules.${idx}.startTime`, option);
                           }}
+                          listArray="center"
                           inputClassName="sm:min-w-30"
                         />
                       </div>
@@ -183,12 +196,14 @@ export default function ActivityForm() {
                           </label>
                         )}
                         <InputDropdown
-                          options={['00:00', '00:30']}
+                          id="endTime"
+                          options={TIME_SLOTS}
                           defaultValue=""
                           placeholder="00:00"
                           onSelect={(option: string) => {
                             setValue(`schedules.${idx}.endTime`, option);
                           }}
+                          listArray="center"
                           inputClassName="sm:min-w-30"
                         />
                       </div>

@@ -4,19 +4,23 @@ import { useState } from 'react';
 import Dropdown from '../common/dropdown';
 import Input from '../common/input';
 import Arrow from '../arrow';
+import { DropdownProps } from '../common/dropdown/type';
 
-interface InputDropdownProps {
+interface InputDropdownProps extends Pick<
+  DropdownProps,
+  'options' | 'defaultValue' | 'onSelect'
+> {
+  id:string;
+  listArray?: DropdownProps['listArray'];
   placeholder: string;
-  options: string[];
-  defaultValue: string;
   inputClassName?: string;
-  onSelect: (option: string) => void;
 }
 
 export default function InputDropdown({
   placeholder,
   options,
   defaultValue,
+  listArray = 'left',
   inputClassName,
   onSelect,
 }: InputDropdownProps) {
@@ -41,7 +45,7 @@ export default function InputDropdown({
       }}
       options={options}
       listSize="sm"
-      listArray="left"
+      listArray={listArray}
       listType="active"
       fullWidth
     />
