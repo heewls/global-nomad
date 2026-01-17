@@ -31,6 +31,12 @@
   }
 }
 
+@layer utilities {
+  .scrollbar-hidden::-webkit-scrollbar {
+    display: none;
+  }
+}
+
 @theme {
   --text-32-b: 32px;
   --text-32-b--font-weight: 700;
