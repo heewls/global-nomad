@@ -30,7 +30,10 @@ export default function ActivityForm() {
     imageLoadingType,
     handleAddSlot,
     handleImageChange,
+    handleBannerImageDelete,
+    handleSubImagesDelete,
     handleFormSubmit,
+    successConfirm,
   } = useActivityForm();
 
   return (
@@ -234,7 +237,10 @@ export default function ActivityForm() {
               )}
             </FileInput>
             {bannerImage && imageLoadingType !== 'banner' && (
-              <FormImagePreview image={bannerImage} deleteImage={() => {}} />
+              <FormImagePreview
+                image={bannerImage}
+                deleteImage={handleBannerImageDelete}
+              />
             )}
             {imageLoadingType === 'banner' && (
               <div className="flex h-20 w-20 items-center justify-center sm:h-32 sm:w-32">
@@ -266,7 +272,7 @@ export default function ActivityForm() {
               <FormImagePreview
                 key={`${subImage}-${idx}`}
                 image={subImage}
-                deleteImage={() => {}}
+                deleteImage={() => handleSubImagesDelete(idx)}
               />
             ))}
             {imageLoadingType === 'sub' && (
@@ -292,7 +298,7 @@ export default function ActivityForm() {
         modalId="success-write"
         headerText="체험 등록이 완료되었습니다."
         confirmText="확인"
-        confirmFunction={() => {}}
+        confirmFunction={successConfirm}
       />
     </form>
   );
