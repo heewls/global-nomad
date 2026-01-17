@@ -43,6 +43,8 @@ export default function ActivityForm() {
     formState: { isValid },
   } = form;
 
+  const category = watch('category');
+
   return (
     <form
       onSubmit={handleSubmit(handleFormSubmit)}
@@ -71,6 +73,7 @@ export default function ActivityForm() {
               <InputDropdown
                 id="category"
                 placeholder="카테고리를 선택해 주세요"
+                value={category}
                 options={CATEGORY_OPTIONS}
                 onSelect={(option: string) => setValue('category', option)}
               />
