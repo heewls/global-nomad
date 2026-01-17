@@ -1,6 +1,5 @@
 'use client';
 
-import { useState } from 'react';
 import Dropdown from '../common/dropdown';
 import Input from '../common/input';
 import Arrow from '../arrow';
@@ -8,9 +7,9 @@ import { DropdownProps } from '../common/dropdown/type';
 
 interface InputDropdownProps extends Pick<
   DropdownProps,
-  'options' | 'defaultValue' | 'onSelect'
+  'options' | 'value' | 'onSelect' | 'scrollbarHidden'
 > {
-  id:string;
+  id: string;
   listArray?: DropdownProps['listArray'];
   placeholder: string;
   inputClassName?: string;
@@ -19,35 +18,32 @@ interface InputDropdownProps extends Pick<
 export default function InputDropdown({
   placeholder,
   options,
-  defaultValue,
+  value,
   listArray = 'left',
   inputClassName,
   onSelect,
+  scrollbarHidden,
 }: InputDropdownProps) {
-  const [dropdownValue, setDropdownValue] = useState(defaultValue || '');
-
   return (
     <Dropdown
       dropdownButton={(isOpen) => (
         <Input
           readOnly
           placeholder={placeholder}
-          value={dropdownValue}
+          value={value}
           rightSlot={<Arrow isOpen={isOpen} />}
           inputClassName={'cursor-pointer'}
           inputBgClassName={inputClassName}
         />
       )}
-      defaultValue={defaultValue}
-      onSelect={(option) => {
-        setDropdownValue(option);
-        onSelect(option);
-      }}
+      value={value}
+      onSelect={onSelect}
       options={options}
       listSize="sm"
       listArray={listArray}
       listType="active"
       fullWidth
+      scrollbarHidden={scrollbarHidden}
     />
   );
 }

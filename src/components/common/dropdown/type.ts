@@ -3,13 +3,14 @@ type DropdownSize = 'sm' | 'md';
 export interface DropdownProps {
   dropdownButton: (isOpen: boolean) => React.ReactNode;
   options: string[];
-  defaultValue?: string;
+  value?: string;
   onSelect: (option: string) => void;
   listArray: 'left' | 'center' | 'right';
   listType: 'simple' | 'active';
   listSize: DropdownSize;
   fullWidth?: boolean;
   placement?: string;
+  scrollbarHidden?: boolean;
 }
 
 export interface DropdownButtonProps extends Pick<DropdownProps, 'fullWidth'> {
