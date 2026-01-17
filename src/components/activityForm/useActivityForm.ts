@@ -164,12 +164,21 @@ export default function useActivityForm(activityData?: ActivityRequest) {
   const bannerImage = form.watch('bannerImageUrl');
   const subImages = form.watch('subImageUrls');
 
+  const TIME_SLOTS = Array.from({ length: 24 }, (_, idx) => {
+    const hour = Math.floor(idx / 2);
+    const minute = idx % 2 === 0 ? '00' : '30';
+    const formattedHour = hour.toString().padStart(2, '0');
+
+    return `${formattedHour}:${minute}`;
+  });
+
   return {
     form,
     scheduleSlots,
     bannerImage,
     subImages,
     imageLoadingType,
+    TIME_SLOTS,
     handleAddSlot,
     handleImageChange,
     handleBannerImageDelete,
