@@ -12,9 +12,10 @@ import useActivityForm from './useActivityForm';
 import Spinner from '../common/loading/Spinner';
 import AlertModal from '../modals/AlertModal';
 import Schedules from './Schedules';
+import BouncingDots from '../common/loading/BouncingDots';
 
 const CATEGORY_OPTIONS = [
-  '문화 ∙ 예술',
+  '문화 · 예술',
   '식음료',
   '스포츠',
   '투어',
@@ -25,6 +26,7 @@ const CATEGORY_OPTIONS = [
 export default function ActivityForm() {
   const {
     form,
+    isLoading,
     bannerImage,
     subImages,
     imageLoadingType,
@@ -211,14 +213,14 @@ export default function ActivityForm() {
       </div>
 
       <Button
-        disabled={isValid}
+        disabled={!isValid || isLoading}
         variant="primary"
         height="40"
         rounded="12"
         fontSize="14-b"
         className="w-30"
       >
-        등록하기
+        {isLoading ? <BouncingDots /> : '등록하기'}
       </Button>
       <AlertModal
         modalId="success-write"

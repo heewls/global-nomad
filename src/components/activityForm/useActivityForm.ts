@@ -16,6 +16,7 @@ export default function useActivityForm(activityData?: ActivityRequest) {
     'banner' | 'sub' | null
   >(null);
   const [isFormLoading, setIsFormLoading] = useState(false);
+  const [activityId, setActivityId] = useState<number | null>(null);
 
   const { open, close } = useModalStore();
   const router = useRouter();
@@ -103,8 +104,6 @@ export default function useActivityForm(activityData?: ActivityRequest) {
     form.setValue('subImageUrls', updateSub);
   };
 
-  // let activitiesId: string;
-
   const handleFormSubmit = (form: ActivityRequest) => {
     if (isFormLoading) return;
 
@@ -112,12 +111,12 @@ export default function useActivityForm(activityData?: ActivityRequest) {
 
     axiosClient
       .post('/activities', {
-        form,
+        ...form,
       })
       .then((response) => {
         setIsFormLoading(false);
         open('success-write');
-        // activitiesId = response.data.id;
+        setActivityId(response.data.id);
       })
       .catch((error) => {
         if (!axios.isAxiosError(error)) return;
@@ -128,8 +127,7 @@ export default function useActivityForm(activityData?: ActivityRequest) {
 
   const successConfirm = () => {
     close('success-write');
-    // console.log(activitiesId);
-    // router.push(`/activities/${activitiesId}`);
+    router.push(`/activities/${activityId}`);
   };
 
   const bannerImage = form.watch('bannerImageUrl');
@@ -137,6 +135,7 @@ export default function useActivityForm(activityData?: ActivityRequest) {
 
   return {
     form,
+    isLoading: isFormLoading,
     bannerImage,
     subImages,
     imageLoadingType,
