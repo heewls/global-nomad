@@ -7,28 +7,11 @@ import axiosClient from '@/lib/api/axiosClient';
 import { ActivityRequest } from '@/types/activities';
 import useModalStore from '@/store/modal';
 
-interface ScheduleSlot {
-  id: number;
-  date: string;
-  startTime: string;
-  endTime: string;
-}
-
-const initialSlot: ScheduleSlot = {
-  id: Date.now(),
-  date: '',
-  startTime: '',
-  endTime: '',
-};
-
 interface ActivitiesImageResponse {
   activityImageUrl: string;
 }
 
 export default function useActivityForm(activityData?: ActivityRequest) {
-  const [scheduleSlots, setScheduleSlots] = useState<ScheduleSlot[]>([
-    initialSlot,
-  ]);
   const [imageLoadingType, setImageLoadingType] = useState<
     'banner' | 'sub' | null
   >(null);
@@ -36,16 +19,6 @@ export default function useActivityForm(activityData?: ActivityRequest) {
 
   const { open, close } = useModalStore();
   const router = useRouter();
-
-  const handleAddSlot = () => {
-    const newSlot: ScheduleSlot = {
-      id: Date.now(),
-      date: '',
-      startTime: '',
-      endTime: '',
-    };
-    setScheduleSlots((prev) => [...prev, newSlot]);
-  };
 
   const activitySchema = z.object({
     title: z.string().min(1),
@@ -72,9 +45,7 @@ export default function useActivityForm(activityData?: ActivityRequest) {
     description: activityData?.description ?? '',
     price: activityData?.price ?? 0,
     address: activityData?.address ?? '',
-    schedules: activityData?.schedules ?? [
-      { date: '', startTime: '', endTime: '' },
-    ],
+    schedules: activityData?.schedules ?? [],
     bannerImageUrl: activityData?.bannerImageUrl ?? '',
     subImageUrls: activityData?.subImageUrls ?? [],
   };
@@ -132,7 +103,7 @@ export default function useActivityForm(activityData?: ActivityRequest) {
     form.setValue('subImageUrls', updateSub);
   };
 
-  let activitiesId: string;
+  // let activitiesId: string;
 
   const handleFormSubmit = (form: ActivityRequest) => {
     if (isFormLoading) return;
@@ -146,7 +117,7 @@ export default function useActivityForm(activityData?: ActivityRequest) {
       .then((response) => {
         setIsFormLoading(false);
         open('success-write');
-        activitiesId = response.data.id;
+        // activitiesId = response.data.id;
       })
       .catch((error) => {
         if (!axios.isAxiosError(error)) return;
@@ -157,29 +128,18 @@ export default function useActivityForm(activityData?: ActivityRequest) {
 
   const successConfirm = () => {
     close('success-write');
-    console.log(activitiesId);
+    // console.log(activitiesId);
     // router.push(`/activities/${activitiesId}`);
   };
 
   const bannerImage = form.watch('bannerImageUrl');
   const subImages = form.watch('subImageUrls');
 
-  const TIME_SLOTS = Array.from({ length: 24 }, (_, idx) => {
-    const hour = Math.floor(idx / 2);
-    const minute = idx % 2 === 0 ? '00' : '30';
-    const formattedHour = hour.toString().padStart(2, '0');
-
-    return `${formattedHour}:${minute}`;
-  });
-
   return {
     form,
-    scheduleSlots,
     bannerImage,
     subImages,
     imageLoadingType,
-    TIME_SLOTS,
-    handleAddSlot,
     handleImageChange,
     handleBannerImageDelete,
     handleSubImagesDelete,

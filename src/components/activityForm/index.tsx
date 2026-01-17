@@ -5,15 +5,13 @@ import FormField from '../common/formField';
 import Input from '../common/input';
 import Textarea from '../common/textarea';
 import InputDropdown from '../inputDropdown';
-import Calendar from '@/../public/icons/calendar.svg';
-import Plus from '@/assets/icons/plus.svg';
-import Minus from '@/assets/icons/minus.svg';
 import FormImage from '@/assets/icons/translucentLogo.svg';
 import FileInput from '../common/input/FileInput';
 import FormImagePreview from './FormImagePreview';
 import useActivityForm from './useActivityForm';
 import Spinner from '../common/loading/Spinner';
 import AlertModal from '../modals/AlertModal';
+import Schedules from './Schedules';
 
 const CATEGORY_OPTIONS = [
   '문화 ∙ 예술',
@@ -26,25 +24,24 @@ const CATEGORY_OPTIONS = [
 
 export default function ActivityForm() {
   const {
-    form: {
-      register,
-      watch,
-      setValue,
-      handleSubmit,
-      formState: { isValid },
-    },
-    scheduleSlots,
+    form,
     bannerImage,
     subImages,
     imageLoadingType,
-    TIME_SLOTS,
-    handleAddSlot,
     handleImageChange,
     handleBannerImageDelete,
     handleSubImagesDelete,
     handleFormSubmit,
     successConfirm,
   } = useActivityForm();
+
+  const {
+    register,
+    watch,
+    setValue,
+    handleSubmit,
+    formState: { isValid },
+  } = form;
 
   return (
     <form
@@ -74,7 +71,6 @@ export default function ActivityForm() {
               <InputDropdown
                 id="category"
                 placeholder="카테고리를 선택해 주세요"
-                defaultValue=""
                 options={CATEGORY_OPTIONS}
                 onSelect={(option: string) => setValue('category', option)}
               />
@@ -141,95 +137,7 @@ export default function ActivityForm() {
 
         <div className="flex flex-col gap-4.5">
           <h2 className="text-16-b">예약 가능한 시간대</h2>
-          <div className="flex flex-col gap-4 sm:gap-5">
-            {scheduleSlots.map((slot, idx) => (
-              <div key={slot.id} className="flex flex-col gap-4 sm:gap-5">
-                {idx === 1 && (
-                  <div className="border-gray100 w-full border-t" />
-                )}
-
-                <div className="flex flex-col gap-2.5 sm:flex-row sm:gap-3.5">
-                  <div className="flex flex-1 flex-col gap-2 sm:gap-2.5">
-                    {idx === 0 && (
-                      <label htmlFor="date" className="text-14-m sm:text-16-m">
-                        날짜
-                      </label>
-                    )}
-                    <Input
-                      readOnly
-                      id="date"
-                      placeholder="yy/mm/dd"
-                      rightSlot={idx === 0 && <Calendar className="shrink-0" />}
-                      inputBgClassName="cursor-pointer"
-                      inputClassName="cursor-pointer"
-                    />
-                  </div>
-
-                  <div className="flex flex-1 items-end gap-3.5">
-                    <div className="flex items-end gap-2.5">
-                      <div className="flex flex-col gap-2 sm:gap-2.5">
-                        {idx === 0 && (
-                          <label
-                            htmlFor="startTime"
-                            className="text-14-m sm:text-16-m hidden sm:flex"
-                          >
-                            시작 시간
-                          </label>
-                        )}
-                        <InputDropdown
-                          id="startTime"
-                          options={TIME_SLOTS}
-                          defaultValue=""
-                          placeholder="00:00"
-                          onSelect={(option: string) => {
-                            setValue(`schedules.${idx}.startTime`, option);
-                          }}
-                          listArray="center"
-                          inputClassName="sm:min-w-30"
-                        />
-                      </div>
-                      <div className="bg-gray800 mb-[27px] h-0.5 w-2" />
-                      <div className="flex flex-col gap-2 sm:gap-2.5">
-                        {idx === 0 && (
-                          <label className="text-14-m sm:text-16-m hidden sm:flex">
-                            종료 시간
-                          </label>
-                        )}
-                        <InputDropdown
-                          id="endTime"
-                          options={TIME_SLOTS}
-                          defaultValue=""
-                          placeholder="00:00"
-                          onSelect={(option: string) => {
-                            setValue(`schedules.${idx}.endTime`, option);
-                          }}
-                          listArray="center"
-                          inputClassName="sm:min-w-30"
-                        />
-                      </div>
-                    </div>
-
-                    {idx === 0 ? (
-                      <button
-                        type="button"
-                        onClick={handleAddSlot}
-                        className="bg-primary500 mb-[13px] flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-white sm:mb-1.5 sm:h-10.5 sm:w-10.5"
-                      >
-                        <Plus className="h-4 w-4 sm:h-6 sm:w-6" />
-                      </button>
-                    ) : (
-                      <button
-                        type="button"
-                        className="bg-gray50 mb-[13px] flex h-7 w-7 shrink-0 items-center justify-center rounded-full sm:mb-1.5 sm:h-10.5 sm:w-10.5"
-                      >
-                        <Minus className="h-4 w-4 sm:h-6 sm:w-6" />
-                      </button>
-                    )}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+          <Schedules form={form} />
         </div>
         <div className="flex flex-col gap-2.5">
           <h2 className="text-16-b">배너 이미지</h2>
