@@ -148,10 +148,10 @@ export default function Schedules({
       ))}
 
       <AlertModal
-        modalId="scehdule-fill"
+        modalId="schedule-fill"
         headerText="날짜와 시간을 모두 선택해주세요."
         confirmText="확인"
-        confirmFunction={() => close('scehdule-fill')}
+        confirmFunction={() => close('schedule-fill')}
       />
     </div>
   );

@@ -52,7 +52,7 @@ export default function useSchedules(form: UseFormReturn<ActivityRequest>) {
 
   const handleSlotAdd = () => {
     if (!addingSlot.date || !addingSlot.startTime || !addingSlot.endTime) {
-      open('scehdule-fill');
+      open('schedule-fill');
       return;
     }
 
