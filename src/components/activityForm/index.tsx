@@ -115,10 +115,9 @@ export default function ActivityForm() {
                   value={displayValue}
                   onChange={(e) => {
                     const onlyNumber = e.target.value.replace(/[^0-9]/g, '');
-
                     const numberPrice = onlyNumber ? Number(onlyNumber) : 0;
 
-                    setValue('price', numberPrice);
+                    setValue('price', numberPrice, { shouldValidate: true });
                   }}
                 />
               );

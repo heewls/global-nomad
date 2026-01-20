@@ -37,7 +37,7 @@ export default function useSchedules(form: UseFormReturn<ActivityRequest>) {
     time: 'startTime' | 'endTime';
     option: string;
   }) => {
-    form.setValue(`schedules.${idx}.${time}`, option);
+    form.setValue(`schedules.${idx}.${time}`, option, { shouldValidate: true });
   };
 
   const handleAddingSlotChange = (
@@ -56,13 +56,15 @@ export default function useSchedules(form: UseFormReturn<ActivityRequest>) {
       return;
     }
 
-    form.setValue('schedules', [...savedSchedules, addingSlot]);
+    form.setValue('schedules', [...savedSchedules, addingSlot], {
+      shouldValidate: true,
+    });
     setAddingSlot(initialSlot);
   };
 
   const handleSlotDelete = (idx: number) => {
     const updatedSchedules = savedSchedules.filter((_, i) => i !== idx);
-    form.setValue('schedules', updatedSchedules);
+    form.setValue('schedules', updatedSchedules, { shouldValidate: true });
   };
 
   return {

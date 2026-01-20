@@ -84,9 +84,11 @@ export default function useActivityForm(activityData?: ActivityRequest) {
 
         if (image === 'subImageUrls') {
           const prevImages = form.getValues('subImageUrls') || [];
-          form.setValue('subImageUrls', [...prevImages, newImage]);
+          form.setValue('subImageUrls', [...prevImages, newImage], {
+            shouldValidate: true,
+          });
         } else {
-          form.setValue('bannerImageUrl', newImage);
+          form.setValue('bannerImageUrl', newImage, { shouldValidate: true });
         }
         setImageLoadingType(null);
       })
@@ -94,14 +96,14 @@ export default function useActivityForm(activityData?: ActivityRequest) {
   };
 
   const handleBannerImageDelete = () => {
-    form.setValue('bannerImageUrl', '');
+    form.setValue('bannerImageUrl', '', { shouldValidate: true });
   };
 
   const handleSubImagesDelete = (idx: number) => {
     const sub = form.getValues('subImageUrls') || [];
     const updateSub = sub.filter((_, index) => index !== idx);
 
-    form.setValue('subImageUrls', updateSub);
+    form.setValue('subImageUrls', updateSub, { shouldValidate: true });
   };
 
   const handleFormSubmit = (form: ActivityRequest) => {
