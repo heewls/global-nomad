@@ -2,11 +2,10 @@ import axios from 'axios';
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
-export async function refreshAccessToken(refreshToken: string) {
+export async function refreshAccessToken() {
   try {
     const response = await axios.post(
       `${BASE_URL}/auth/tokens`,
-      { refreshToken },
       {
         headers: { 'Content-Type': 'application/json' },
         adapter: 'fetch',
