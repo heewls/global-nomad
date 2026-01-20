@@ -7,4 +7,5 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   border?: string;
   inputBgClassName?: string;
   inputClassName?: string;
+  ref?: React.Ref<HTMLInputElement>;
 }

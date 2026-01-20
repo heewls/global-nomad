@@ -99,27 +99,27 @@ export default function ActivityForm() {
             id="price"
             label="가격"
             render={() => {
-              const { onChange, ...inputProps } = register('price', {
-                valueAsNumber: true,
-              });
+              const { name, ref } = register('price');
               const priceValue = watch('price');
-              const displayValue = priceValue
-                ? Number(priceValue).toLocaleString()
-                : '';
+              const displayValue =
+                priceValue === 0 || !priceValue
+                  ? ''
+                  : Number(priceValue).toLocaleString();
 
               return (
                 <Input
                   type="text"
-                  value={displayValue}
                   placeholder="체험 금액을 입력해 주세요"
+                  name={name}
+                  ref={ref}
+                  value={displayValue}
                   onChange={(e) => {
                     const onlyNumber = e.target.value.replace(/[^0-9]/g, '');
+
                     const numberPrice = onlyNumber ? Number(onlyNumber) : 0;
 
-                    e.target.value = numberPrice.toString();
-                    onChange(e);
+                    setValue('price', numberPrice);
                   }}
-                  {...inputProps}
                 />
               );
             }}
