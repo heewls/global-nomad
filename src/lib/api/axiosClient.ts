@@ -69,7 +69,7 @@ axiosClient.interceptors.response.use(
     const handleAuthFailure = (authError: AxiosError) => {
       isRefreshing = false;
       resolvePendingRequests(authError, null);
-      window.location.href = '/login';
+      // window.location.href = '/login';
 
       return Promise.reject(authError);
     };
@@ -78,7 +78,7 @@ axiosClient.interceptors.response.use(
     if (!refreshToken) return handleAuthFailure(error);
 
     try {
-      const newAccessToken = await refreshAccessToken();
+      const newAccessToken = await refreshAccessToken(refreshToken ?? '');
       if (!newAccessToken) return handleAuthFailure(error);
 
       Cookies.set('accessToken', newAccessToken);
@@ -93,6 +93,5 @@ axiosClient.interceptors.response.use(
     }
   }
 );
-
 
 export default axiosClient;

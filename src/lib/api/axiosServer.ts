@@ -41,7 +41,7 @@ axiosServer.interceptors.response.use(
 
     if (!refreshToken) redirect('/login');
 
-    const newAccessToken = await refreshAccessToken();
+    const newAccessToken = await refreshAccessToken(refreshToken ?? '');
     if (!newAccessToken) redirect('/login');
 
     config.headers.set('Authorization', `Bearer ${newAccessToken}`);
