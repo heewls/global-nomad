@@ -23,6 +23,7 @@ export default function Schedules({
 }) {
   const {
     addingSlot,
+    timeErrorModal,
     savedSchedules,
     close,
     handleAddingSlotChange: onAddingSelect,
@@ -40,13 +41,14 @@ export default function Schedules({
               날짜
             </label>
             <Input
+              readOnly
               id="date"
               placeholder="yy/mm/dd"
               value={addingSlot.date}
               onChange={(e) => onAddingSelect('date', e.target.value)}
               rightSlot={<Calendar className="shrink-0" />}
-              // inputBgClassName="cursor-pointer"
-              // inputClassName="cursor-pointer"
+              inputBgClassName="cursor-pointer"
+              inputClassName="cursor-pointer"
             />
           </div>
 
@@ -152,6 +154,12 @@ export default function Schedules({
         headerText="날짜와 시간을 모두 선택해주세요."
         confirmText="확인"
         confirmFunction={() => close('schedule-fill')}
+      />
+      <AlertModal
+        modalId={timeErrorModal?.modalId ?? ''}
+        headerText={timeErrorModal?.modalMessage}
+        confirmText="확인"
+        confirmFunction={() => close(timeErrorModal?.modalId ?? '')}
       />
     </div>
   );

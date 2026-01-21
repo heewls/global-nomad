@@ -10,6 +10,11 @@ export interface ScheduleSlot {
   endTime: string;
 }
 
+interface TimeErrorModal {
+  modalId: string;
+  modalMessage: string;
+}
+
 const initialSlot: ScheduleSlot = {
   id: Date.now(),
   date: '',
@@ -19,6 +24,7 @@ const initialSlot: ScheduleSlot = {
 
 export default function useSchedules(form: UseFormReturn<ActivityRequest>) {
   const [addingSlot, setAddingSlot] = useState<ScheduleSlot>(initialSlot);
+  const [timeErrorModal, setTimeErrorModal] = useState<TimeErrorModal>();
 
   const { open, close } = useModalStore();
 
@@ -27,6 +33,31 @@ export default function useSchedules(form: UseFormReturn<ActivityRequest>) {
       control: form.control,
       name: 'schedules',
     }) || [];
+
+  const timeToNumber = (time: string) => Number(time.replace(':', ''));
+
+  const timeValidation = (start: string, end: string) => {
+    if (!start || !end) return true;
+
+    const startTime = timeToNumber(start);
+    const endTime = timeToNumber(end);
+
+    if (startTime === endTime) {
+      setTimeErrorModal({
+        modalId: 'time-equal',
+        modalMessage: '시작 시간과 종료 시간을 다르게 설정해 주세요.',
+      });
+      open('time-equal');
+    }
+
+    if (startTime > endTime) {
+      setTimeErrorModal({
+        modalId: 'time-error',
+        modalMessage: '종료 시간은 시작 시간보다 늦어야 합니다.',
+      });
+      open('time-error');
+    }
+  };
 
   const handleSavedTimeSelect = ({
     idx,
@@ -56,6 +87,8 @@ export default function useSchedules(form: UseFormReturn<ActivityRequest>) {
       return;
     }
 
+    if (!timeValidation(addingSlot.startTime, addingSlot.endTime)) return;
+
     form.setValue('schedules', [...savedSchedules, addingSlot], {
       shouldValidate: true,
     });
@@ -69,6 +102,7 @@ export default function useSchedules(form: UseFormReturn<ActivityRequest>) {
 
   return {
     addingSlot,
+    timeErrorModal,
     savedSchedules,
     close,
     handleAddingSlotChange,
