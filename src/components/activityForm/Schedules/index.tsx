@@ -1,20 +1,14 @@
 import { UseFormReturn } from 'react-hook-form';
 import Input from '../../common/input';
+import Calendar from '../../calendar';
+import Dropdown from '@/components/common/dropdown';
 import InputDropdown from '../../inputDropdown';
-import Calendar from '@/../public/icons/calendar.svg';
+import AlertModal from '@/components/modals/AlertModal';
+import CalendarIcon from '@/../public/icons/calendar.svg';
 import Plus from '@/assets/icons/plus.svg';
 import Minus from '@/assets/icons/minus.svg';
 import useSchedules from './useSchedules';
-import AlertModal from '@/components/modals/AlertModal';
 import { ActivityRequest } from '@/types/activities';
-
-const TIME_SLOTS = Array.from({ length: 48 }, (_, idx) => {
-  const hour = Math.floor(idx / 2);
-  const minute = idx % 2 === 0 ? '00' : '30';
-  const formattedHour = hour.toString().padStart(2, '0');
-
-  return `${formattedHour}:${minute}`;
-});
 
 export default function Schedules({
   form,
@@ -22,12 +16,13 @@ export default function Schedules({
   form: UseFormReturn<ActivityRequest>;
 }) {
   const {
+    TIME_SLOTS,
     addingSlot,
     timeErrorModal,
     savedSchedules,
     close,
     handleAddingSlotChange: onAddingSelect,
-    handleSavedTimeSelect: onSavedSelect,
+    handleSavedScheduleChange: onSavedSelect,
     handleSlotAdd: onAdd,
     handleSlotDelete: onDelete,
   } = useSchedules(form);
@@ -36,26 +31,45 @@ export default function Schedules({
     <div className="flex flex-col gap-4 sm:gap-5">
       <div className="flex flex-col gap-4 sm:gap-5">
         <div className="flex flex-col gap-2.5 sm:flex-row sm:gap-3.5">
-          <div className="flex flex-1 flex-col gap-2 sm:gap-2.5">
+          <div className="relative flex flex-1 flex-col gap-2 sm:gap-2.5">
             <label htmlFor="date" className="text-14-m sm:text-16-m">
               날짜
             </label>
-            <Input
-              readOnly
-              id="date"
-              placeholder="yy/mm/dd"
+            <Dropdown
+              dropdownButton={() => (
+                <Input
+                  readOnly
+                  id="date"
+                  placeholder="yy/mm/dd"
+                  value={addingSlot.date}
+                  rightSlot={<CalendarIcon className="shrink-0" />}
+                  inputBgClassName="cursor-pointer"
+                  inputClassName="cursor-pointer"
+                />
+              )}
+              optionComponent={
+                <div className="p-3">
+                  <Calendar
+                    onSelect={(date: string) => onAddingSelect('date', date)}
+                  />
+                </div>
+              }
+              onSelect={() => {}}
               value={addingSlot.date}
-              onChange={(e) => onAddingSelect('date', e.target.value)}
-              rightSlot={<Calendar className="shrink-0" />}
-              inputBgClassName="cursor-pointer"
-              inputClassName="cursor-pointer"
+              listArray="center"
+              listType="simple"
+              listSize="sm"
+              fullWidth
             />
           </div>
 
           <div className="flex flex-1 items-end gap-3.5">
             <div className="flex items-end gap-2.5">
               <div className="flex flex-col gap-2 sm:gap-2.5">
-                <label className="text-14-m sm:text-16-m hidden sm:flex">
+                <label
+                  htmlFor="startTime"
+                  className="text-14-m sm:text-16-m hidden sm:flex"
+                >
                   시작 시간
                 </label>
                 <InputDropdown
@@ -71,7 +85,10 @@ export default function Schedules({
               </div>
               <div className="bg-gray800 mb-[27px] h-0.5 w-2" />
               <div className="flex flex-col gap-2 sm:gap-2.5">
-                <label className="text-14-m sm:text-16-m hidden sm:flex">
+                <label
+                  htmlFor="endTime"
+                  className="text-14-m sm:text-16-m hidden sm:flex"
+                >
                   종료 시간
                 </label>
                 <InputDropdown
@@ -108,7 +125,31 @@ export default function Schedules({
           className="flex flex-col gap-2.5 sm:flex-row sm:gap-3.5"
         >
           <div className="flex flex-1">
-            <Input readOnly value={slot.date} />
+            <Dropdown
+              dropdownButton={() => (
+                <Input
+                  readOnly
+                  value={slot.date}
+                  inputBgClassName="cursor-pointer"
+                  inputClassName="cursor-pointer"
+                />
+              )}
+              optionComponent={
+                <div className="p-3">
+                  <Calendar
+                    onSelect={(date) =>
+                      onSavedSelect({ idx, field: 'date', value: date })
+                    }
+                  />
+                </div>
+              }
+              onSelect={() => {}}
+              value={slot.date}
+              listArray="center"
+              listType="simple"
+              listSize="sm"
+              fullWidth
+            />
           </div>
 
           <div className="flex flex-1 items-end gap-3.5">
@@ -119,8 +160,9 @@ export default function Schedules({
                 value={slot.startTime}
                 options={TIME_SLOTS}
                 onSelect={(option) =>
-                  onSavedSelect({ idx, time: 'startTime', option })
+                  onSavedSelect({ idx, field: 'startTime', value: option })
                 }
+                listArray="center"
                 inputClassName="sm:min-w-30"
                 scrollbarHidden
               />
@@ -131,8 +173,9 @@ export default function Schedules({
                 value={slot.endTime}
                 options={TIME_SLOTS}
                 onSelect={(option) =>
-                  onSavedSelect({ idx, time: 'endTime', option })
+                  onSavedSelect({ idx, field: 'endTime', value: option })
                 }
+                listArray="center"
                 inputClassName="sm:min-w-30"
                 scrollbarHidden
               />

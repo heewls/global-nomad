@@ -28,6 +28,14 @@ export default function useSchedules(form: UseFormReturn<ActivityRequest>) {
 
   const { open, close } = useModalStore();
 
+  const TIME_SLOTS = Array.from({ length: 48 }, (_, idx) => {
+    const hour = Math.floor(idx / 2);
+    const minute = idx % 2 === 0 ? '00' : '30';
+    const formattedHour = hour.toString().padStart(2, '0');
+
+    return `${formattedHour}:${minute}`;
+  });
+
   const savedSchedules: ScheduleSlot[] =
     useWatch({
       control: form.control,
@@ -48,6 +56,7 @@ export default function useSchedules(form: UseFormReturn<ActivityRequest>) {
         modalMessage: '시작 시간과 종료 시간을 다르게 설정해 주세요.',
       });
       open('time-equal');
+      return false;
     }
 
     if (startTime > endTime) {
@@ -56,28 +65,31 @@ export default function useSchedules(form: UseFormReturn<ActivityRequest>) {
         modalMessage: '종료 시간은 시작 시간보다 늦어야 합니다.',
       });
       open('time-error');
+      return false;
     }
+
+    return true;
   };
 
-  const handleSavedTimeSelect = ({
+  const handleSavedScheduleChange = ({
     idx,
-    time,
-    option,
+    field,
+    value,
   }: {
     idx: number;
-    time: 'startTime' | 'endTime';
-    option: string;
+    field: 'date' | 'startTime' | 'endTime';
+    value: string;
   }) => {
-    form.setValue(`schedules.${idx}.${time}`, option, { shouldValidate: true });
+    form.setValue(`schedules.${idx}.${field}`, value, { shouldValidate: true });
   };
 
   const handleAddingSlotChange = (
     field: 'date' | 'startTime' | 'endTime',
-    time: string
+    value: string
   ) => {
     setAddingSlot((prev) => ({
       ...prev,
-      [field]: time,
+      [field]: value,
     }));
   };
 
@@ -92,6 +104,7 @@ export default function useSchedules(form: UseFormReturn<ActivityRequest>) {
     form.setValue('schedules', [...savedSchedules, addingSlot], {
       shouldValidate: true,
     });
+
     setAddingSlot(initialSlot);
   };
 
@@ -101,12 +114,13 @@ export default function useSchedules(form: UseFormReturn<ActivityRequest>) {
   };
 
   return {
+    TIME_SLOTS,
     addingSlot,
     timeErrorModal,
     savedSchedules,
     close,
     handleAddingSlotChange,
-    handleSavedTimeSelect,
+    handleSavedScheduleChange,
     handleSlotAdd,
     handleSlotDelete,
   };

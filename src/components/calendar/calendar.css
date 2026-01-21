@@ -1,0 +1,85 @@
+.fc,
+.fc th,
+.fc td,
+.fc-scrollgrid,
+.fc-scrollgrid-section > td {
+  border: 0 !important;
+  border-style: hidden !important;
+}
+
+.fc .fc-daygrid-day,
+.fc .fc-day-today,
+.fc-highlight {
+  background-color: transparent !important;
+}
+
+.fc .fc-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px !important;
+}
+
+.fc .fc-toolbar-title {
+  font-size: 16px !important;
+  font-weight: 500;
+}
+
+.fc .fc-button-group {
+  display: flex;
+  gap: 12px;
+}
+
+.fc .fc-button {
+  padding: 0;
+  background-color: transparent !important;
+  color: var(--color-gray950) !important;
+  border: none !important;
+  box-shadow: none !important;
+  display: flex;
+  align-items: center;
+}
+
+.fc-col-header-cell-cushion,
+.fc-daygrid-day-number {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  width: 46px !important;
+  height: 46px !important;
+  padding: 0 !important;
+}
+
+.fc-col-header-cell {
+  font-weight: 600;
+  vertical-align: middle !important;
+}
+
+.fc-col-header-cell-cushion {
+  color: var(--color-gray800);
+}
+
+.fc-daygrid-day {
+  cursor: pointer;
+}
+
+.fc-daygrid-day-events {
+  display: none;
+}
+
+.fc-day-today .fc-daygrid-day-number {
+  border-radius: 100%;
+  background-color: var(--color-primary100);
+  color: var(--color-primary500);
+}
+
+.fc-daygrid-day:has(.fc-highlight) .fc-daygrid-day-number {
+  background-color: var(--color-primary500) !important;
+  color: white !important;
+  border-radius: 100%;
+}
+
+.fc-day-past {
+  pointer-events: none !important;
+  cursor: default !important;
+}
