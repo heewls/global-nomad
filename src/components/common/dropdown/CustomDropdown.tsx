@@ -39,17 +39,15 @@ function DropdownButton({
 
 export default function CustomDropdown({
   onSelect,
-  options,
-  defaultValue,
+  options = [],
+  value,
   size,
   listArray,
   listType,
   placement,
   fullWidth,
 }: CustomDropdownProps) {
-  const [selectedOption, setSelectedOption] = useState(
-    defaultValue ?? options[0]
-  );
+  const [selectedOption, setSelectedOption] = useState(value ?? options[0]);
 
   const handleOptionClick = (option: string) => {
     setSelectedOption(option);

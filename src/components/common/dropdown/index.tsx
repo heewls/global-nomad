@@ -17,7 +17,8 @@ const dropdownListArray = {
 
 export default function Dropdown({
   dropdownButton,
-  options,
+  options = [],
+  optionComponent,
   value,
   onSelect,
   listArray = 'left',
@@ -51,33 +52,37 @@ export default function Dropdown({
             placement
           )}
         >
-          <ul
-            className={clsx(
-              'text-16-m flex max-h-60 flex-col overflow-y-auto',
-              scrollbarHidden && 'scrollbar-hidden',
-              listType === 'active' && 'gap-1'
-            )}
-          >
-            {options.map((option, idx) => {
-              const isSelected = listType === 'active' && option === value;
-              return (
-                <li
-                  key={idx}
-                  onClick={() => handleOptionClick(option)}
-                  className={clsx(
-                    'flex items-center',
-                    dropdownListSize[listSize],
-                    dropdownListArray[listArray],
-                    dropdownListType[listType],
-                    isSelected && 'bg-primary100',
-                    fullWidth && 'w-full'
-                  )}
-                >
-                  {option}
-                </li>
-              );
-            })}
-          </ul>
+          {optionComponent ? (
+            optionComponent
+          ) : (
+            <ul
+              className={clsx(
+                'text-16-m flex max-h-60 flex-col overflow-y-auto',
+                scrollbarHidden && 'scrollbar-hidden',
+                listType === 'active' && 'gap-1'
+              )}
+            >
+              {options?.map((option, idx) => {
+                const isSelected = listType === 'active' && option === value;
+                return (
+                  <li
+                    key={idx}
+                    onClick={() => handleOptionClick(option)}
+                    className={clsx(
+                      'flex items-center',
+                      dropdownListSize[listSize],
+                      dropdownListArray[listArray],
+                      dropdownListType[listType],
+                      isSelected && 'bg-primary100',
+                      fullWidth && 'w-full'
+                    )}
+                  >
+                    {option}
+                  </li>
+                );
+              })}
+            </ul>
+          )}
         </div>
       )}
     </div>

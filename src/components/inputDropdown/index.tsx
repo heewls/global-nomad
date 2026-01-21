@@ -4,15 +4,16 @@ import Dropdown from '../common/dropdown';
 import Input from '../common/input';
 import Arrow from '../arrow';
 import { DropdownProps } from '../common/dropdown/type';
+import { InputProps } from '../common/input/type';
 
-interface InputDropdownProps extends Pick<
-  DropdownProps,
-  'options' | 'value' | 'onSelect' | 'scrollbarHidden'
-> {
-  id: string;
+export interface InputDropdownProps
+  extends
+    Omit<InputProps, 'value' | 'onSelect'>,
+    Omit<
+      DropdownProps,
+      'dropdownButton' | 'listSize' | 'listType' | 'listArray'
+    > {
   listArray?: DropdownProps['listArray'];
-  placeholder: string;
-  inputClassName?: string;
 }
 
 export default function InputDropdown({

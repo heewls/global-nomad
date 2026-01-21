@@ -2,7 +2,8 @@ type DropdownSize = 'sm' | 'md';
 
 export interface DropdownProps {
   dropdownButton: (isOpen: boolean) => React.ReactNode;
-  options: string[];
+  options?: string[];
+  optionComponent?: React.ReactNode;
   value?: string;
   onSelect: (option: string) => void;
   listArray: 'left' | 'center' | 'right';
