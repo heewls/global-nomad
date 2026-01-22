@@ -80,6 +80,15 @@ export default function useSchedules(form: UseFormReturn<ActivityRequest>) {
     field: 'date' | 'startTime' | 'endTime';
     value: string;
   }) => {
+    if (field === 'startTime' || field === 'endTime') {
+      const currentSlot = savedSchedules[idx];
+
+      const startTime = field === 'startTime' ? value : currentSlot.startTime;
+      const endTime = field === 'endTime' ? value : currentSlot.endTime;
+
+      if (!timeValidation(startTime, endTime)) return;
+    }
+
     form.setValue(`schedules.${idx}.${field}`, value, { shouldValidate: true });
   };
 
