@@ -11,6 +11,7 @@ import useUserStore from '@/store/user';
 import Dropdown from '@/components/common/dropdown';
 import useModalStore from '@/store/modal';
 import ConfirmModal from '@/components/modals/ConfirmModal';
+import { clearTokens } from '@/lib/clientCookie';
 
 export default function GNB() {
   const pathname = usePathname();
@@ -26,6 +27,7 @@ export default function GNB() {
 
   const handleConfirmModal = () => {
     clearUser();
+    clearTokens();
     close('logout');
   };
 
@@ -58,11 +60,11 @@ export default function GNB() {
             <div className="flex items-center justify-center gap-2.5">
               <ProfileImage size={30} image={user?.profileImageUrl} />
               <Dropdown
-                dropdownButton={
+                dropdownButton={() => (
                   <span className="text-14-m text-gray950 cursor-pointer">
                     {user?.nickname ?? 'USER'}
                   </span>
-                }
+                )}
                 onSelect={handleOptionClick}
                 options={['마이 페이지', '로그아웃']}
                 listArray="center"

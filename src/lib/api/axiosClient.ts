@@ -1,5 +1,6 @@
 import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
 import Cookies from 'js-cookie';
+import { refreshAccessToken } from '../refreshAccessToken';
 
 interface Queueing {
   resolve: (token: string | null) => void;
@@ -68,7 +69,7 @@ axiosClient.interceptors.response.use(
     const handleAuthFailure = (authError: AxiosError) => {
       isRefreshing = false;
       resolvePendingRequests(authError, null);
-      window.location.href = '/login';
+      // window.location.href = '/login';
 
       return Promise.reject(authError);
     };
@@ -77,7 +78,7 @@ axiosClient.interceptors.response.use(
     if (!refreshToken) return handleAuthFailure(error);
 
     try {
-      const newAccessToken = await refreshAccessToken(refreshToken);
+      const newAccessToken = await refreshAccessToken(refreshToken ?? '');
       if (!newAccessToken) return handleAuthFailure(error);
 
       Cookies.set('accessToken', newAccessToken);
@@ -92,19 +93,5 @@ axiosClient.interceptors.response.use(
     }
   }
 );
-
-async function refreshAccessToken(refreshToken: string) {
-  try {
-    const response = await axios.post(
-      `${BASE_URL}/auth/tokens`,
-      { refreshToken },
-      { headers: { 'Content-Type': 'application/json' }, adapter: 'fetch' }
-    );
-
-    return response.data?.accessToken;
-  } catch (error) {
-    throw error;
-  }
-}
 
 export default axiosClient;

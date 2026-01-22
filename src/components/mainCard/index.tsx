@@ -1,9 +1,9 @@
 import Image from 'next/image';
 import Rating from '../common/rating';
-import { Activities } from '@/types/activities';
+import { Activity } from '@/types/activities';
 
-export type Activity = Pick<
-  Activities,
+export type ActivityCard = Pick<
+  Activity,
   'title' | 'rating' | 'reviewCount' | 'price' | 'bannerImageUrl'
 >;
 
@@ -13,7 +13,7 @@ export default function MainCard({
   reviewCount,
   price,
   bannerImageUrl,
-}: Activity) {
+}: ActivityCard) {
   return (
     <div className="max-m-39 shadow-card flex w-full cursor-pointer flex-col -space-y-8 sm:-space-y-15">
       <div className="relative aspect-9/10 overflow-hidden rounded-t-[18px] sm:rounded-t-4xl">

@@ -1,6 +1,7 @@
 import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
 import { redirect } from 'next/navigation';
 import { cookies } from 'next/headers';
+import { refreshAccessToken } from '../refreshAccessToken';
 
 interface CustomConfig extends InternalAxiosRequestConfig {
   _retry?: boolean;
@@ -34,7 +35,16 @@ axiosServer.interceptors.response.use(
     }
 
     config._retry = true;
-    redirect('/login');
+
+    const cookieStore = await cookies();
+    const refreshToken = cookieStore.get('refreshToken')?.value;
+
+    if (!refreshToken) redirect('/login');
+
+    const newAccessToken = await refreshAccessToken(refreshToken ?? '');
+    if (!newAccessToken) redirect('/login');
+
+    config.headers.set('Authorization', `Bearer ${newAccessToken}`);
   }
 );
 

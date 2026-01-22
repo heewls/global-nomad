@@ -18,7 +18,7 @@ export default function AlertModal({
             height="40-48"
             rounded="12-14"
             fontSize="14-16-m"
-            className="w-full"
+            className="w-45 sm:w-50"
             onClick={confirmFunction}
           >
             {confirmText}
