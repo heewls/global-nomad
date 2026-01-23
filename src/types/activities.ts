@@ -1,3 +1,5 @@
+import { CATEGORY_OPTIONS } from '@/components/activityForm';
+
 export interface Activity {
   id: number;
   userId: number;
@@ -11,6 +13,12 @@ export interface Activity {
   reviewCount: number;
   createdAt: string;
   updatedAt: string;
+}
+
+export interface Activities {
+  activities: Activity[];
+  cursorId: number;
+  totalCount: number;
 }
 
 export interface ActivityDetail extends Activity {
@@ -36,4 +44,16 @@ interface Schedules {
   date: string;
   startTime: string;
   endTime: string;
+}
+
+export type CategoryType = (typeof CATEGORY_OPTIONS)[number];
+export type SortType = 'latest' | 'price_asc' | 'price_desc' | 'most_reviewed';
+
+export interface ActivitiesParams {
+  method: string;
+  category: CategoryType;
+  keyword: string;
+  sort: SortType;
+  page: number;
+  size: number;
 }

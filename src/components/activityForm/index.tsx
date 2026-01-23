@@ -14,7 +14,7 @@ import AlertModal from '../modals/AlertModal';
 import Schedules from './Schedules';
 import BouncingDots from '../common/loading/BouncingDots';
 
-const CATEGORY_OPTIONS = [
+export const CATEGORY_OPTIONS = [
   '문화 · 예술',
   '식음료',
   '스포츠',
