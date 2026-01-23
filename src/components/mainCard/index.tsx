@@ -1,13 +1,17 @@
+import Link from 'next/link';
 import Image from 'next/image';
 import Rating from '../common/rating';
 import { Activity } from '@/types/activities';
 
-export type ActivityCard = Pick<
+export interface ActivityCard extends Pick<
   Activity,
   'title' | 'rating' | 'reviewCount' | 'price' | 'bannerImageUrl'
->;
+> {
+  href: string;
+}
 
 export default function MainCard({
+  href,
   title,
   rating,
   reviewCount,
@@ -15,7 +19,10 @@ export default function MainCard({
   bannerImageUrl,
 }: ActivityCard) {
   return (
-    <div className="max-m-39 shadow-card flex w-full cursor-pointer flex-col -space-y-8 sm:-space-y-15">
+    <Link
+      href={href}
+      className="max-m-39 shadow-card flex w-full cursor-pointer flex-col -space-y-8 sm:-space-y-15"
+    >
       <div className="relative aspect-9/10 overflow-hidden rounded-t-[18px] sm:rounded-t-4xl">
         <Image
           src={bannerImageUrl}
@@ -43,6 +50,6 @@ export default function MainCard({
           <span className="text-12-m text-gray400 sm:text-16-m">/ 인</span>
         </span>
       </div>
-    </div>
+    </Link>
   );
 }
