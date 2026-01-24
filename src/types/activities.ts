@@ -1,4 +1,4 @@
-import { CATEGORY_OPTIONS } from '@/components/activityForm';
+import CATEGORY_OPTIONS from '@/contents/category';
 
 export interface Activity {
   id: number;
