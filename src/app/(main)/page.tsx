@@ -1,5 +1,5 @@
 import { ActivitiesParams, CategoryType, SortType } from '@/types/activities';
-import AllActivities from './_main/AllActivities';
+import AllActivities from './_main/components/AllActivities';
 import { getActivities } from './_main/api';
 
 export default async function Main({
