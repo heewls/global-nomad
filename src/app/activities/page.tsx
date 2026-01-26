@@ -1,6 +1,6 @@
+import AllActivities from './_activities/components/AllActivities';
+import { getActivities } from './_activities/api';
 import { ActivitiesParams, CategoryType, SortType } from '@/types/activities';
-import AllActivities from './_main/components/AllActivities';
-import { getActivities } from './_main/api';
 
 export default async function Main({
   searchParams,
@@ -12,11 +12,11 @@ export default async function Main({
     keyword: (searchParams.keyword as string) || undefined,
     sort: (searchParams.sort as SortType) || 'latest',
     page: Number(searchParams.page) || 1,
-    size: 8,
   };
 
   const initialActivities = await getActivities({
     method: 'offset',
+    size: 8,
     ...params,
   });
 
