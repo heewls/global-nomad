@@ -58,7 +58,7 @@ export default function Rating({
             onMouseOver={() => handleMouseOver(idx + 1)}
             onMouseLeave={handleMouseLeave}
           >
-            <Star className={className} fill="currentColor" />
+            <Star className={className} />
           </div>
         );
       })}
