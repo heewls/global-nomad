@@ -1,10 +1,19 @@
+'use client';
+
 import MainCard from '@/components/mainCard';
 import Category from './Category';
 import Filter from './Filter';
 import { Activities } from '@/types/activities';
+import Pagination from '@/components/pagination';
+import useActivities from '../useActivities';
+
+const PAGE_SIZE = 8;
 
 export default function AllActivities({ items }: { items: Activities }) {
   const { activities, totalCount } = items;
+  const { page: currentPage, updateParams } = useActivities();
+
+  const totalPages = Math.ceil(totalCount / PAGE_SIZE);
 
   return (
     <div className="flex flex-col gap-6 sm:gap-7.5">
@@ -22,7 +31,7 @@ export default function AllActivities({ items }: { items: Activities }) {
           </div>
         </div>
       </div>
-      <div className="grid grid-cols-4 gap-6">
+      <div className="grid grid-cols-2 gap-6 lg:grid-cols-4">
         {activities.map((item) => (
           <MainCard
             key={item.id}
@@ -35,6 +44,11 @@ export default function AllActivities({ items }: { items: Activities }) {
           />
         ))}
       </div>
+      <Pagination
+        currentPage={Number(currentPage)}
+        totalPages={totalPages}
+        onPageChange={(page) => updateParams({ page: page })}
+      />
     </div>
   );
 }

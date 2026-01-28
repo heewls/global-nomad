@@ -58,7 +58,7 @@ export default function useLogin() {
         setUser(data.user);
         setToken('accessToken', data.accessToken);
         setToken('refreshToken', data.refreshToken);
-        router.push('/');
+        router.push('/activities');
         setIsLoading(false);
       })
       .catch((error) => {
