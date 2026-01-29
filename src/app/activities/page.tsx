@@ -1,6 +1,7 @@
 import AllActivities from './_activities/components/AllActivities';
 import { getActivities } from './_activities/api';
 import { ActivitiesParams, CategoryType, SortType } from '@/types/activities';
+import BestActivities from './_activities/components/BestActivities';
 
 export default async function Activities({
   searchParams,
@@ -22,9 +23,16 @@ export default async function Activities({
     ...activitiesParams,
   });
 
+  const bestActivities = await getActivities({
+    method: 'offset',
+    sort: 'most_reviewed',
+    size: 12,
+  });
+
   return (
-    <div>
-      <AllActivities items={initialActivities} />
+    <div className="flex flex-col gap-10 sm:gap-20">
+      <BestActivities best={bestActivities} />
+      <AllActivities all={initialActivities} />
     </div>
   );
 }

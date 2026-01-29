@@ -1,6 +1,6 @@
+import clsx from 'clsx';
 import Prev from '@/assets/icons/prevArrow.svg';
 import Next from '@/assets/icons/nextArrow.svg';
-import clsx from 'clsx';
 
 interface PaginationProps {
   currentPage: number;
