@@ -21,7 +21,7 @@ export default function MainCard({
   return (
     <Link
       href={href}
-      className="max-m-39 shadow-card flex w-full cursor-pointer flex-col -space-y-8 sm:-space-y-15"
+      className="max-m-39 shadow-card flex w-full min-w-0 cursor-pointer flex-col -space-y-8 sm:-space-y-15"
     >
       <div className="relative aspect-9/10 overflow-hidden rounded-t-[18px] sm:rounded-t-4xl">
         <Image
@@ -45,10 +45,12 @@ export default function MainCard({
             </div>
           </div>
         </div>
-        <span className="text-16-b sm:text-18-b flex items-center gap-0.5">
-          ₩ {price.toLocaleString()}
-          <span className="text-12-m text-gray400 sm:text-16-m">/ 인</span>
-        </span>
+        <div className="text-16-b sm:text-18-b flex items-center gap-0.5">
+          <span className="truncate">₩ {price.toLocaleString()}</span>
+          <span className="text-12-m text-gray400 sm:text-16-m shrink-0">
+            / 인
+          </span>
+        </div>
       </div>
     </Link>
   );
