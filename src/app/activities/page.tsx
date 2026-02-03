@@ -32,15 +32,18 @@ export default async function Activities({
   });
 
   const keyword = params.keyword;
-
   const isSearching = !!keyword && keyword !== '';
 
   return (
-    <div className="flex flex-col gap-10 sm:gap-20">
-      <HeroBanner hero={bestActivities.activities[0]} />
-      <SearchActivities />
-      {!isSearching && <BestActivities best={bestActivities} />}
-      <AllActivities isSearching={isSearching} all={initialActivities} />
+    <div className="flex flex-col gap-10 py-10 sm:gap-15 md:py-20">
+      <div className="flex flex-col gap-4 md:gap-7.5 lg:gap-12.5">
+        <HeroBanner hero={bestActivities.activities[0]} />
+        <SearchActivities />
+      </div>
+      <div className="flex flex-col gap-10 md:gap-20">
+        {!isSearching && <BestActivities best={bestActivities} />}
+        <AllActivities isSearching={isSearching} all={initialActivities} />
+      </div>
     </div>
   );
 }

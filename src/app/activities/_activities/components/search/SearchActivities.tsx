@@ -13,7 +13,7 @@ export default function SearchActivities() {
   } = useSearch();
 
   return (
-    <div className="flex flex-col items-center justify-center gap-3 sm:gap-9">
+    <div className="flex flex-col items-center justify-center gap-3 py-4 md:gap-9 md:px-10 md:py-8">
       <h2 className="text-16-b sm:text-32-b">무엇을 체험하고 싶으신가요?</h2>
       <Input
         placeholder="내가 원하는 체험은"
