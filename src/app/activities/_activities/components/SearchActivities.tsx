@@ -1,16 +1,12 @@
 'use client';
 
 import Input from '@/components/common/input';
-import Search from '@/../public/icons/search.svg';
 import Button from '@/components/common/button';
+import Search from '@/../public/icons/search.svg';
 import useSearch from '../hook/useSearch';
 
 export default function SearchActivities() {
-  const {
-    localKeyword: keyword,
-    handleSearchChange,
-    handleSearchSubmit,
-  } = useSearch();
+  const { localKeyword, handleSearchChange, handleSearchSubmit } = useSearch();
 
   return (
     <div className="flex flex-col items-center justify-center gap-3 py-4 md:gap-9 md:px-10 md:py-8">
@@ -28,7 +24,7 @@ export default function SearchActivities() {
             검색하기
           </Button>
         }
-        value={keyword}
+        value={localKeyword}
         onChange={handleSearchChange}
         border="border-transparent"
         inputBgClassName="h-13.5 md:h-16 lg:h-17.5 shadow-search-bar"
