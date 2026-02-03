@@ -2,7 +2,7 @@
 
 import Dropdown from '@/components/common/dropdown';
 import Arrow from '@/components/arrow';
-import useActivities from '../useActivities';
+import useActivities from '../hook/useActivities';
 
 const FILTER = {
   '가격 낮은 순': 'price_asc',

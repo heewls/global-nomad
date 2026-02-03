@@ -2,7 +2,7 @@
 
 import clsx from 'clsx';
 import CATEGORY_OPTIONS from '@/contents/category';
-import useActivities from '../useActivities';
+import useActivities from '../hook/useActivities';
 import Culture from '@/assets/icons/culture.svg';
 import Food from '@/assets/icons/food.svg';
 import Sports from '@/assets/icons/sports.svg';

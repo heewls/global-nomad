@@ -5,7 +5,7 @@ import Category from './Category';
 import Filter from './Filter';
 import { Activities } from '@/types/activities';
 import Pagination from '@/components/pagination';
-import useActivities from '../useActivities';
+import useActivities from '../hook/useActivities';
 
 const PAGE_SIZE = 8;
 

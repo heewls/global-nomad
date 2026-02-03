@@ -3,7 +3,7 @@
 import Input from '@/components/common/input';
 import Search from '@/../public/icons/search.svg';
 import Button from '@/components/common/button';
-import useSearch from './useSearch';
+import useSearch from '../hook/useSearch';
 
 export default function SearchActivities() {
   const {

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import useActivities from '../../useActivities';
+import useActivities from '../hook/useActivities';
 
 export default function useSearch() {
   const { keyword, updateParams } = useActivities();

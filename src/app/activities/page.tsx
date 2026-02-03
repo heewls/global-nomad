@@ -1,9 +1,9 @@
 import AllActivities from './_activities/components/AllActivities';
+import BestActivities from './_activities/components/BestActivities';
+import SearchActivities from './_activities/components/SearchActivities';
+import HeroBanner from './_activities/components/HeroBanner';
 import { getActivities } from './_activities/api';
 import { ActivitiesParams, CategoryType, SortType } from '@/types/activities';
-import BestActivities from './_activities/components/BestActivities';
-import SearchActivities from './_activities/components/search/SearchActivities';
-import HeroBanner from './_activities/components/HeroBanner';
 
 export default async function Activities({
   searchParams,
