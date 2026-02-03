@@ -9,27 +9,44 @@ import useActivities from '../useActivities';
 
 const PAGE_SIZE = 8;
 
-export default function AllActivities({ all }: { all: Activities }) {
+export default function AllActivities({
+  all,
+  isSearching,
+}: {
+  all: Activities;
+  isSearching: boolean;
+}) {
   const { activities, totalCount } = all;
-  const { page: currentPage, updateParams } = useActivities();
+  const { page: currentPage, keyword, updateParams } = useActivities();
 
   const totalPages = Math.ceil(totalCount / PAGE_SIZE);
 
   return (
     <div className="flex flex-col gap-6 sm:gap-7.5">
-      <div className="flex flex-col gap-2.5 md:gap-4 lg:gap-5">
-        <div className="flex items-center justify-between">
-          <h2 className="text-18-b md:text-24-b lg:text-32-b">모든 체험</h2>
-          <div className="lg:hidden">
-            <Filter />
+      {!isSearching && (
+        <div className="flex flex-col gap-2.5 md:gap-4 lg:gap-5">
+          <div className="flex items-center justify-between">
+            <h2 className="text-18-b md:text-24-b lg:text-32-b">모든 체험</h2>
+            <div className="lg:hidden">
+              <Filter />
+            </div>
+          </div>
+          <div className="flex items-center justify-between">
+            <Category />
+            <div className="hidden lg:flex">
+              <Filter />
+            </div>
           </div>
         </div>
-        <div className="flex items-center justify-between">
-          <Category />
-          <div className="hidden lg:flex">
-            <Filter />
-          </div>
-        </div>
+      )}
+      <div className="flex flex-col gap-5">
+        <span className="text-18-m md:text-24-m">
+          <span className="text-18-b md:text-24-b">{keyword}</span>로 검색한
+          결과입니다.
+        </span>
+        <span className="text-14-m md:text-18-m text-gray700">
+          총 {totalCount}개의 결과
+        </span>
       </div>
       <div className="grid grid-cols-2 gap-6 lg:grid-cols-4">
         {activities.map((item) => (

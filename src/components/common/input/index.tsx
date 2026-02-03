@@ -14,7 +14,7 @@ export default function Input({
   return (
     <div
       className={clsx(
-        'flex h-13.5 w-full gap-2.5 rounded-2xl border bg-white px-5 py-4',
+        'flex h-13.5 w-full items-center gap-2.5 rounded-2xl border bg-white px-5 py-4',
         isError ? 'border-red' : border,
         inputBgClassName
       )}

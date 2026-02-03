@@ -21,7 +21,7 @@ export default function MainCard({
   return (
     <Link
       href={href}
-      className="max-m-39 shadow-card flex w-full min-w-0 cursor-pointer flex-col -space-y-8 sm:-space-y-15"
+      className="max-m-39 flex w-full min-w-0 cursor-pointer flex-col -space-y-8 sm:-space-y-15"
     >
       <div className="relative aspect-9/10 overflow-hidden rounded-t-[18px] sm:rounded-t-4xl">
         <Image
@@ -32,7 +32,7 @@ export default function MainCard({
           sizes="(max-width: 640px) 155px, (max-width: 768px) 332px, (max-width: 1280px) 262px, 332px"
         />
       </div>
-      <div className="shadow-card-content z-10 flex h-fit flex-col gap-2.5 rounded-[18px] bg-white p-4 sm:gap-4.5 sm:rounded-4xl sm:px-7.5 sm:py-5">
+      <div className="shadow-card z-10 flex h-fit flex-col gap-2.5 rounded-[18px] bg-white p-4 sm:gap-4.5 sm:rounded-4xl sm:px-7.5 sm:py-5">
         <div className="flex flex-col gap-1">
           <span className="text-14-m sm:text-18-m truncate font-semibold">
             {title}

@@ -24,9 +24,10 @@ export default function useActivities() {
       }
     });
 
-    if (params.get('page') === '1') params.delete('page');
+    if ('keyword' in newParams || 'category' in newParams)
+      params.delete('page');
 
-    if (newParams.category && !newParams.page) params.delete('page');
+    if (params.get('page') === '1') params.delete('page');
 
     router.push(`${pathname}?${params.toString()}`);
   };

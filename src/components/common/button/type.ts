@@ -8,9 +8,9 @@ type ButtonFontSize = keyof typeof B.buttonFontSize;
 export default interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
   variant: ButtonVariant;
-  height: ButtonHeight;
-  rounded: ButtonRounded;
-  fontSize: ButtonFontSize;
+  height?: ButtonHeight;
+  rounded?: ButtonRounded;
+  fontSize?: ButtonFontSize;
   disabled?: boolean;
   fullWidth?: boolean;
   className?: string;

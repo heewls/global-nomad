@@ -15,7 +15,7 @@ export default function Button({
   return (
     <button
       className={clsx(
-        'flex w-30 items-center justify-center whitespace-nowrap',
+        'flex w-30 shrink-0 items-center justify-center whitespace-nowrap',
         B.buttonHeight[height],
         B.buttonRounded[rounded],
         B.buttonFontSize[fontSize],

@@ -44,10 +44,10 @@
   --text-32-m: 32px;
   --text-32-m--font-weight: 500;
 
-  --text-24-b: 24;
+  --text-24-b: 24px;
   --text-24-b--font-weight: 700;
 
-  --text-24-m: 24;
+  --text-24-m: 24px;
   --text-24-m--font-weight: 500;
 
   --text-20-b: 20px;
@@ -132,8 +132,8 @@
 }
 
 @theme {
-  --shadow-card: 0 4px 24px 0 rrgb(156 180 202 / 20%);
-  --shadow-card-content: 0 8px 20px 0 rgba(0 0 0 /5%);
+  --shadow-card: 0 8px 20px 0 rgba(0 0 0 /5%);
+  --shadow-search-bar: 0 6px 10px 0 rgba(13 153 255 /5%);
 }
 
 @font-face {

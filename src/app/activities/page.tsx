@@ -2,6 +2,7 @@ import AllActivities from './_activities/components/AllActivities';
 import { getActivities } from './_activities/api';
 import { ActivitiesParams, CategoryType, SortType } from '@/types/activities';
 import BestActivities from './_activities/components/BestActivities';
+import SearchActivities from './_activities/components/search/SearchActivities';
 
 export default async function Activities({
   searchParams,
@@ -29,10 +30,15 @@ export default async function Activities({
     size: 12,
   });
 
+  const keyword = params.keyword;
+
+  const isSearching = !!keyword && keyword !== '';
+
   return (
     <div className="flex flex-col gap-10 sm:gap-20">
-      <BestActivities best={bestActivities} />
-      <AllActivities all={initialActivities} />
+      <SearchActivities />
+      {!isSearching && <BestActivities best={bestActivities} />}
+      <AllActivities isSearching={isSearching} all={initialActivities} />
     </div>
   );
 }
