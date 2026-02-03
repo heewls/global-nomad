@@ -39,15 +39,17 @@ export default function AllActivities({
           </div>
         </div>
       )}
-      <div className="flex flex-col gap-5">
-        <span className="text-18-m md:text-24-m">
-          <span className="text-18-b md:text-24-b">{keyword}</span>로 검색한
-          결과입니다.
-        </span>
-        <span className="text-14-m md:text-18-m text-gray700">
-          총 {totalCount}개의 결과
-        </span>
-      </div>
+      {isSearching && (
+        <div className="flex flex-col gap-5">
+          <span className="text-18-m md:text-24-m">
+            <span className="text-18-b md:text-24-b">{keyword}</span>로 검색한
+            결과입니다.
+          </span>
+          <span className="text-14-m md:text-18-m text-gray700">
+            총 {totalCount}개의 결과
+          </span>
+        </div>
+      )}
       <div className="grid grid-cols-2 gap-6 lg:grid-cols-4">
         {activities.map((item) => (
           <MainCard
