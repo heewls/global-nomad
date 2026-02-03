@@ -1,35 +1,15 @@
 'use client';
 
-import { useRef } from 'react';
 import MainCard from '@/components/mainCard';
 import { Activities } from '@/types/activities';
 import Prev from '@/assets/icons/prevArrow.svg';
 import Next from '@/assets/icons/nextArrow.svg';
+import useBestActivities from '../hook/useBestActivities';
 
 export default function BestActivities({ best }: { best: Activities }) {
-  const scrollRef = useRef<HTMLDivElement>(null);
   const { activities } = best;
-
-  const handleScroll = (type: 'prev' | 'next') => {
-    if (!scrollRef.current) return;
-
-    const container = scrollRef.current;
-
-    const firstActivity = container.firstElementChild as HTMLElement;
-    if (!firstActivity) return;
-
-    const activityWidth = firstActivity.offsetWidth;
-    const gap =
-      window.innerWidth >= 1024 ? 24 : window.innerWidth >= 768 ? 20 : 12;
-
-    const preview = window.innerWidth >= 1024 ? 4 : 2;
-    const distance = (activityWidth + gap) * preview;
-
-    container.scrollTo({
-      left: container.scrollLeft + (type === 'prev' ? -distance : distance),
-      behavior: 'smooth',
-    });
-  };
+  const { scrollRef, handleScroll, isFirstPage, isLastPage } =
+    useBestActivities();
 
   return (
     <div className="smd:gap-7.5 relative flex flex-col gap-6">
@@ -57,18 +37,22 @@ export default function BestActivities({ best }: { best: Activities }) {
         </div>
 
         <div className="hidden md:block">
-          <button
-            onClick={() => handleScroll('prev')}
-            className="absolute top-1/2 -left-4 z-20 flex h-13.5 w-13.5 -translate-y-1/2 items-center justify-center rounded-full bg-white/70"
-          >
-            <Prev className="text-black" />
-          </button>
-          <button
-            onClick={() => handleScroll('next')}
-            className="absolute top-1/2 -right-4 z-20 flex h-13.5 w-13.5 -translate-y-1/2 items-center justify-center rounded-full bg-white/70"
-          >
-            <Next className="text-black" />
-          </button>
+          {isFirstPage && (
+            <button
+              onClick={() => handleScroll('prev')}
+              className="absolute top-1/2 -left-4 z-20 flex h-13.5 w-13.5 -translate-y-1/2 items-center justify-center rounded-full bg-white/70"
+            >
+              <Prev className="text-black" />
+            </button>
+          )}
+          {isLastPage && (
+            <button
+              onClick={() => handleScroll('next')}
+              className="absolute top-1/2 -right-4 z-20 flex h-13.5 w-13.5 -translate-y-1/2 items-center justify-center rounded-full bg-white/70"
+            >
+              <Next className="text-black" />
+            </button>
+          )}
         </div>
       </div>
     </div>
