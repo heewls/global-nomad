@@ -13,6 +13,8 @@ export default function useActivities() {
   const keyword = searchParams.get('keyword') || '';
   const category = searchParams.get('category') || '';
 
+  const currentQuery = searchParams.toString();
+
   const updateParams = (newParams: Partial<ActivitiesParams>) => {
     const params = new URLSearchParams(searchParams.toString());
 
@@ -28,6 +30,9 @@ export default function useActivities() {
       params.delete('page');
 
     if (params.get('page') === '1') params.delete('page');
+
+    const newQueryString = params.toString();
+    if (currentQuery === newQueryString) return;
 
     router.push(`${pathname}?${params.toString()}`, { scroll: false });
   };
