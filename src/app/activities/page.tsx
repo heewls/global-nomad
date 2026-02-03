@@ -3,6 +3,7 @@ import { getActivities } from './_activities/api';
 import { ActivitiesParams, CategoryType, SortType } from '@/types/activities';
 import BestActivities from './_activities/components/BestActivities';
 import SearchActivities from './_activities/components/search/SearchActivities';
+import HeroBanner from './_activities/components/HeroBanner';
 
 export default async function Activities({
   searchParams,
@@ -36,6 +37,7 @@ export default async function Activities({
 
   return (
     <div className="flex flex-col gap-10 sm:gap-20">
+      <HeroBanner hero={bestActivities.activities[0]} />
       <SearchActivities />
       {!isSearching && <BestActivities best={bestActivities} />}
       <AllActivities isSearching={isSearching} all={initialActivities} />
