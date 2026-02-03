@@ -13,7 +13,12 @@ export default function Pagination({
   totalPages,
   onPageChange,
 }: PaginationProps) {
-  const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+  const pageCount = Array.from({ length: totalPages }, (_, i) => i + 1);
+
+  const groupIndex = Math.floor((currentPage - 1) / 5);
+  const startPage = groupIndex * 5 + 1;
+  const pages = pageCount.slice(startPage - 1, startPage + 4);
+
   const firstPage = currentPage === 1;
   const lastPage = currentPage === totalPages;
   const noneItem = totalPages === 0;
