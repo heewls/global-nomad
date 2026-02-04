@@ -50,7 +50,7 @@ export default function AllActivities({
           </span>
         </div>
       )}
-      <div className="grid grid-cols-2 gap-6 lg:grid-cols-4">
+      <div className="grid grid-cols-2 gap-4.5 md:gap-x-5 md:gap-y-6 lg:grid-cols-4 lg:gap-x-6 lg:gap-y-7.5">
         {activities.map((item) => (
           <MainCard
             key={item.id}
