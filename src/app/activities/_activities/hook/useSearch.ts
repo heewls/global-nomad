@@ -18,7 +18,13 @@ export default function useSearch() {
 
   const handleSearchSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     e?.preventDefault();
-    updateParams({ keyword: localKeyword });
+    
+    updateParams({
+      keyword: localKeyword,
+      category: '',
+      sort: 'latest',
+      page: 1,
+    });
   };
 
   return {

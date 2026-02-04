@@ -9,7 +9,7 @@ export default function HeroBanner({ hero }: { hero: Activity }) {
   return (
     <Link
       href={`/activities/${hero.id}`}
-      className="relative h-45 w-full overflow-hidden rounded-xl md:h-93.5 md:rounded-[18px] lg:h-125 lg:rounded-3xl"
+      className="relative h-45 w-full cursor-pointer overflow-hidden rounded-xl md:h-93.5 md:rounded-[18px] lg:h-125 lg:rounded-3xl"
     >
       <Image
         fill

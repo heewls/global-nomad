@@ -40,7 +40,7 @@ export default function AllActivities({
         </div>
       )}
       {isSearching && (
-        <div className="flex flex-col gap-5">
+        <div className="flex flex-col gap-2.5">
           <span className="text-18-m md:text-24-m">
             <span className="text-18-b md:text-24-b">{keyword}</span>로 검색한
             결과입니다.
