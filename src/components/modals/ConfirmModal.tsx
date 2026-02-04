@@ -27,6 +27,7 @@ export default function ConfirmModal({
             height="40-48"
             rounded="12-14"
             fontSize="14-16-b"
+            className="w-30"
             onClick={() => close(modalId)}
           >
             {cancelText}
@@ -36,6 +37,7 @@ export default function ConfirmModal({
             height="40-48"
             rounded="12-14"
             fontSize="14-16-m"
+            className="w-30"
             onClick={confirmFunction}
           >
             {confirmText}
