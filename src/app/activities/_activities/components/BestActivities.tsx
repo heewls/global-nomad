@@ -25,7 +25,7 @@ export default function BestActivities({ best }: { best: Activities }) {
               className="w-32.5 shrink-0 sm:min-w-40 md:min-w-[calc((100%-20px)/2)] lg:min-w-[calc((100%-72px)/4)]"
             >
               <MainCard
-                href={`/activities/${item.id}`}
+                href={`/activity/${item.id}`}
                 title={item.title}
                 rating={item.rating}
                 reviewCount={item.reviewCount}
