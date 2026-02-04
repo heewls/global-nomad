@@ -28,7 +28,7 @@ export default async function Activities({
   const bestActivities = await getActivities({
     method: 'offset',
     sort: 'most_reviewed',
-    size: 12,
+    size: 16,
   });
 
   const keyword = params.keyword;

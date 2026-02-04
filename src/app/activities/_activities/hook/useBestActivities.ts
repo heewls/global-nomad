@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 
-const BEST_ITEMS = 12;
+const BEST_ITEMS = 16;
 
 export default function useBestActivities() {
   const [page, setPage] = useState(1);
