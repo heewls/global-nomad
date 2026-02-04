@@ -13,15 +13,7 @@ import Spinner from '../common/loading/Spinner';
 import AlertModal from '../modals/AlertModal';
 import Schedules from './Schedules';
 import BouncingDots from '../common/loading/BouncingDots';
-
-const CATEGORY_OPTIONS = [
-  '문화 · 예술',
-  '식음료',
-  '스포츠',
-  '투어',
-  '관광',
-  '웰빙',
-];
+import CATEGORY_OPTIONS from '@/contents/category';
 
 export default function ActivityForm() {
   const {

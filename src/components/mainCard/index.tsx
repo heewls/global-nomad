@@ -1,13 +1,17 @@
+import Link from 'next/link';
 import Image from 'next/image';
 import Rating from '../common/rating';
 import { Activity } from '@/types/activities';
 
-export type ActivityCard = Pick<
+export interface ActivityCard extends Pick<
   Activity,
   'title' | 'rating' | 'reviewCount' | 'price' | 'bannerImageUrl'
->;
+> {
+  href: string;
+}
 
 export default function MainCard({
+  href,
   title,
   rating,
   reviewCount,
@@ -15,7 +19,10 @@ export default function MainCard({
   bannerImageUrl,
 }: ActivityCard) {
   return (
-    <div className="max-m-39 shadow-card flex w-full cursor-pointer flex-col -space-y-8 sm:-space-y-15">
+    <Link
+      href={href}
+      className="max-m-39 flex w-full min-w-0 cursor-pointer flex-col -space-y-8 sm:-space-y-15"
+    >
       <div className="relative aspect-9/10 overflow-hidden rounded-t-[18px] sm:rounded-t-4xl">
         <Image
           src={bannerImageUrl}
@@ -25,7 +32,7 @@ export default function MainCard({
           sizes="(max-width: 640px) 155px, (max-width: 768px) 332px, (max-width: 1280px) 262px, 332px"
         />
       </div>
-      <div className="shadow-card-content z-10 flex h-fit flex-col gap-2.5 rounded-[18px] bg-white p-4 sm:gap-4.5 sm:rounded-4xl sm:px-7.5 sm:py-5">
+      <div className="shadow-card z-10 flex h-fit flex-col gap-2.5 rounded-[18px] bg-white p-4 sm:gap-4.5 sm:rounded-4xl sm:px-7.5 sm:py-5">
         <div className="flex flex-col gap-1">
           <span className="text-14-m sm:text-18-m truncate font-semibold">
             {title}
@@ -38,11 +45,13 @@ export default function MainCard({
             </div>
           </div>
         </div>
-        <span className="text-16-b sm:text-18-b flex items-center gap-0.5">
-          ₩ {price.toLocaleString()}
-          <span className="text-12-m text-gray400 sm:text-16-m">/ 인</span>
-        </span>
+        <div className="text-16-b sm:text-18-b flex items-center gap-0.5">
+          <span className="truncate">₩ {price.toLocaleString()}</span>
+          <span className="text-12-m text-gray400 sm:text-16-m shrink-0">
+            / 인
+          </span>
+        </div>
       </div>
-    </div>
+    </Link>
   );
 }
