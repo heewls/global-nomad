@@ -10,7 +10,7 @@ export default function AlertModal({
 }: AlertModalProps) {
   return (
     <Modal.Layer id={modalId}>
-      <Modal.Container className="gap-6 px-17.5 py-7.5 sm:px-22.5 sm:py-7.5 sm:pt-10 sm:pb-7.5">
+      <Modal.Container containerClassName="gap-6 px-17.5 py-7.5 sm:px-22.5 sm:py-7.5 sm:pt-10 sm:pb-7.5">
         <Modal.Header>{headerText}</Modal.Header>
         <Modal.Footer>
           <Button
