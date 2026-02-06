@@ -129,7 +129,7 @@ export default function useActivityForm(activityData?: ActivityRequest) {
 
   const successConfirm = () => {
     close('success-write');
-    router.push(`/activities/${activityId}`);
+    router.push(`/activitiy/${activityId}`);
   };
 
   const bannerImage = form.watch('bannerImageUrl');

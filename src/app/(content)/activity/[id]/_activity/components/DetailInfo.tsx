@@ -3,7 +3,7 @@
 import Rating from '@/components/common/rating';
 import Dropdown from '@/components/common/dropdown';
 import ConfirmModal from '@/components/modals/ConfirmModal';
-import useDetail from './hook/useDetail';
+import useDetail from '../hook/useDetail';
 import { ActivityDetail } from '@/types/activities';
 import Spot from '@/../public/icons/spot.svg';
 import Kebab from '@/../public/icons/kebab.svg';
