@@ -40,6 +40,12 @@
   align-items: center;
 }
 
+.fc-daygrid-day-frame {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
 .fc-col-header-cell-cushion,
 .fc-daygrid-day-number {
   display: flex !important;
