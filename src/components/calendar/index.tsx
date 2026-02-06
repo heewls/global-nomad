@@ -5,8 +5,10 @@ import interactionPlugin from '@fullcalendar/interaction';
 
 export default function Calendar({
   onSelect,
+  height,
 }: {
   onSelect: (date: string) => void;
+  height: 'auto' | '100%' | string;
 }) {
   return (
     <FullCalendar
@@ -19,7 +21,7 @@ export default function Calendar({
         today.setHours(0, 0, 0, 0);
         return selectInfo.start >= today;
       }}
-      height="auto"
+      height={height}
       editable={false}
       selectable={true}
       unselectAuto={false}

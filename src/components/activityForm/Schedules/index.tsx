@@ -51,6 +51,7 @@ export default function Schedules({
                 <div className="p-3">
                   <Calendar
                     onSelect={(date: string) => onAddingSelect('date', date)}
+                    height="auto"
                   />
                 </div>
               }
@@ -140,6 +141,7 @@ export default function Schedules({
                     onSelect={(date) =>
                       onSavedSelect({ idx, field: 'date', value: date })
                     }
+                    height="auto"
                   />
                 </div>
               }
