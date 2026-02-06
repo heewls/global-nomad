@@ -1,7 +1,7 @@
 import { useRouter } from 'next/navigation';
 import useModalStore from '@/store/modal';
 import useUserStore from '@/store/user';
-import { deleteActivity } from '../../api';
+import axiosClient from '@/lib/api/axiosClient';
 
 export default function useDetail({ activityId }: { activityId?: string }) {
   const router = useRouter();
@@ -15,6 +15,10 @@ export default function useDetail({ activityId }: { activityId?: string }) {
   const handleSelect = (option: string) => {
     if (option === '수정하기') router.push(`/activity/${activityId}/edit `);
     if (option === '삭제하기') open('delete-activity');
+  };
+
+  const deleteActivity = async (id: string) => {
+    await axiosClient.delete(`/my-activities/${id}`);
   };
 
   const handleActivityDelete = async (id: string) => {
