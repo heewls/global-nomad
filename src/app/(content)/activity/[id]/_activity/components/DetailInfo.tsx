@@ -14,7 +14,7 @@ export default function DetailInfo({ detail }: { detail: ActivityDetail }) {
   });
 
   return (
-    <div className="border-b-gray100 flex justify-between border-b pb-5 md:pb-6 lg:pb-7.5">
+    <div className="border-b-gray100 flex w-full justify-between border-b pb-5 md:pb-6 lg:border-none lg:pb-7.5">
       <div className="flex flex-col gap-1 md:gap-2.5 lg:gap-2">
         <span className="text-13-m text-gray700 md:text-14-m">
           {detail.category}

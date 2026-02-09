@@ -1,7 +1,7 @@
-import ReservationForm from '../../_activity/components/ReservationForm';
+import { ReservationModal } from '../../_activity/components/compound/ReservationCompound';
 import { getActivity } from '../../api';
 
-export default async function ReservationModal({
+export default async function Reservation({
   params,
 }: {
   params: Promise<{ id: string }>;
@@ -9,5 +9,5 @@ export default async function ReservationModal({
   const { id } = await params;
   const activity = await getActivity(id);
 
-  return <ReservationForm detail={activity} />;
+  return <ReservationModal detail={activity} />;
 }

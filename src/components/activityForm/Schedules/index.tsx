@@ -188,7 +188,7 @@ export default function Schedules({
               onClick={() => onDelete(idx)}
               className="bg-gray50 mb-[13px] flex h-7 w-7 shrink-0 items-center justify-center rounded-full sm:mb-1.5 sm:h-10.5 sm:w-10.5"
             >
-              <Minus className="h-4 w-4 sm:h-6 sm:w-6" />
+              <Minus className="h-4 w-4 text-black sm:h-6 sm:w-6" />
             </button>
           </div>
         </div>
