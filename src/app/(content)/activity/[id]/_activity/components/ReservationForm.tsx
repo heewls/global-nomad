@@ -1,8 +1,9 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import Button from '@/components/common/button';
-import Calendar from '@/components/calendar';
+import ReservationCalendar from '@/components/calendar/ReservationCalendar';
 import { MobileParticipant, Participant } from './compound/ReservationCompound';
 import { ActivityDetail } from '@/types/activities';
 import Close from '@/assets/icons/x.svg';
@@ -14,7 +15,16 @@ export function ReservationForm({
   detail: ActivityDetail;
   isOwner?: boolean;
 }) {
+  const [selectedDate, setSelectedDate] = useState<string>('');
   const router = useRouter();
+
+  const availableDates = Array.from(
+    new Set(detail.schedules.map((s) => s.date))
+  );
+
+  const filteredSchedules = detail.schedules.filter(
+    (schedule) => schedule.date === selectedDate
+  );
 
   if (isOwner) return null;
 
@@ -43,23 +53,35 @@ export function ReservationForm({
             </button>
           </div>
           <div className="h-92 w-full md:h-123 md:w-90 lg:h-92 lg:w-87.5">
-            <Calendar onSelect={() => {}} height="100%" />
+            <ReservationCalendar
+              onSelect={setSelectedDate}
+              availableDates={availableDates}
+              selectedDate={selectedDate}
+            />
           </div>
         </div>
 
         <div className="md:shadow-card flex flex-1 md:flex-col md:gap-9 md:rounded-3xl md:px-6 md:py-7.5 lg:gap-6 lg:p-0 lg:shadow-none">
-          <div className="flex w-full flex-col gap-3.5 md:gap-5">
-            <h3 className="text-16-b">예약 가능한 시간</h3>
-            <div className="scrollbar-hidden flex max-h-61 flex-col gap-3 overflow-scroll">
-              {detail.schedules.map((schedule) => (
-                <button
-                  key={schedule.id}
-                  className="border-gray300 text-14-m h-13 w-full shrink-0 cursor-pointer rounded-xl border bg-white"
-                >
-                  {schedule.startTime}~{schedule.endTime}
-                </button>
-              ))}
-            </div>
+          <div className="flex w-full flex-col items-center gap-3.5 md:gap-5">
+            <h3 className="text-16-b flex w-full items-start">
+              예약 가능한 시간
+            </h3>
+            {filteredSchedules.length === 0 ? (
+              <span className="text-16-m text-gray700 flex">
+                날짜를 선택해 주세요.
+              </span>
+            ) : (
+              <div className="scrollbar-hidden flex max-h-61 w-full flex-col gap-3 overflow-scroll">
+                {filteredSchedules.map((schedule) => (
+                  <button
+                    key={schedule.id}
+                    className="border-gray300 text-14-m h-13 w-full shrink-0 cursor-pointer rounded-xl border bg-white"
+                  >
+                    {schedule.startTime}~{schedule.endTime}
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
 
           <div className="hidden md:block">

@@ -1,0 +1,23 @@
+.is-available .fc-daygrid-day-number,
+.fc-daygrid-day.is-selected .fc-daygrid-day-number {
+  background-color: var(--color-primary500);
+  color: white;
+  border-radius: 100%;
+}
+
+.fc-daygrid-day.is-disabled {
+  opacity: 0.3;
+  cursor: default !important;
+  pointer-events: none;
+}
+
+.fc-day-today {
+  cursor: default !important;
+  pointer-events: none;
+}
+
+.fc-daygrid-day.is-available {
+  opacity: 1 !important;
+  cursor: pointer !important;
+  pointer-events: auto !important;
+}
