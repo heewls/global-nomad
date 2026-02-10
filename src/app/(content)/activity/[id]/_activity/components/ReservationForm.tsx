@@ -1,10 +1,14 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import clsx from 'clsx';
 import Button from '@/components/common/button';
+import AlertModal from '@/components/modals/AlertModal';
+import BouncingDots from '@/components/common/loading/BouncingDots';
 import ReservationCalendar from '@/components/calendar/ReservationCalendar';
 import { MobileParticipant, Participant } from './compound/ReservationCompound';
+import useModalStore from '@/store/modal';
+import useReservation from '../hook/useReservation';
 import { ActivityDetail } from '@/types/activities';
 import Close from '@/assets/icons/x.svg';
 
@@ -15,16 +19,21 @@ export function ReservationForm({
   detail: ActivityDetail;
   isOwner?: boolean;
 }) {
-  const [selectedDate, setSelectedDate] = useState<string>('');
   const router = useRouter();
+  const { close } = useModalStore();
 
-  const availableDates = Array.from(
-    new Set(detail.schedules.map((s) => s.date))
-  );
-
-  const filteredSchedules = detail.schedules.filter(
-    (schedule) => schedule.date === selectedDate
-  );
+  const {
+    isNext,
+    isLoading,
+    scheduleId,
+    selectedDate,
+    availableDates,
+    filteredSchedules,
+    setSelectedDate,
+    handlePutInScheduleId,
+    handleNextPage,
+    handleReservationSubmit,
+  } = useReservation(detail);
 
   if (isOwner) return null;
 
@@ -66,20 +75,30 @@ export function ReservationForm({
             <h3 className="text-16-b flex w-full items-start">
               예약 가능한 시간
             </h3>
-            {filteredSchedules.length === 0 ? (
+            {filteredSchedules?.length === 0 ? (
               <span className="text-16-m text-gray700 flex">
                 날짜를 선택해 주세요.
               </span>
             ) : (
               <div className="scrollbar-hidden flex max-h-61 w-full flex-col gap-3 overflow-scroll">
-                {filteredSchedules.map((schedule) => (
-                  <button
-                    key={schedule.id}
-                    className="border-gray300 text-14-m h-13 w-full shrink-0 cursor-pointer rounded-xl border bg-white"
-                  >
-                    {schedule.startTime}~{schedule.endTime}
-                  </button>
-                ))}
+                {filteredSchedules?.map((schedule) => {
+                  const isChecked = schedule.id === scheduleId;
+
+                  return (
+                    <button
+                      key={schedule.id}
+                      onClick={() => handlePutInScheduleId(schedule.id)}
+                      className={clsx(
+                        isChecked
+                          ? 'border-b-primary500 bg-primary100 text-primary500 border-2'
+                          : 'border-gray300 border bg-white',
+                        'text-14-m h-13 w-full shrink-0 cursor-pointer rounded-xl'
+                      )}
+                    >
+                      {schedule.startTime}~{schedule.endTime}
+                    </button>
+                  );
+                })}
               </div>
             )}
           </div>
@@ -102,8 +121,10 @@ export function ReservationForm({
           rounded="14"
           fontSize="16-b"
           className="w-34"
+          disabled={!scheduleId}
+          onClick={handleReservationSubmit}
         >
-          예약하기
+          {isLoading ? <BouncingDots /> : '예약하기'}
         </Button>
       </div>
       <Button
@@ -115,6 +136,12 @@ export function ReservationForm({
       >
         확인
       </Button>
+      <AlertModal
+        modalId="success-reservation"
+        headerText="에약이 완료되었습니다."
+        confirmText="확인"
+        confirmFunction={() => close('success-reservation')}
+      />
     </div>
   );
 }
