@@ -25,6 +25,7 @@ export function ReservationForm({
   const {
     isNext,
     isLoading,
+    isValidTime,
     scheduleId,
     selectedDate,
     availableDates,
@@ -83,16 +84,19 @@ export function ReservationForm({
               <div className="scrollbar-hidden flex max-h-61 w-full flex-col gap-3 overflow-scroll">
                 {filteredSchedules?.map((schedule) => {
                   const isChecked = schedule.id === scheduleId;
+                  const isPast = !isValidTime?.some((v) => v.id === schedule.id);
 
                   return (
                     <button
                       key={schedule.id}
                       onClick={() => handlePutInScheduleId(schedule.id)}
                       className={clsx(
-                        isChecked
-                          ? 'border-b-primary500 bg-primary100 text-primary500 border-2'
-                          : 'border-gray300 border bg-white',
-                        'text-14-m h-13 w-full shrink-0 cursor-pointer rounded-xl'
+                        'text-14-m h-13 w-full shrink-0 rounded-xl border',
+                        isPast
+                          ? 'border-gray200 text-gray300 bg-gray100 pointer-events-none cursor-default'
+                          : isChecked
+                            ? 'border-primary500 bg-primary100 text-primary500 border-2'
+                            : 'border-gray300 hover:border-primary500 cursor-pointer bg-white text-gray-800'
                       )}
                     >
                       {schedule.startTime}~{schedule.endTime}

@@ -62,17 +62,26 @@ export default function useReservation(detail?: ActivityDetail) {
       .finally(() => setIsLoading(false));
   };
 
+  const todayStr = new Date().toLocaleDateString('en-CA');
+
   const availableDates = Array.from(
-    new Set(detail?.schedules.map((s) => s.date))
+    new Set(
+      detail?.schedules.map((s) => s.date).filter((date) => date >= todayStr)
+    )
   );
 
   const filteredSchedules = detail?.schedules.filter(
     (schedule) => schedule.date === selectedDate
   );
 
+  const isValidTime = detail?.schedules.filter((s) => {
+    return new Date(`${s.date}T${s.startTime}`) > new Date();
+  });
+
   return {
     isNext,
     isLoading,
+    isValidTime,
     scheduleId,
     headCount,
     selectedDate,
