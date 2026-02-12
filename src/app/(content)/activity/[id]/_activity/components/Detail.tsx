@@ -1,10 +1,10 @@
 'use client';
 
 import Link from 'next/link';
-import Image from 'next/image';
 import Button from '@/components/common/button';
 import DetailInfo from './DetailInfo';
-import { ReservationForm } from './ReservationForm';
+import ReservationForm from './ReservationForm';
+import DetailImage from './DetailImage';
 import useDetail from '../hook/useDetail';
 import { ActivityDetail } from '@/types/activities';
 
@@ -17,15 +17,7 @@ export default function Detail({ detail }: { detail: ActivityDetail }) {
     <div>
       <div className="relative flex items-start gap-10">
         <div className="flex w-full flex-col gap-5 md:gap-7.5 lg:gap-10">
-          {detail.subImages.map((sub) => (
-            <Image
-              key={sub.id}
-              src={sub.imageUrl}
-              alt="banner image"
-              width={200}
-              height={200}
-            />
-          ))}
+          <DetailImage bannerImage={detail.bannerImageUrl} subImages={detail.subImages} />
 
           <div className="block lg:hidden">
             <DetailInfo detail={detail} />
@@ -50,7 +42,7 @@ export default function Detail({ detail }: { detail: ActivityDetail }) {
         </div>
       </div>
 
-      {!isOwner && (
+      {!isOwner(detail.userId) && (
         <div className="border-t-gray100 fixed bottom-0 left-0 flex h-31 w-full flex-col gap-3 border-t bg-white px-6 py-4.5 lg:hidden">
           <div className="flex items-center justify-between">
             <span className="text-18-b flex items-center gap-1.5">

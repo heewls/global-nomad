@@ -1,6 +1,6 @@
 import Modal from '@/components/common/modal';
-import { ReservationForm } from '../ReservationForm';
-import useReservation from '../../hook/useReservation';
+import ReservationForm from './ReservationForm';
+import useReservation from '../hook/useReservation';
 import { ActivityDetail } from '@/types/activities';
 import PrevPage from '@/../public/icons/prevArrow.svg';
 import Plus from '@/assets/icons/plus.svg';

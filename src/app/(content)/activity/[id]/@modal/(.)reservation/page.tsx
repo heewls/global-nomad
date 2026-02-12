@@ -1,4 +1,4 @@
-import { ReservationModal } from '../../_activity/components/compound/ReservationCompound';
+import { ReservationModal } from '../../_activity/components/ReservationCompound';
 import { getActivity } from '../../api';
 
 export default async function Reservation({

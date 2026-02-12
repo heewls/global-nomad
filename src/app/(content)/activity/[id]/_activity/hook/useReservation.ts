@@ -1,8 +1,10 @@
-import { useState } from 'react';
-import { ActivityDetail } from '@/types/activities';
-import axiosClient from '@/lib/api/axiosClient';
+'use client';
+
 import axios from 'axios';
+import { useState } from 'react';
+import axiosClient from '@/lib/api/axiosClient';
 import useModalStore from '@/store/modal';
+import { ActivityDetail } from '@/types/activities';
 
 interface ReservationResponse {
   scheduleId: number;
@@ -57,7 +59,12 @@ export default function useReservation(detail?: ActivityDetail) {
       })
       .catch((error) => {
         if (!axios.isAxiosError(error)) return;
-        console.log(error);
+
+        if (error.status === 409) {
+          open('duplicate-reservation');
+          setScheduleId(0);
+          setHeadCount(1);
+        }
       })
       .finally(() => setIsLoading(false));
   };

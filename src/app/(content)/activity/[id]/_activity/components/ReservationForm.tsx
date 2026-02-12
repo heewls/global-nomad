@@ -6,13 +6,13 @@ import Button from '@/components/common/button';
 import AlertModal from '@/components/modals/AlertModal';
 import BouncingDots from '@/components/common/loading/BouncingDots';
 import ReservationCalendar from '@/components/calendar/ReservationCalendar';
-import { MobileParticipant, Participant } from './compound/ReservationCompound';
+import { MobileParticipant, Participant } from './ReservationCompound';
 import useModalStore from '@/store/modal';
 import useReservation from '../hook/useReservation';
 import { ActivityDetail } from '@/types/activities';
 import Close from '@/assets/icons/x.svg';
 
-export function ReservationForm({
+export default function ReservationForm({
   detail,
   isOwner,
 }: {
@@ -84,7 +84,9 @@ export function ReservationForm({
               <div className="scrollbar-hidden flex max-h-61 w-full flex-col gap-3 overflow-scroll">
                 {filteredSchedules?.map((schedule) => {
                   const isChecked = schedule.id === scheduleId;
-                  const isPast = !isValidTime?.some((v) => v.id === schedule.id);
+                  const isPast = !isValidTime?.some(
+                    (v) => v.id === schedule.id
+                  );
 
                   return (
                     <button
@@ -145,6 +147,12 @@ export function ReservationForm({
         headerText="에약이 완료되었습니다."
         confirmText="확인"
         confirmFunction={() => close('success-reservation')}
+      />
+      <AlertModal
+        modalId="duplicate-reservation"
+        headerText="이미 예약한 일정입니다."
+        confirmText="확인"
+        confirmFunction={() => close('duplicate-reservation')}
       />
     </div>
   );
