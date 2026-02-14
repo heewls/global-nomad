@@ -8,13 +8,19 @@ import DetailImage from './DetailImage';
 import useDetail from '../hook/useDetail';
 import useReservation from '../hook/useReservation';
 import { ActivityDetail } from '@/types/activities';
+import BouncingDots from '@/components/common/loading/BouncingDots';
 
 export default function Detail({ detail }: { detail: ActivityDetail }) {
   const { isOwner } = useDetail({
     activityId: detail.id.toString(),
   });
-  const { isSubmittable, headCount, checkedSchedule, handleReservationSubmit } =
-    useReservation(detail);
+  const {
+    isLoading,
+    isSubmittable,
+    headCount,
+    checkedSchedule,
+    handleReservationSubmit,
+  } = useReservation(detail);
 
   const formattedDate = checkedSchedule?.date
     ? checkedSchedule.date
@@ -82,7 +88,7 @@ export default function Detail({ detail }: { detail: ActivityDetail }) {
             disabled={!isSubmittable}
             onClick={handleReservationSubmit}
           >
-            예약하기
+            {isLoading ? <BouncingDots /> : '예약하기'}
           </Button>
         </div>
       )}
