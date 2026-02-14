@@ -1,14 +1,18 @@
 import Modal from '@/components/common/modal';
 import ReservationForm from './ReservationForm';
-import useReservation from '../hook/useReservation';
 import { ActivityDetail } from '@/types/activities';
-import PrevPage from '@/../public/icons/prevArrow.svg';
 import Plus from '@/assets/icons/plus.svg';
 import Minus from '@/assets/icons/minus.svg';
 
-export function Participant() {
-  const { headCount, handleCountChange, handleCount } = useReservation();
-
+export function Participant({
+  headCount,
+  handleCountChange,
+  handleCount,
+}: {
+  headCount: number;
+  handleCountChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleCount: (type: 'minus' | 'plus') => void;
+}) {
   return (
     <div className="flex items-center justify-between gap-5 md:flex-col md:items-start lg:flex-row lg:items-center">
       <h3 className="text-16-b">참여 인원 수</h3>
@@ -35,25 +39,10 @@ export function Participant() {
   );
 }
 
-export function MobileParticipant() {
-  return (
-    <div className="flex w-full flex-col gap-5">
-      <div className="flex flex-col gap-2">
-        <div className="flex gap-1.5">
-          <PrevPage className="cursor-pointer" />
-          <span className="text-18-b">인원</span>
-        </div>
-        <span>예약할 인원을 선택해 주세요.</span>
-      </div>
-      <Participant />
-    </div>
-  );
-}
-
 export function ReservationModal({ detail }: { detail: ActivityDetail }) {
   return (
     <Modal.Container
-      containerClassName="h-fit w-full p-6 pb-4.5 md:px-7.5 md:pt-6 md:pb-4.5"
+      containerClassName="h-fit w-full p-6 pb-4.5 md:px-7.5 md:pt-6 md:pb-4.5 rounded-b-none"
       placement="items-end lg:hidden"
     >
       <ReservationForm detail={detail} />

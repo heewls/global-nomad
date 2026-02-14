@@ -6,18 +6,33 @@ import DetailInfo from './DetailInfo';
 import ReservationForm from './ReservationForm';
 import DetailImage from './DetailImage';
 import useDetail from '../hook/useDetail';
+import useReservation from '../hook/useReservation';
 import { ActivityDetail } from '@/types/activities';
 
 export default function Detail({ detail }: { detail: ActivityDetail }) {
   const { isOwner } = useDetail({
     activityId: detail.id.toString(),
   });
+  const { isSubmittable, headCount, checkedSchedule, handleReservationSubmit } =
+    useReservation(detail);
+
+  const formattedDate = checkedSchedule?.date
+    ? checkedSchedule.date
+        .split('-')
+        .map((v) => v.slice(-2))
+        .join('/')
+    : '';
+
+  const checkedScheduleStr = `${formattedDate} ${checkedSchedule?.startTime} ~ ${checkedSchedule?.endTime}`;
 
   return (
     <div>
       <div className="relative flex items-start gap-10">
         <div className="flex w-full flex-col gap-5 md:gap-7.5 lg:gap-10">
-          <DetailImage bannerImage={detail.bannerImageUrl} subImages={detail.subImages} />
+          <DetailImage
+            bannerImage={detail.bannerImageUrl}
+            subImages={detail.subImages}
+          />
 
           <div className="block lg:hidden">
             <DetailInfo detail={detail} />
@@ -47,13 +62,15 @@ export default function Detail({ detail }: { detail: ActivityDetail }) {
           <div className="flex items-center justify-between">
             <span className="text-18-b flex items-center gap-1.5">
               ₩ {detail.price.toLocaleString()}
-              <span className="text-gray400 text-16-m">/인</span>
+              <span className="text-gray400 text-16-m">
+                {isSubmittable ? `/${headCount}명` : '/인'}
+              </span>
             </span>
             <Link
               href={`/activity/${detail.id}/reservation`}
               className="text-primary500 text-16-b underline"
             >
-              날짜 선택하기
+              {checkedSchedule ? checkedScheduleStr : '날짜 선택하기'}
             </Link>
           </div>
           <Button
@@ -62,6 +79,8 @@ export default function Detail({ detail }: { detail: ActivityDetail }) {
             rounded="14"
             fontSize="16-b"
             className="w-full"
+            disabled={!isSubmittable}
+            onClick={handleReservationSubmit}
           >
             예약하기
           </Button>

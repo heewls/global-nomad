@@ -35,7 +35,7 @@ export default function GNB() {
     <nav
       className={clsx(
         isMainPage ? 'bg-transparent' : 'bg-white',
-        'sticky top-0 flex h-20 w-full items-center justify-center'
+        'sticky top-0 z-100 flex h-20 w-full items-center justify-center'
       )}
     >
       <div className="flex w-full max-w-380 justify-between px-6 sm:px-7.5 md:px-10">

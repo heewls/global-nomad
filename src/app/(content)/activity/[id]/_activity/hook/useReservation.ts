@@ -5,20 +5,26 @@ import { useState } from 'react';
 import axiosClient from '@/lib/api/axiosClient';
 import useModalStore from '@/store/modal';
 import { ActivityDetail } from '@/types/activities';
+import useReservationStore from './useReservationStore';
 
 interface ReservationResponse {
   scheduleId: number;
   headCount: number;
 }
 
-export default function useReservation(detail?: ActivityDetail) {
+export default function useReservation(detail: ActivityDetail) {
   const [isNext, setIsNext] = useState(false);
-  const [scheduleId, setScheduleId] = useState(0);
-  const [headCount, setHeadCount] = useState(1);
-  const [selectedDate, setSelectedDate] = useState<string>('');
   const [isLoading, setIsLoading] = useState(false);
 
   const { open } = useModalStore();
+  const {
+    selectedDate,
+    scheduleId,
+    headCount,
+    setSelectedDate,
+    setScheduleId,
+    setHeadCount,
+  } = useReservationStore();
 
   const handlePutInScheduleId = (id: number) => {
     setScheduleId(id);
@@ -33,12 +39,16 @@ export default function useReservation(detail?: ActivityDetail) {
   const handleCount = (type: 'minus' | 'plus') => {
     if (type === 'minus' && headCount === 1) return;
 
-    if (type === 'minus') setHeadCount((prev) => prev - 1);
-    if (type === 'plus') setHeadCount((prev) => prev + 1);
+    if (type === 'minus') setHeadCount(headCount - 1);
+    if (type === 'plus') setHeadCount(headCount + 1);
   };
 
   const handleNextPage = () => {
-    setIsNext((prev) => !prev);
+    setIsNext(true);
+  };
+
+  const handlePrevPage = () => {
+    setIsNext(false);
   };
 
   const handleReservationSubmit = async () => {
@@ -47,7 +57,7 @@ export default function useReservation(detail?: ActivityDetail) {
     setIsLoading(true);
 
     await axiosClient
-      .post<ReservationResponse>(`/activities/${detail?.id}/reservations`, {
+      .post<ReservationResponse>(`/activities/${detail.id}/reservations`, {
         scheduleId,
         headCount,
       })
@@ -73,32 +83,41 @@ export default function useReservation(detail?: ActivityDetail) {
 
   const availableDates = Array.from(
     new Set(
-      detail?.schedules.map((s) => s.date).filter((date) => date >= todayStr)
+      detail.schedules.map((s) => s.date).filter((date) => date >= todayStr)
     )
   );
 
-  const filteredSchedules = detail?.schedules.filter(
+  const filteredSchedules = detail.schedules.filter(
     (schedule) => schedule.date === selectedDate
   );
 
-  const isValidTime = detail?.schedules.filter((s) => {
+  const validTime = detail.schedules.filter((s) => {
     return new Date(`${s.date}T${s.startTime}`) > new Date();
   });
+
+  const checkedSchedule = filteredSchedules.find(
+    (schedule) => schedule.id === scheduleId
+  );
+  
+  const isSubmittable = scheduleId !== 0 || isLoading;
 
   return {
     isNext,
     isLoading,
-    isValidTime,
+    isSubmittable,
     scheduleId,
     headCount,
     selectedDate,
     availableDates,
     filteredSchedules,
+    validTime,
+    checkedSchedule,
     setSelectedDate,
     handlePutInScheduleId,
     handleCountChange,
     handleCount,
     handleNextPage,
+    handlePrevPage,
     handleReservationSubmit,
   };
 }
