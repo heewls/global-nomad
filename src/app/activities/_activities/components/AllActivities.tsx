@@ -54,7 +54,7 @@ export default function AllActivities({
         {activities.map((item) => (
           <MainCard
             key={item.id}
-            href={`/activities/${item.id}`}
+            href={`/activity/${item.id}`}
             title={item.title}
             rating={item.rating}
             reviewCount={item.reviewCount}

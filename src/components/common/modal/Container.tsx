@@ -5,10 +5,12 @@ import clsx from 'clsx';
 
 export default function Container({
   children,
-  className,
+  containerClassName,
+  placement,
 }: {
   children: React.ReactNode;
-  className?: string;
+  containerClassName?: string;
+  placement?: string;
 }) {
   useEffect(() => {
     const originalOverflow = window.getComputedStyle(document.body).overflow;
@@ -20,11 +22,16 @@ export default function Container({
   }, []);
 
   return (
-    <div className="fixed inset-0 z-999 flex items-center justify-center bg-black/50">
+    <div
+      className={clsx(
+        'fixed inset-0 z-999 flex justify-center bg-black/50',
+        placement ? placement : 'items-center'
+      )}
+    >
       <div
         className={clsx(
           'flex flex-col items-center justify-center rounded-[30px] bg-white',
-          className
+          containerClassName
         )}
       >
         {children}

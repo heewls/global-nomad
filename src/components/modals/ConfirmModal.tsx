@@ -15,7 +15,7 @@ export default function ConfirmModal({
 
   return (
     <Modal.Layer id={modalId}>
-      <Modal.Container className="gap-6 px-7.5 pt-7.5 pb-6 sm:px-15 sm:py-7.5">
+      <Modal.Container containerClassName="gap-6 px-7.5 pt-7.5 pb-6 sm:px-15 sm:py-7.5">
         <Modal.Header
           image={<Really className="h-[49px] w-[49px] sm:h-22 sm:w-22" />}
         >
@@ -27,6 +27,7 @@ export default function ConfirmModal({
             height="40-48"
             rounded="12-14"
             fontSize="14-16-b"
+            className="w-30"
             onClick={() => close(modalId)}
           >
             {cancelText}
@@ -36,6 +37,7 @@ export default function ConfirmModal({
             height="40-48"
             rounded="12-14"
             fontSize="14-16-m"
+            className="w-30"
             onClick={confirmFunction}
           >
             {confirmText}
