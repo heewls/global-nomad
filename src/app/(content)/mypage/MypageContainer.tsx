@@ -2,7 +2,7 @@
 
 import { usePathname } from 'next/navigation';
 import clsx from 'clsx';
-import MypageSideBar from './_components/mypageSideBar';
+import MypageSideBar from './_components/MypageSideBar';
 
 export default function MypageContainer({
   children,
