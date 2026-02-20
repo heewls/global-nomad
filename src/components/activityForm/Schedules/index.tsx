@@ -4,7 +4,7 @@ import Calendar from '../../calendar';
 import Dropdown from '@/components/common/dropdown';
 import InputDropdown from '../../inputDropdown';
 import AlertModal from '@/components/modals/AlertModal';
-import CalendarIcon from '@/../public/icons/calendar.svg';
+import CalendarIcon from '@/assets/icons/calendar.svg';
 import Plus from '@/assets/icons/plus.svg';
 import Minus from '@/assets/icons/minus.svg';
 import useSchedules from './useSchedules';
@@ -42,7 +42,9 @@ export default function Schedules({
                   id="date"
                   placeholder="yy/mm/dd"
                   value={addingSlot.date}
-                  rightSlot={<CalendarIcon className="shrink-0" />}
+                  rightSlot={
+                    <CalendarIcon className="h-5 w-5 shrink-0 text-black" />
+                  }
                   inputBgClassName="cursor-pointer"
                   inputClassName="cursor-pointer"
                 />

@@ -7,7 +7,9 @@ interface UserState {
   isLogin: boolean;
   setUser: (user: User) => void;
   clearUser: () => void;
-  updateNickname: (newNickname: string) => void;
+  updateUserProfile: (
+    profile: Partial<Pick<User, 'nickname' | 'profileImageUrl'>>
+  ) => void;
 }
 
 const useUserStore = create<UserState>()(
@@ -20,11 +22,12 @@ const useUserStore = create<UserState>()(
 
       clearUser: () => set({ user: null, isLogin: false }),
 
-      updateNickname: (newNickname) =>
+      updateUserProfile: (profile) =>
         set((state) => ({
-          user: state.user ? { ...state.user, nickname: newNickname } : null,
+          user: state.user ? { ...state.user, ...profile } : null,
         })),
     }),
+
     {
       name: 'user',
     }
