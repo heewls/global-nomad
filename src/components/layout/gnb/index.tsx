@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { redirect, usePathname } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import clsx from 'clsx';
 import Symbol from '@/assets/icons/symbol.svg';
 import Text from '@/../public/logo/smText.svg';
@@ -14,6 +14,7 @@ import ConfirmModal from '@/components/modals/ConfirmModal';
 import { clearTokens } from '@/lib/clientCookie';
 
 export default function GNB() {
+  const router = useRouter();
   const pathname = usePathname();
   const { user, isLogin, clearUser } = useUserStore();
   const { open, close } = useModalStore();
@@ -21,7 +22,7 @@ export default function GNB() {
   const isMainPage = pathname === '/activities';
 
   const handleOptionClick = (option: string) => {
-    if (option === '마이페이지') redirect('/mypage');
+    if (option === '마이 페이지') router.push('/mypage');
     if (option === '로그아웃') open('logout');
   };
 
@@ -61,7 +62,10 @@ export default function GNB() {
             <Bell className="cursor-pointer" />
             <div className="bg-gray100 h-3.5 w-px" />
             <div className="flex items-center justify-center gap-2.5">
-              <ProfileImage size={30} image={user?.profileImageUrl} />
+              <ProfileImage
+                className="h-7.5 w-7.5"
+                image={user?.profileImageUrl}
+              />
               <Dropdown
                 dropdownButton={() => (
                   <span className="text-14-m text-gray950 cursor-pointer">

@@ -2,23 +2,23 @@ import clsx from 'clsx';
 import Image from 'next/image';
 
 export default function ProfileImage({
-  size,
+  className,
   image,
 }: {
-  size: number;
+  className: string;
   image?: string | null;
 }) {
   return (
     <div
-      style={{ width: `${size}px`, height: `${size}px` }}
       className={clsx(
         'relative overflow-hidden rounded-full',
-        !image && 'bg-primary100'
+        !image && 'bg-primary100',
+        className
       )}
     >
       <Image
-        src={image ?? '/icons/defaultProfile.svg'}
         fill
+        src={image ?? '/icons/defaultProfile.svg'}
         alt="profile image"
         className="object-cover"
       />

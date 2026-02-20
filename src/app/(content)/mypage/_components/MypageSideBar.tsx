@@ -1,17 +1,15 @@
 'use client';
 
-import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import clsx from 'clsx';
+import ProfileImage from '@/components/profileImage';
 import useUserStore from '@/store/user';
 import Person from '@/assets/icons/person.svg';
 import Chat from '@/assets/icons/chat.svg';
 import Setting from '@/assets/icons/setting.svg';
 import Calendar from '@/assets/icons/calendar.svg';
-
-const DEFAULT_IMAGE = '/icons/defaultProfile.svg';
 
 const MYPAGE_MENU = [
   { label: '내 정보', href: '/mypage/my_profile', icon: Person },
@@ -38,15 +36,10 @@ export default function MypageSideBar() {
   return (
     <div className="border-gray50 h-112.5 w-full shrink-0 rounded-xl border md:h-85.5 md:w-44.5 lg:h-112.5 lg:w-72.5">
       <div className="flex flex-col items-center gap-6 px-3.5 py-6 md:gap-3 lg:gap-6">
-        <div className="bg-primary100 relative h-30 w-30 rounded-full md:h-17.5 md:w-17.5 lg:h-30 lg:w-30">
-          <Image
-            fill
-            src={user?.profileImageUrl || DEFAULT_IMAGE}
-            alt="user profile image"
-            className="object-cover"
-            sizes="120px"
-          />
-        </div>
+        <ProfileImage
+          className="h-30 w-30 md:h-17.5 md:w-17.5 lg:h-30 lg:w-30"
+          image={user?.profileImageUrl}
+        />
 
         <ul className="flex w-full flex-col items-start gap-3.5 md:gap-3 lg:gap-3.5">
           {MYPAGE_MENU.map((menu) => {

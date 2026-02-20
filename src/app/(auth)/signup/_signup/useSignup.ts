@@ -32,7 +32,7 @@ export default function useSignup() {
       email: z.string().email(AUTH_MESSAGES.email.invalid),
       nickname: z
         .string()
-        .min(1, AUTH_MESSAGES.nickname.requried)
+        .min(1, AUTH_MESSAGES.nickname.required)
         .max(10, AUTH_MESSAGES.nickname.invalid),
       password: z.string().min(8, AUTH_MESSAGES.password.invalid),
       passwordCheck: z.string().min(8, AUTH_MESSAGES.password.invalid),
