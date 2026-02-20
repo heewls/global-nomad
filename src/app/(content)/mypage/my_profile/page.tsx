@@ -18,6 +18,7 @@ export default function MyProfile() {
     form,
     isLoading,
     profileImage,
+    resetForm,
     handleProfileImageChange,
     handleFormSubmit,
   } = useProfile();
@@ -128,6 +129,8 @@ export default function MyProfile() {
         </div>
         <div className="flex justify-center gap-3">
           <Button
+            type="button"
+            onClick={resetForm}
             variant="outline"
             height="54"
             rounded="16"

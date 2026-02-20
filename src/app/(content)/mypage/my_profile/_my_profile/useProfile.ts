@@ -26,6 +26,10 @@ export default function useProfile() {
     profileImageUrl: user?.profileImageUrl,
   };
 
+  const resetForm = () => {
+    form.reset(PROFILE_FORM);
+  };
+
   const profileSchema = z.object({
     email: z.string(),
     nickname: z
@@ -104,6 +108,7 @@ export default function useProfile() {
     form,
     isLoading,
     profileImage,
+    resetForm,
     handleProfileImageChange,
     handleFormSubmit,
   };
