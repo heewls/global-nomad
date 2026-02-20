@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import QueryProvider from '@/lib/querys/QueryProvider';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -15,7 +16,7 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body className="h-screen overflow-hidden bg-white">
-        {children}
+        <QueryProvider>{children}</QueryProvider>
         {modal}
         <div id="modal-root" />
       </body>
