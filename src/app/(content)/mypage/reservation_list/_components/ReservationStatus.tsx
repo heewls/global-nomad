@@ -4,7 +4,6 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import clsx from 'clsx';
 
 const STATUS_LIST = [
-  { label: '전체', value: 'all' },
   { label: '예약 신청', value: 'pending' },
   { label: '예약 취소', value: 'canceled' },
   { label: '예약 승인', value: 'confirmed' },
@@ -17,12 +16,12 @@ export default function ReservationStatus() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const currentStatus = searchParams.get('status') || 'all';
+  const currentStatus = searchParams.get('status');
 
   const updateStatus = (newStatus: string) => {
     const params = new URLSearchParams(searchParams.toString());
 
-    if (newStatus === 'all') {
+    if (newStatus === currentStatus) {
       params.delete('status');
     } else {
       params.set('status', newStatus);
