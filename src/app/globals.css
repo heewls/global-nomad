@@ -143,8 +143,8 @@
 }
 
 @theme {
-  --shadow1: 0 8px 20px 0 rgba(0 0 0 /5%);
-  --shadow2: 0 4px 24px 0 rgba(156 180 202 /20%);
+  --shadow-1: 0 8px 20px 0 rgba(0 0 0 /5%);
+  --shadow-2: 0 4px 24px 0 rgba(156 180 202 /20%);
   --shadow-search-bar: 0 6px 10px 0 rgba(13 153 255 /5%);
 }
 
