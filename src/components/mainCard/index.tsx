@@ -32,7 +32,7 @@ export default function MainCard({
           sizes="(max-width: 640px) 155px, (max-width: 768px) 332px, (max-width: 1280px) 262px, 332px"
         />
       </div>
-      <div className="shadow-card z-10 flex h-fit flex-col gap-2.5 rounded-[18px] bg-white p-4 sm:gap-4.5 sm:rounded-4xl sm:px-7.5 sm:py-5">
+      <div className="shadow1 z-10 flex h-fit flex-col gap-2.5 rounded-[18px] bg-white p-4 sm:gap-4.5 sm:rounded-4xl sm:px-7.5 sm:py-5">
         <div className="flex flex-col gap-1">
           <span className="text-14-m sm:text-18-m truncate font-semibold">
             {title}
