@@ -29,3 +29,15 @@ export interface Reservation {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface Reservations {
+  cursorId: number;
+  totalCount: number;
+  reservations: Reservation[];
+}
+
+export interface ReservationListParams {
+  cursorId: number;
+  size: number;
+  status: TReservationStatus;
+}

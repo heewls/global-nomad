@@ -15,8 +15,10 @@ export default function MypageContainer({
 
   return (
     <div className="mx-auto max-w-245">
-      <div className="flex md:gap-7.5 lg:gap-16">
-        <aside className={clsx(isMenuPage ? 'block w-full' : 'hidden md:block')}>
+      <div className="flex py-9 md:gap-7.5 md:py-10 lg:gap-16">
+        <aside
+          className={clsx(isMenuPage ? 'block w-full' : 'hidden md:block')}
+        >
           <MypageSideBar />
         </aside>
         <div
