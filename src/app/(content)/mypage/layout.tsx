@@ -1,4 +1,4 @@
-import MypageContainer from './MypageContainer';
+import MypageContainer from './_components/MypageContainer';
 
 export default function MyPageLayout({
   children,

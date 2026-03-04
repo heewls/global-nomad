@@ -25,13 +25,14 @@ export default function MypageSideBar() {
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth >= 768) router.replace('/mypage/my_profile');
+      if (window.innerWidth >= 768 && pathname === '/mypage/my_profile')
+        router.replace('/mypage/my_profile');
     };
 
     handleResize();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-  }, [router]);
+  }, [router, pathname]);
 
   return (
     <div className="border-gray50 h-112.5 w-full shrink-0 rounded-xl border md:h-85.5 md:w-44.5 lg:h-112.5 lg:w-72.5">

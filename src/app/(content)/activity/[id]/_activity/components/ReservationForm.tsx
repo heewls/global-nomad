@@ -203,7 +203,7 @@ export function ReservationTablet({ detail }: { detail: ActivityDetail }) {
               selectedDate={selectedDate}
             />
           </div>
-          <div className="shadow-card flex flex-1 flex-col gap-9 rounded-3xl border border-gray-100 px-6 py-7.5">
+          <div className="shadow-1 flex flex-1 flex-col gap-9 rounded-3xl border border-gray-100 px-6 py-7.5">
             <TimeScheduleList
               scheduleId={scheduleId}
               validTime={validTime}
