@@ -10,7 +10,14 @@ export async function getReservationList(params: ReservationListParams) {
     }
   });
 
-  const response = await axiosServer.get<Reservations>('/my-reservations');
+  const response = await axiosServer.get<Reservations>(
+    `/my-reservations?${query}`,
+    {
+      fetchOptions: {
+        next: { tags: ['reservation-list'] },
+      },
+    }
+  );
 
   return response.data;
 }

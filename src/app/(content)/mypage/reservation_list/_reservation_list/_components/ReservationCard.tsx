@@ -6,6 +6,7 @@ import Button from '@/components/common/button';
 import StatusBadge from './StatusBadge';
 import { Reservation, TReservationStatus } from '@/types/reservation';
 import ConfirmModal from '@/components/modals/ConfirmModal';
+import AlertModal from '@/components/modals/AlertModal';
 import useReservationList from '../_hook/useReservationList';
 
 export default function ReservationCard({
@@ -82,9 +83,15 @@ function StatusButton({
   reservationId: number;
   status: TReservationStatus;
 }) {
-  const { handleOpenCancelModal, handleCancelReservation } =
-    useReservationList();
-  const modalId = `cancel-reservation-${reservationId}`;
+  const {
+    errorMessage,
+    handleOpenCancelModal,
+    handleCancelReservation,
+    handleCloseErrorModal,
+  } = useReservationList();
+  const successCancelModalId = `cancel-reservation-${reservationId}`;
+  const errorCancelModalId = `error-cancel-reservation-${reservationId}`;
+
   if (status === 'pending')
     return (
       <div className="flex w-full gap-3 lg:w-fit">
@@ -108,11 +115,17 @@ function StatusButton({
           예약 취소
         </Button>
         <ConfirmModal
-          modalId={modalId}
+          modalId={successCancelModalId}
           headerText="체험을 삭제하시겠습니까?"
           cancelText="아니오"
           confirmText="취소하기"
           confirmFunction={() => handleCancelReservation(reservationId)}
+        />
+        <AlertModal
+          modalId={errorCancelModalId}
+          headerText={errorMessage}
+          confirmText="확인"
+          confirmFunction={() => handleCloseErrorModal(reservationId)}
         />
       </div>
     );

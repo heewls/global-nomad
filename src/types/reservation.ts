@@ -37,7 +37,7 @@ export interface Reservations {
 }
 
 export interface ReservationListParams {
-  cursorId: number;
-  size: number;
-  status: TReservationStatus;
+  cursorId?: number;
+  size?: number;
+  status?: TReservationStatus;
 }
