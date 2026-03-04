@@ -1,8 +1,12 @@
+'use client';
+
 import Link from 'next/link';
 import Image from 'next/image';
 import Button from '@/components/common/button';
 import StatusBadge from './StatusBadge';
 import { Reservation, TReservationStatus } from '@/types/reservation';
+import ConfirmModal from '@/components/modals/ConfirmModal';
+import useReservationList from '../_hook/useReservationList';
 
 export default function ReservationCard({
   reservation,
@@ -36,14 +40,17 @@ export default function ReservationCard({
           <div className="flex w-full items-center justify-between">
             <div className="flex h-5 items-center gap-1">
               <span className="text-16-b leading-5">
-                ₩ {reservation.totalPrice}
+                ₩ {reservation.totalPrice.toLocaleString()}
               </span>
               <span className="text-14-m text-gray400">
                 {reservation.headCount}명
               </span>
             </div>
             <div className="hidden lg:block">
-              <StatusButton status={reservation.status} />
+              <StatusButton
+                status={reservation.status}
+                reservationId={reservation.id}
+              />
             </div>
           </div>
         </div>
@@ -59,13 +66,25 @@ export default function ReservationCard({
         </div>
       </Link>
       <div className="lg:hidden">
-        <StatusButton status={reservation.status} />
+        <StatusButton
+          status={reservation.status}
+          reservationId={reservation.id}
+        />
       </div>
     </div>
   );
 }
 
-function StatusButton({ status }: { status: TReservationStatus }) {
+function StatusButton({
+  reservationId,
+  status,
+}: {
+  reservationId: number;
+  status: TReservationStatus;
+}) {
+  const { handleOpenCancelModal, handleCancelReservation } =
+    useReservationList();
+  const modalId = `cancel-reservation-${reservationId}`;
   if (status === 'pending')
     return (
       <div className="flex w-full gap-3 lg:w-fit">
@@ -84,9 +103,17 @@ function StatusButton({ status }: { status: TReservationStatus }) {
           rounded="8"
           fontSize="14-m"
           className="bg-gray50! flex-1 border-none lg:h-[29px]! lg:w-17.5 lg:flex-none"
+          onClick={(e) => handleOpenCancelModal({ e, reservationId })}
         >
           예약 취소
         </Button>
+        <ConfirmModal
+          modalId={modalId}
+          headerText="체험을 삭제하시겠습니까?"
+          cancelText="아니오"
+          confirmText="취소하기"
+          confirmFunction={() => handleCancelReservation(reservationId)}
+        />
       </div>
     );
 

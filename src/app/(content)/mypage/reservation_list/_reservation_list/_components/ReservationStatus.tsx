@@ -16,7 +16,7 @@ export default function ReservationStatus() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const currentStatus = searchParams.get('status');
+  const currentStatus = searchParams.get('status') || '';
 
   const updateStatus = (newStatus: string) => {
     const params = new URLSearchParams(searchParams.toString());
