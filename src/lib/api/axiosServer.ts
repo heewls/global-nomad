@@ -1,6 +1,6 @@
-import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
 import { redirect } from 'next/navigation';
 import { cookies } from 'next/headers';
+import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
 import { refreshAccessToken } from '../refreshAccessToken';
 
 interface CustomConfig extends InternalAxiosRequestConfig {
@@ -20,7 +20,9 @@ axiosServer.interceptors.request.use(async (config) => {
   const cookieStore = await cookies();
   const accessToken = cookieStore.get('accessToken')?.value;
 
-  if (accessToken) config.headers.set('Authorization', `Bearer ${accessToken}`);
+  if (!accessToken) return config;
+
+  config.headers.set('Authorization', `Bearer ${accessToken}`);
 
   return config;
 });
@@ -37,14 +39,24 @@ axiosServer.interceptors.response.use(
     config._retry = true;
 
     const cookieStore = await cookies();
-    const refreshToken = cookieStore.get('refreshToken')?.value;
 
+    const refreshToken = cookieStore.get('refreshToken')?.value;
     if (!refreshToken) redirect('/login');
 
-    const newAccessToken = await refreshAccessToken(refreshToken ?? '');
-    if (!newAccessToken) redirect('/login');
+    const newAccessToken = await refreshAccessToken(refreshToken);
+    if (newAccessToken) {
+      cookieStore.set('accessToken', newAccessToken, {
+        path: '/',
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax',
+      });
+    } else {
+      redirect('/login');
+    }
 
     config.headers.set('Authorization', `Bearer ${newAccessToken}`);
+
+    return axiosServer(config);
   }
 );
 

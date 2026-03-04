@@ -22,7 +22,9 @@ const axiosClient = axios.create({
 
 axiosClient.interceptors.request.use((config) => {
   const accessToken = Cookies.get('accessToken');
-  if (accessToken) config.headers.set('Authorization', `Bearer ${accessToken}`);
+  if (!accessToken) return config;
+
+  config.headers.set('Authorization', `Bearer ${accessToken}`);
 
   return config;
 });
@@ -66,31 +68,27 @@ axiosClient.interceptors.response.use(
     config._retry = true;
     isRefreshing = true;
 
-    const handleAuthFailure = (authError: AxiosError) => {
+    const handleAuthFailure = () => {
       isRefreshing = false;
-      resolvePendingRequests(authError, null);
-      // window.location.href = '/login';
+      resolvePendingRequests(error, null);
+      window.location.href = '/login';
 
-      return Promise.reject(authError);
+      return Promise.reject(error);
     };
 
     const refreshToken = Cookies.get('refreshToken');
-    if (!refreshToken) return handleAuthFailure(error);
+    if (!refreshToken) return handleAuthFailure();
 
-    try {
-      const newAccessToken = await refreshAccessToken(refreshToken ?? '');
-      if (!newAccessToken) return handleAuthFailure(error);
+    const newAccessToken = await refreshAccessToken(refreshToken);
+    if (!newAccessToken) return handleAuthFailure();
 
-      Cookies.set('accessToken', newAccessToken);
-      config.headers.set('Authorization', `Bearer ${newAccessToken}`);
+    Cookies.set('accessToken', newAccessToken);
+    config.headers.set('Authorization', `Bearer ${newAccessToken}`);
 
-      resolvePendingRequests(null, newAccessToken);
-      isRefreshing = false;
+    resolvePendingRequests(null, newAccessToken);
+    isRefreshing = false;
 
-      return axiosClient(config);
-    } catch (refreshError) {
-      return handleAuthFailure(refreshError as AxiosError);
-    }
+    return axiosClient(config);
   }
 );
 
