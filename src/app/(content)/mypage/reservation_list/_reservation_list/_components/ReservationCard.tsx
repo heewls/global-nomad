@@ -116,7 +116,7 @@ function StatusButton({
         </Button>
         <ConfirmModal
           modalId={successCancelModalId}
-          headerText="체험을 삭제하시겠습니까?"
+          headerText="예약을 취소하시겠습니까?"
           cancelText="아니오"
           confirmText="취소하기"
           confirmFunction={() => handleCancelReservation(reservationId)}
