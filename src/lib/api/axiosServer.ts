@@ -1,7 +1,9 @@
+'use server';
+
 import { redirect } from 'next/navigation';
-import { cookies } from 'next/headers';
 import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
-import { refreshAccessToken } from '../refreshAccessToken';
+import { getServerCookies } from '../serverCookie';
+import refreshServerToken from '../refreshToken/refreshServerToken';
 
 interface CustomConfig extends InternalAxiosRequestConfig {
   _retry?: boolean;
@@ -17,9 +19,7 @@ const axiosServer = axios.create({
 });
 
 axiosServer.interceptors.request.use(async (config) => {
-  const cookieStore = await cookies();
-  const accessToken = cookieStore.get('accessToken')?.value;
-
+  const accessToken = await getServerCookies('accessToken');
   if (!accessToken) return config;
 
   config.headers.set('Authorization', `Bearer ${accessToken}`);
@@ -38,25 +38,23 @@ axiosServer.interceptors.response.use(
 
     config._retry = true;
 
-    const cookieStore = await cookies();
+    try {
+      const refreshToken = await getServerCookies('refreshToken');
+      if (!refreshToken) redirect('/login');
 
-    const refreshToken = cookieStore.get('refreshToken')?.value;
-    if (!refreshToken) redirect('/login');
+      const newAccessToken = await refreshServerToken(refreshToken);
 
-    const newAccessToken = await refreshAccessToken(refreshToken);
-    if (newAccessToken) {
-      cookieStore.set('accessToken', newAccessToken, {
-        path: '/',
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'lax',
-      });
-    } else {
-      redirect('/login');
+      if (newAccessToken) {
+        config.headers.set('Authorization', `Bearer ${newAccessToken}`);
+        return axiosServer(config);
+      } else {
+        redirect('/login');
+      }
+    } catch (error) {
+      return Promise.reject(error);
     }
 
-    config.headers.set('Authorization', `Bearer ${newAccessToken}`);
-
-    return axiosServer(config);
+    return Promise.reject(error);
   }
 );
 
