@@ -19,7 +19,7 @@ export default function GNB() {
   const { user, isLogin, clearUser } = useUserStore();
   const { open, close } = useModalStore();
 
-  const isMainPage = pathname === '/activities';
+  const isMainPage = pathname === '/';
 
   const handleOptionClick = (option: string) => {
     if (option === '마이 페이지') router.push('/mypage');
@@ -41,7 +41,7 @@ export default function GNB() {
     >
       <div className="flex w-full max-w-380 justify-between px-6 sm:px-7.5 md:px-10">
         <Link
-          href="/activities"
+          href="/"
           className="flex w-fit items-center justify-center gap-3"
         >
           <Symbol className="h-7 w-7" />
