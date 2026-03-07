@@ -47,7 +47,7 @@ export default async function ReservationList({
     </div>
   );
 }
-
+ 
 function Header() {
   return (
     <div className="flex flex-col gap-2.5 py-2.5 md:gap-1">

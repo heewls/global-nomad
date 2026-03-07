@@ -25,7 +25,7 @@ export default function MypageSideBar() {
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth >= 768 && pathname === '/mypage/my_profile')
+      if (window.innerWidth >= 768 && pathname === '/mypage')
         router.replace('/mypage/my_profile');
     };
 

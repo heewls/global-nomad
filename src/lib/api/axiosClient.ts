@@ -1,6 +1,6 @@
 import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
 import Cookies from 'js-cookie';
-import { refreshAccessToken } from '../refreshAccessToken';
+import refreshClientToken from '../refreshToken/refreshClientToken';
 
 interface Queueing {
   resolve: (token: string | null) => void;
@@ -79,7 +79,7 @@ axiosClient.interceptors.response.use(
     const refreshToken = Cookies.get('refreshToken');
     if (!refreshToken) return handleAuthFailure();
 
-    const newAccessToken = await refreshAccessToken(refreshToken);
+    const newAccessToken = await refreshClientToken(refreshToken);
     if (!newAccessToken) return handleAuthFailure();
 
     Cookies.set('accessToken', newAccessToken);
