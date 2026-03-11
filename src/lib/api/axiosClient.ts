@@ -1,6 +1,7 @@
 import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
 import Cookies from 'js-cookie';
 import refreshClientToken from '../refreshToken/refreshClientToken';
+import { clearTokens, getToken, setToken } from '../clientCookie';
 
 interface Queueing {
   resolve: (token: string | null) => void;
@@ -71,18 +72,19 @@ axiosClient.interceptors.response.use(
     const handleAuthFailure = () => {
       isRefreshing = false;
       resolvePendingRequests(error, null);
+      clearTokens();
       window.location.href = '/login';
 
       return Promise.reject(error);
     };
 
-    const refreshToken = Cookies.get('refreshToken');
+    const refreshToken = getToken('refreshToken');
     if (!refreshToken) return handleAuthFailure();
 
     const newAccessToken = await refreshClientToken(refreshToken);
     if (!newAccessToken) return handleAuthFailure();
 
-    Cookies.set('accessToken', newAccessToken);
+    setToken('accessToken', newAccessToken);
     config.headers.set('Authorization', `Bearer ${newAccessToken}`);
 
     resolvePendingRequests(null, newAccessToken);

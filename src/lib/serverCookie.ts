@@ -14,3 +14,9 @@ export async function setServerCookies(token: Token, value: string) {
   const cookieStore = await cookies();
   cookieStore.set(token, value);
 }
+
+export async function deleteServerCookies() {
+  const cookieStore = await cookies();
+  cookieStore.delete('accessToken');
+  cookieStore.delete('refreshToken');
+}

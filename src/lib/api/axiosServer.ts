@@ -2,7 +2,7 @@
 
 import { redirect } from 'next/navigation';
 import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
-import { getServerCookies } from '../serverCookie';
+import { deleteServerCookies, getServerCookies } from '../serverCookie';
 import refreshServerToken from '../refreshToken/refreshServerToken';
 
 interface CustomConfig extends InternalAxiosRequestConfig {
@@ -48,13 +48,12 @@ axiosServer.interceptors.response.use(
         config.headers.set('Authorization', `Bearer ${newAccessToken}`);
         return axiosServer(config);
       } else {
+        deleteServerCookies();
         redirect('/login');
       }
     } catch (error) {
       return Promise.reject(error);
     }
-
-    return Promise.reject(error);
   }
 );
 
