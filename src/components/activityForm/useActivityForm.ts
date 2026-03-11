@@ -108,35 +108,78 @@ export default function useActivityForm(activityData?: ActivityDetail) {
     form.setValue('subImageUrls', updateSub, { shouldValidate: true });
   };
 
-  const handleFormSubmit = (form: ActivityRequest) => {
+  const handleFormSubmit = async (form: ActivityRequest) => {
     if (isFormLoading) return;
 
     setIsFormLoading(true);
 
-    const method = isEditMode ? 'patch' : 'post';
-    const url = isEditMode
-      ? `/my-activities/${activityData.id}`
-      : '/activities';
+    if (!isEditMode) {
+      axiosClient
+        .post('/activities', { ...form })
+        .then((response) => {
+          setIsFormLoading(false);
+          setActivityId(response.data.id);
+          open('success-write');
+        })
+        .catch((error) => {
+          if (!axios.isAxiosError(error)) return;
+          console.error(error);
 
-    axiosClient[method](url, {
-      ...form,
-    })
-      .then((response) => {
+          open('error-write');
+          setIsFormLoading(false);
+        })
+        .finally(() => setIsFormLoading(false));
+    }
+
+    const subImageIdsToRemove = activityData?.subImages
+      .filter((prev) => !form.subImageUrls?.includes(prev.imageUrl))
+      .map((prev) => prev.id);
+
+    const subImageUrlsToAdd =
+      form.subImageUrls?.filter(
+        (url) => !activityData?.subImages.some((prev) => prev.imageUrl === url)
+      ) || [];
+
+    const scheduleIdsToRemove = activityData?.schedules
+      .filter((prev) => !form.schedules.some((curr) => curr.id === prev.id))
+      .map((prev) => prev.id);
+
+    const schedulesToAdd = form.schedules
+      .filter((curr) => !curr.id)
+      .map(({ date, startTime, endTime }) => ({ date, startTime, endTime }));
+
+    const patch = {
+      title: form.title,
+      category: form.category,
+      description: form.description,
+      price: form.price,
+      address: form.address,
+      bannerImageUrl: form.bannerImageUrl,
+      subImageIdsToRemove,
+      subImageUrlsToAdd,
+      scheduleIdsToRemove,
+      schedulesToAdd,
+    };
+
+    axiosClient
+      .patch(`/my-activities/${activityData?.id}`, { ...patch })
+      .then(() => {
         setIsFormLoading(false);
         open('success-write');
-        setActivityId(response.data.id);
       })
       .catch((error) => {
         if (!axios.isAxiosError(error)) return;
-        open('error-write');
         console.error(error);
+
+        open('error-write');
+        setIsFormLoading(false);
       })
       .finally(() => setIsFormLoading(false));
   };
 
   const successConfirm = () => {
     close('success-write');
-    router.push(`/activity/${activityId}`);
+    router.push(`/activity/${isEditMode ? activityData.id : activityId}`);
   };
 
   const closeErrorModal = () => {
