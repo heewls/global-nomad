@@ -89,7 +89,10 @@ export default function useSchedules(form: UseFormReturn<ActivityRequest>) {
       if (!timeValidation(startTime, endTime)) return;
     }
 
-    form.setValue(`schedules.${idx}.${field}`, value, { shouldValidate: true });
+    form.setValue(`schedules.${idx}.${field}`, value, {
+      shouldValidate: true,
+      shouldDirty: true,
+    });
   };
 
   const handleAddingSlotChange = (

@@ -13,7 +13,7 @@ export default function useDetail({ activityId }: { activityId?: string }) {
   };
 
   const handleSelect = (option: string) => {
-    if (option === '수정하기') router.push(`/activity/${activityId}/edit `);
+    if (option === '수정하기') router.push(`/activity/edit/${activityId} `);
     if (option === '삭제하기') open('delete-activity');
   };
 

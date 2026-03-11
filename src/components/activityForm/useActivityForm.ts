@@ -4,14 +4,14 @@ import z from 'zod';
 import axios from 'axios';
 import useZodForm from '@/hook/useZodForm';
 import axiosClient from '@/lib/api/axiosClient';
-import { ActivityRequest } from '@/types/activities';
+import { ActivityRequest, ActivityDetail } from '@/types/activities';
 import useModalStore from '@/store/modal';
 
 interface ActivitiesImageResponse {
   activityImageUrl: string;
 }
 
-export default function useActivityForm(activityData?: ActivityRequest) {
+export default function useActivityForm(activityData?: ActivityDetail) {
   const [imageLoadingType, setImageLoadingType] = useState<
     'banner' | 'sub' | null
   >(null);
@@ -20,6 +20,8 @@ export default function useActivityForm(activityData?: ActivityRequest) {
 
   const { open, close } = useModalStore();
   const router = useRouter();
+
+  const isEditMode = !!activityData;
 
   const activitySchema = z.object({
     title: z.string().min(1),
@@ -48,7 +50,7 @@ export default function useActivityForm(activityData?: ActivityRequest) {
     address: activityData?.address ?? '',
     schedules: activityData?.schedules ?? [],
     bannerImageUrl: activityData?.bannerImageUrl ?? '',
-    subImageUrls: activityData?.subImageUrls ?? [],
+    subImageUrls: activityData?.subImages?.map((img) => img.imageUrl) ?? [],
   };
 
   const form = useZodForm({
@@ -106,34 +108,93 @@ export default function useActivityForm(activityData?: ActivityRequest) {
     form.setValue('subImageUrls', updateSub, { shouldValidate: true });
   };
 
-  const handleFormSubmit = (form: ActivityRequest) => {
+  const handleFormSubmit = async (form: ActivityRequest) => {
     if (isFormLoading) return;
 
     setIsFormLoading(true);
 
+    if (!isEditMode) {
+      axiosClient
+        .post('/activities', { ...form })
+        .then((response) => {
+          setIsFormLoading(false);
+          setActivityId(response.data.id);
+          open('success-write');
+        })
+        .catch((error) => {
+          if (!axios.isAxiosError(error)) return;
+          console.error(error);
+
+          open('error-write');
+          setIsFormLoading(false);
+        })
+        .finally(() => setIsFormLoading(false));
+    }
+
+    const subImageIdsToRemove = activityData?.subImages
+      .filter((prev) => !form.subImageUrls?.includes(prev.imageUrl))
+      .map((prev) => prev.id);
+
+    const subImageUrlsToAdd =
+      form.subImageUrls?.filter(
+        (url) => !activityData?.subImages.some((prev) => prev.imageUrl === url)
+      ) || [];
+
+    const scheduleIdsToRemove = activityData?.schedules
+      .filter((prev) => !form.schedules.some((curr) => curr.id === prev.id))
+      .map((prev) => prev.id);
+
+    const schedulesToAdd = form.schedules
+      .filter((curr) => !curr.id)
+      .map(({ date, startTime, endTime }) => ({ date, startTime, endTime }));
+
+    const patch = {
+      title: form.title,
+      category: form.category,
+      description: form.description,
+      price: form.price,
+      address: form.address,
+      bannerImageUrl: form.bannerImageUrl,
+      subImageIdsToRemove,
+      subImageUrlsToAdd,
+      scheduleIdsToRemove,
+      schedulesToAdd,
+    };
+
     axiosClient
-      .post('/activities', {
-        ...form,
-      })
-      .then((response) => {
+      .patch(`/my-activities/${activityData?.id}`, { ...patch })
+      .then(() => {
         setIsFormLoading(false);
         open('success-write');
-        setActivityId(response.data.id);
       })
       .catch((error) => {
         if (!axios.isAxiosError(error)) return;
-        console.log(error);
+        console.error(error);
+
+        open('error-write');
+        setIsFormLoading(false);
       })
       .finally(() => setIsFormLoading(false));
   };
 
   const successConfirm = () => {
     close('success-write');
-    router.push(`/activity/${activityId}`);
+    router.push(`/activity/${isEditMode ? activityData.id : activityId}`);
+  };
+
+  const closeErrorModal = () => {
+    close('error-write');
   };
 
   const bannerImage = form.watch('bannerImageUrl');
   const subImages = form.watch('subImageUrls');
+  const buttonChildren = isEditMode ? '수정하기' : '등록하기';
+  const successModalText = isEditMode
+    ? '체험 수정이 완료되었습니다.'
+    : '체험 등록이 완료되었습니다.';
+  const errorModalText = isEditMode
+    ? '체험 수정이 실패했습니다.'
+    : '체험 등록이 실패했습니다.';
 
   return {
     form,
@@ -141,10 +202,14 @@ export default function useActivityForm(activityData?: ActivityRequest) {
     bannerImage,
     subImages,
     imageLoadingType,
+    buttonChildren,
+    successModalText,
+    errorModalText,
     handleImageChange,
     handleBannerImageDelete,
     handleSubImagesDelete,
     handleFormSubmit,
     successConfirm,
+    closeErrorModal,
   };
 }

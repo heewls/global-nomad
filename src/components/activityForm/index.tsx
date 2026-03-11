@@ -14,20 +14,29 @@ import AlertModal from '../modals/AlertModal';
 import Schedules from './Schedules';
 import BouncingDots from '../common/loading/BouncingDots';
 import CATEGORY_OPTIONS from '@/contents/category';
+import { ActivityDetail } from '@/types/activities';
 
-export default function ActivityForm() {
+export default function ActivityForm({
+  activity,
+}: {
+  activity?: ActivityDetail;
+}) {
   const {
     form,
     isLoading,
     bannerImage,
     subImages,
     imageLoadingType,
+    buttonChildren,
+    successModalText,
+    errorModalText,
     handleImageChange,
     handleBannerImageDelete,
     handleSubImagesDelete,
     handleFormSubmit,
     successConfirm,
-  } = useActivityForm();
+    closeErrorModal,
+  } = useActivityForm(activity);
 
   const {
     register,
@@ -211,13 +220,19 @@ export default function ActivityForm() {
         fontSize="14-b"
         className="w-30"
       >
-        {isLoading ? <BouncingDots /> : '등록하기'}
+        {isLoading ? <BouncingDots /> : buttonChildren}
       </Button>
       <AlertModal
         modalId="success-write"
-        headerText="체험 등록이 완료되었습니다."
+        headerText={successModalText}
         confirmText="확인"
         confirmFunction={successConfirm}
+      />
+      <AlertModal
+        modalId="error-write"
+        headerText={errorModalText}
+        confirmText="확인"
+        confirmFunction={closeErrorModal}
       />
     </form>
   );

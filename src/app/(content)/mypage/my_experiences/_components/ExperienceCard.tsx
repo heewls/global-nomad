@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import Button from '@/components/common/button';
 import Rating from '@/components/common/rating';
 import AlertModal from '@/components/modals/AlertModal';
@@ -67,6 +68,8 @@ function ExperienceButtons({ id }: { id: number }) {
     handleDeleteMyExperience,
   } = useExperience();
 
+  const router = useRouter();
+  
   const successDeleteModalId = `delete-experience-${id}`;
   const errorDeleteModalId = `error-delete-experience-${id}`;
 
@@ -78,6 +81,7 @@ function ExperienceButtons({ id }: { id: number }) {
         rounded="8"
         fontSize="14-m"
         className="w-17.5 flex-1"
+        onClick={() => router.push(`/activity/edit/${id}`)}
       >
         수정하기
       </Button>
