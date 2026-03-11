@@ -30,6 +30,7 @@ export interface ActivityRequest extends Omit<
   Activity,
   'id' | 'userId' | 'rating' | 'reviewCount' | 'createdAt' | 'updatedAt'
 > {
+  id?: number;
   schedules: Omit<Schedules, 'id'>[];
   subImageUrls?: string[];
 }

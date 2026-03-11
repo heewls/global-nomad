@@ -4,14 +4,14 @@ import z from 'zod';
 import axios from 'axios';
 import useZodForm from '@/hook/useZodForm';
 import axiosClient from '@/lib/api/axiosClient';
-import { ActivityRequest } from '@/types/activities';
+import { ActivityRequest, ActivityDetail } from '@/types/activities';
 import useModalStore from '@/store/modal';
 
 interface ActivitiesImageResponse {
   activityImageUrl: string;
 }
 
-export default function useActivityForm(activityData?: ActivityRequest) {
+export default function useActivityForm(activityData?: ActivityDetail) {
   const [imageLoadingType, setImageLoadingType] = useState<
     'banner' | 'sub' | null
   >(null);
@@ -20,6 +20,8 @@ export default function useActivityForm(activityData?: ActivityRequest) {
 
   const { open, close } = useModalStore();
   const router = useRouter();
+
+  const isEditMode = !!activityData;
 
   const activitySchema = z.object({
     title: z.string().min(1),
@@ -48,7 +50,7 @@ export default function useActivityForm(activityData?: ActivityRequest) {
     address: activityData?.address ?? '',
     schedules: activityData?.schedules ?? [],
     bannerImageUrl: activityData?.bannerImageUrl ?? '',
-    subImageUrls: activityData?.subImageUrls ?? [],
+    subImageUrls: activityData?.subImages?.map((img) => img.imageUrl) ?? [],
   };
 
   const form = useZodForm({
@@ -111,10 +113,14 @@ export default function useActivityForm(activityData?: ActivityRequest) {
 
     setIsFormLoading(true);
 
-    axiosClient
-      .post('/activities', {
-        ...form,
-      })
+    const method = isEditMode ? 'patch' : 'post';
+    const url = isEditMode
+      ? `/my-activities/${activityData.id}`
+      : '/activities';
+
+    axiosClient[method](url, {
+      ...form,
+    })
       .then((response) => {
         setIsFormLoading(false);
         open('success-write');
@@ -122,7 +128,8 @@ export default function useActivityForm(activityData?: ActivityRequest) {
       })
       .catch((error) => {
         if (!axios.isAxiosError(error)) return;
-        console.log(error);
+        open('error-write');
+        console.error(error);
       })
       .finally(() => setIsFormLoading(false));
   };
@@ -132,8 +139,19 @@ export default function useActivityForm(activityData?: ActivityRequest) {
     router.push(`/activity/${activityId}`);
   };
 
+  const closeErrorModal = () => {
+    close('error-write');
+  };
+
   const bannerImage = form.watch('bannerImageUrl');
   const subImages = form.watch('subImageUrls');
+  const buttonChildren = isEditMode ? '수정하기' : '등록하기';
+  const successModalText = isEditMode
+    ? '체험 수정이 완료되었습니다.'
+    : '체험 등록이 완료되었습니다.';
+  const errorModalText = isEditMode
+    ? '체험 수정이 실패했습니다.'
+    : '체험 등록이 실패했습니다.';
 
   return {
     form,
@@ -141,10 +159,14 @@ export default function useActivityForm(activityData?: ActivityRequest) {
     bannerImage,
     subImages,
     imageLoadingType,
+    buttonChildren,
+    successModalText,
+    errorModalText,
     handleImageChange,
     handleBannerImageDelete,
     handleSubImagesDelete,
     handleFormSubmit,
     successConfirm,
+    closeErrorModal,
   };
 }
